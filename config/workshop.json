@@ -1,9 +1,65 @@
 {
   "appid": "4348910",
   "items": {
-    "save-language-converter": { "id": "3832481427", "title": "Save Language Converter | 存档语言转换", "tags": ["Mod", "Quality of Life", "Translation", "Utilities"] },
-    "quick-call": { "id": "3832481274", "title": "Quick Call | 快速通话", "tags": ["Mod", "Quality of Life", "Gameplay"] },
-    "demand-highlight": { "id": "3832481488", "title": "Demand Highlight | 需求高亮", "tags": ["Mod", "Quality of Life", "UI"] },
-    "performance-fixes": { "id": "3832481577", "title": "Performance Fixes | 性能修复", "tags": ["Mod", "Quality of Life", "Utilities"] }
+    "save-language-converter": {
+      "id": "3832481427",
+      "title": "Save Language Converter | 存档语言转换",
+      "tags": [
+        "Mod",
+        "Mods",
+        "Mono",
+        "Quality of Life",
+        "Translation",
+        "Utilities",
+        "Simplified Chinese"
+      ]
+    },
+    "quick-call": {
+      "id": "3832481274",
+      "title": "Quick Call | 快速通话",
+      "tags": [
+        "Mod",
+        "Mods",
+        "Mono",
+        "Quality of Life",
+        "Gameplay"
+      ]
+    },
+    "demand-highlight": {
+      "id": "3832481488",
+      "title": "Demand Highlight | 需求高亮",
+      "tags": [
+        "Mod",
+        "Mods",
+        "Mono",
+        "Quality of Life",
+        "UI",
+        "Simplified Chinese"
+      ]
+    },
+    "performance-fixes": {
+      "id": "3832481577",
+      "title": "Performance Fixes | 性能修复",
+      "tags": [
+        "Mod",
+        "Mods",
+        "Mono",
+        "Quality of Life",
+        "Utilities",
+        "Simplified Chinese"
+      ]
+    },
+    "window-workspaces": {
+      "id": "3832565070",
+      "title": "Window Workspaces | 窗口工作区",
+      "tags": [
+        "Mod",
+        "Mods",
+        "Mono",
+        "Quality of Life",
+        "UI",
+        "Simplified Chinese"
+      ]
+    }
   }
 }

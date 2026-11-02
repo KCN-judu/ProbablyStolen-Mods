@@ -14,3 +14,7 @@
 	path = mods/performance-fixes
 	url = https://github.com/KCN-judu/ProbablyStolen-PerformanceFixes.git
 	branch = main
+[submodule "mods/window-workspaces"]
+	path = mods/window-workspaces
+	url = https://github.com/KCN-judu/ProbablyStolen-WindowWorkspaces.git
+	branch = main

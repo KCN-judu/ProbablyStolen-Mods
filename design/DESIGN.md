@@ -29,6 +29,8 @@ One system for every mod cover, so the three read as a series in the Workshop gr
   - Save Language Converter: teal `#4CC3B5`
   - Quick Call: shop-light orange `#F08A3C`
   - Demand Highlight: the in-mod green `#5CEB6B`, with the mod's amber, red and cyan outline colours used only inside the illustration
+  - Performance Fixes: cyan `#59D1FF`
+  - Window Workspaces: lilac `#C3A6EA`
 - Contrast: cream `#F3E6C8` on the background `#17151F` is about 15 : 1, and the muted tagline `#A79FBF` is about 7 : 1. Both pass WCAG AAA for their size.
 - Depth comes from value, not hue: panels get a 1 px highlight on the top and left edges and a 1 px shadow on the bottom and right, like the game's machinery plates.
 

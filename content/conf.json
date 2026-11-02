@@ -58,6 +58,8 @@
     "category.other.description": "Mods that have not been placed in a group yet.",
     "category.shop.title": "Shop",
     "category.shop.description": "Help at the counter and on the phone.",
+    "category.windows.title": "Windows",
+    "category.windows.description": "Arranging and switching container windows.",
     "category.saves.title": "Saves",
     "category.saves.description": "Working with save files.",
     "category.performance.title": "Performance",

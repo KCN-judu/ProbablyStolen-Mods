@@ -381,11 +381,65 @@ def cover_performance(cv):
     cv.text(mid + 4, base + 6, "AFTER", CYAN)
 
 
+LILAC = (0xC3, 0xA6, 0xEA)
+LILAC_DIM = (0x6E, 0x5E, 0x8C)
+
+
+def mini_window(cv, x, y, w, h, title_color, rows):
+    # A container window: plate, title bar, a few item slots.
+    cv.plate(x, y, w, h, rivets=False)
+    cv.rect(x + 1, y + 1, w - 2, 6, title_color)
+    for r in range(rows):
+        for c in range((w - 6) // 9):
+            cv.slot(x + 3 + c * 9, y + 10 + r * 9, 8, 8)
+
+
+def cover_workspaces(cv):
+    layout(cv, LILAC, ["WINDOW", "WORKSPACES"], ["SNAP TO EDGES.", "SWITCH SETS", "WITH ONE KEY."])
+    px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
+    cv.plate(px, py, pw, ph)
+    cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
+    cv.text(px + 6, py + 2, "WORKSPACE", LILAC)
+    # Workspace chips 1-4, the second one current.
+    for i in range(4):
+        cx = px + pw - 46 + i * 10
+        if i == 1:
+            cv.rect(cx, py + 1, 9, 9, LILAC)
+            cv.bitmap(cx + 2, py + 2, FONT[str(i + 1)], PANEL_LO)
+        else:
+            cv.bitmap(cx + 2, py + 2, FONT[str(i + 1)], FAINT)
+    # The desk under the windows, with the faint snapping grid.
+    gx0, gy0, gx1, gy1 = px + 4, py + 13, px + pw - 4, py + ph - 4
+    cv.rect(gx0, gy0, gx1 - gx0, gy1 - gy0, BG1)
+    for x in range(gx0, gx1, 8):
+        for y in range(gy0, gy1):
+            if (y - gy0) % 2 == 0: cv.put(x, y, PANEL)
+    for y in range(gy0, gy1, 8):
+        for x in range(gx0, gx1):
+            if (x - gx0) % 2 == 0: cv.put(x, y, PANEL)
+    # Three windows snapped edge to edge; the last one still settling onto the guide.
+    mini_window(cv, gx0 + 4, gy0 + 4, 60, 46, LILAC, 4)
+    mini_window(cv, gx0 + 64, gy0 + 4, 64, 30, LILAC_DIM, 2)
+    mini_window(cv, gx0 + 64, gy0 + 34, 64, 34, LILAC_DIM, 2)
+    mini_window(cv, gx0 + 4, gy0 + 60, 42, 38, LILAC_DIM, 3)
+    # Snap guides on the shared edges.
+    for y in range(gy0 + 1, gy1 - 1):
+        if (y // 2) % 2 == 0: cv.put(gx0 + 64, y, LILAC)
+    for x in range(gx0 + 60, gx1 - 1):
+        if (x // 2) % 2 == 0: cv.put(x, gy0 + 34, LILAC)
+    # Drag arrow: the loose window heading right, onto the guide.
+    ax, ay = gx0 + 49, gy0 + 78
+    cv.rect(ax, ay, 9, 2, CREAM_DIM)
+    for k in range(4):
+        cv.vline(ax + 9 + k, ay - 3 + k, 8 - 2 * k, CREAM_DIM)
+
+
 COVERS = {
     "save_language_converter": cover_language,
     "quick_call": cover_call,
     "demand_highlight": cover_demand,
     "performance_fixes": cover_performance,
+    "window_workspaces": cover_workspaces,
 }
 
 

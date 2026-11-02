@@ -202,6 +202,14 @@ msgstr "店铺"
 msgid "Help at the counter and on the phone."
 msgstr "柜台前和电话里的帮手。"
 
+#: conf.json:strings.category.windows.title
+msgid "Windows"
+msgstr "窗口"
+
+#: conf.json:strings.category.windows.description
+msgid "Arranging and switching container windows."
+msgstr "整理和切换容器窗口。"
+
 #: conf.json:strings.category.saves.title
 msgid "Saves"
 msgstr "存档"
