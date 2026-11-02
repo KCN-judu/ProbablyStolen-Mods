@@ -60,6 +60,8 @@
     "category.shop.description": "Help at the counter and on the phone.",
     "category.windows.title": "Windows",
     "category.windows.description": "Arranging and switching container windows.",
+    "category.controls.title": "Controls",
+    "category.controls.description": "Key bindings and input.",
     "category.saves.title": "Saves",
     "category.saves.description": "Working with save files.",
     "category.performance.title": "Performance",

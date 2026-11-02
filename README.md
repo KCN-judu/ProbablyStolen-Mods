@@ -10,6 +10,8 @@ Mods for *Probably Stolen* that keep the game's rules and take away what gets in
 | [Quick Call](https://kcn-judu.github.io/ProbablyStolen-Mods/en/quick-call/) | Calls to Wild and your other contacts go straight to the choices. | [ProbablyStolen-QuickCall](https://github.com/KCN-judu/ProbablyStolen-QuickCall) |
 | [Save Language Converter](https://kcn-judu.github.io/ProbablyStolen-Mods/en/save-language-converter/) | Converts a copy of a save started in another language to the language you play in. | [ProbablyStolen-SaveLanguageConverter](https://github.com/KCN-judu/ProbablyStolen-SaveLanguageConverter) |
 | [Performance Fixes](https://kcn-judu.github.io/ProbablyStolen-Mods/en/performance-fixes/) | Removes stutters with large, packed storage, without changing how the game plays. | [ProbablyStolen-PerformanceFixes](https://github.com/KCN-judu/ProbablyStolen-PerformanceFixes) |
+| [Window Workspaces](https://kcn-judu.github.io/ProbablyStolen-Mods/en/window-workspaces/) | Windows snap to each other while you drag them, and workspaces switch whole sets of open containers with one key. | [ProbablyStolen-WindowWorkspaces](https://github.com/KCN-judu/ProbablyStolen-WindowWorkspaces) |
+| [Better Key Bindings](https://kcn-judu.github.io/ProbablyStolen-Mods/en/better-key-bindings/) | Key combinations, the middle mouse button and mouse buttons 4 and 5 for every key binding, without double triggers. | [ProbablyStolen-BetterKeyBindings](https://github.com/KCN-judu/ProbablyStolen-BetterKeyBindings) |
 
 ## This repository
 

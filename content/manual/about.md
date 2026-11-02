@@ -20,6 +20,8 @@ This collection gathers the *Probably Stolen* mods written by KCN-judu. Every mo
 | Quick Call | Calls go straight to the choices. |
 | Save Language Converter | Converts a copy of a save started in another language. |
 | Performance Fixes | Removes stutters with large, packed storage. |
+| Window Workspaces | Snaps windows together and switches whole sets of them with one key. |
+| Better Key Bindings | Key combinations and extra mouse buttons for every key binding. |
 
 ## Look
 

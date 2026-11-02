@@ -31,6 +31,7 @@ One system for every mod cover, so the three read as a series in the Workshop gr
   - Demand Highlight: the in-mod green `#5CEB6B`, with the mod's amber, red and cyan outline colours used only inside the illustration
   - Performance Fixes: cyan `#59D1FF`
   - Window Workspaces: lilac `#C3A6EA`
+  - Better Key Bindings: amber `#FFB829`, the colour of a lit keycap
 - Contrast: cream `#F3E6C8` on the background `#17151F` is about 15 : 1, and the muted tagline `#A79FBF` is about 7 : 1. Both pass WCAG AAA for their size.
 - Depth comes from value, not hue: panels get a 1 px highlight on the top and left edges and a 1 px shadow on the bottom and right, like the game's machinery plates.
 
@@ -47,6 +48,7 @@ Each one shows the mod working, using the game's own visual language: inventory 
 - **Save Language Converter**: two save cartridges, 文 → A, with an arrow carrying lines of text from one to the other.
 - **Quick Call**: a phone keypad, a fast-forward chevron, and a dialog panel opened straight onto its choices with the first one selected.
 - **Demand Highlight**: an inventory grid showing the four outline styles, plus a small Item Filter window with ticked boxes.
+- **Better Key Bindings**: lit Ctrl + E keycaps, a mouse with its middle and side buttons lit, and a key bindings list where Ctrl + E and E sit on separate rows.
 
 ## Checks
 

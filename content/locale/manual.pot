@@ -210,6 +210,14 @@ msgstr ""
 msgid "Arranging and switching container windows."
 msgstr ""
 
+#: conf.json:strings.category.controls.title
+msgid "Controls"
+msgstr ""
+
+#: conf.json:strings.category.controls.description
+msgid "Key bindings and input."
+msgstr ""
+
 #: conf.json:strings.category.saves.title
 msgid "Saves"
 msgstr ""
@@ -299,19 +307,35 @@ msgstr ""
 msgid "Removes stutters with large, packed storage."
 msgstr ""
 
+#: manual/about.md:23
+msgid "Window Workspaces"
+msgstr ""
+
+#: manual/about.md:23
+msgid "Snaps windows together and switches whole sets of them with one key."
+msgstr ""
+
 #: manual/about.md:24
-msgid "Look"
+msgid "Better Key Bindings"
+msgstr ""
+
+#: manual/about.md:24
+msgid "Key combinations and extra mouse buttons for every key binding."
 msgstr ""
 
 #: manual/about.md:26
-msgid "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License."
+msgid "Look"
 msgstr ""
 
 #: manual/about.md:28
-msgid "License"
+msgid "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License."
 msgstr ""
 
 #: manual/about.md:30
+msgid "License"
+msgstr ""
+
+#: manual/about.md:32
 msgid "Every repository is released under the Apache License 2.0. *Probably Stolen* and its assets belong to their owners; no game files are distributed here."
 msgstr ""
 

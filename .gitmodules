@@ -18,3 +18,7 @@
 	path = mods/window-workspaces
 	url = https://github.com/KCN-judu/ProbablyStolen-WindowWorkspaces.git
 	branch = main
+[submodule "mods/better-key-bindings"]
+	path = mods/better-key-bindings
+	url = https://github.com/KCN-judu/ProbablyStolen-BetterKeyBindings.git
+	branch = main

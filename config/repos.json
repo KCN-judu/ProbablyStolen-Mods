@@ -9,7 +9,8 @@
     "quick-call": "ProbablyStolen-QuickCall",
     "demand-highlight": "ProbablyStolen-DemandHighlight",
     "performance-fixes": "ProbablyStolen-PerformanceFixes",
-    "window-workspaces": "ProbablyStolen-WindowWorkspaces"
+    "window-workspaces": "ProbablyStolen-WindowWorkspaces",
+    "better-key-bindings": "ProbablyStolen-BetterKeyBindings"
   },
   "categories": [
     {
@@ -23,6 +24,12 @@
       "id": "windows",
       "repos": [
         "window-workspaces"
+      ]
+    },
+    {
+      "id": "controls",
+      "repos": [
+        "better-key-bindings"
       ]
     },
     {

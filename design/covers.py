@@ -434,12 +434,61 @@ def cover_workspaces(cv):
         cv.vline(ax + 9 + k, ay - 3 + k, 8 - 2 * k, CREAM_DIM)
 
 
+def keycap(cv, x, y, w, label, lit):
+    # A key: raised top, darker front lip, label centred on the top.
+    top, lip, ink = (AMBER, RUST, PANEL_LO) if lit else (PANEL_HI, PANEL_LO, CREAM_DIM)
+    cv.rect(x, y, w, 18, lip)
+    cv.rect(x, y, w, 15, top)
+    cv.hline(x + 1, y + 1, w - 2, CREAM if lit else MUTED)
+    cv.text(x + (w - text_width(label)) // 2, y + 5, label, ink)
+
+
+def mouse(cv, x, y):
+    # A mouse seen from above, with the middle button and the two side buttons lit.
+    w, h = 29, 46
+    cv.vline(x + w // 2, y - 8, 8, MUTED)
+    # Rounded by stepping the outline in: tighter at the top, wider at the palm.
+    insets = [6, 4, 3, 2, 1, 1] + [0] * (h - 14) + [1, 1, 2, 3, 4, 6, 8, 10]
+    for j, inset in enumerate(insets):
+        cv.hline(x + inset, y + j, w - 2 * inset, STEEL_LO)
+        if 0 < j < h - 1:
+            cv.hline(x + inset + 1, y + j, w - 2 * inset - 2, STEEL)
+    cv.hline(x + 6, y + 1, w - 12, CREAM_DIM)
+    cv.hline(x + 1, y + 19, w - 2, STEEL_LO)
+    cv.vline(x + w // 2, y + 1, 18, STEEL_LO)
+    cv.rect(x + w // 2 - 2, y + 5, 5, 9, AMBER)
+    cv.vline(x + w // 2, y + 6, 7, RUST)
+    cv.rect(x - 2, y + 23, 3, 6, AMBER)
+    cv.rect(x - 2, y + 31, 3, 6, AMBER)
+
+
+def cover_keys(cv):
+    layout(cv, AMBER, ["BETTER", "KEY", "BINDINGS"], ["KEY COMBINATIONS,", "MOUSE 4, 5 AND", "MIDDLE BUTTON."])
+    px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
+    cv.plate(px, py, pw, ph)
+    cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
+    cv.text(px + 6, py + 2, "KEY BINDINGS", AMBER)
+    # The combination being bound, and the mouse buttons it may use.
+    keycap(cv, px + 10, py + 22, 34, "CTRL", True)
+    cv.bitmap(px + 49, py + 27, FONT['+'], AMBER)
+    keycap(cv, px + 60, py + 22, 20, "E", True)
+    mouse(cv, px + pw - 44, py + 16)
+    # Two bindings on the same key stay apart: the combination and the key alone.
+    rows = [("ROTATE", "CTRL+E", True), ("SORT", "E", False), ("BELL", "MOUSE 4", True)]
+    for i, (name, key, lit) in enumerate(rows):
+        ry = py + 70 + i * 19
+        cv.slot(px + 8, ry, pw - 16, 15)
+        cv.text(px + 13, ry + 4, name, CREAM_DIM)
+        cv.text(px + pw - 13 - text_width(key), ry + 4, key, AMBER if lit else MUTED)
+
+
 COVERS = {
     "save_language_converter": cover_language,
     "quick_call": cover_call,
     "demand_highlight": cover_demand,
     "performance_fixes": cover_performance,
     "window_workspaces": cover_workspaces,
+    "better_key_bindings": cover_keys,
 }
 
 
