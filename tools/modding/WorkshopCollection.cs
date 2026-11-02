@@ -1,9 +1,10 @@
 // Creates or updates the Steam Workshop collection that gathers the mods, which SteamCMD cannot do.
 // Needs the Steam client running and logged in as the owner. Built and run by scripts/workshop-collection.sh
 // with the settings in config/workshop.json.
-// Usage: WorkshopCollection.exe <appid> <collection id, 0 to create> <title> <description file> <preview png>
+// Usage: WorkshopCollection.exe <appid> <collection id, 0 to create> <title file> <description file> <preview png>
 //        <visibility: public|friends|private|keep> <tag>,<tag> <child id> [<child id> ...]
 // Prints "collection <id>" first, so the caller can store a new id. Visibility is only changed when asked.
+// Text comes from UTF-8 files: Windows passes command-line arguments through the local code page, which breaks Chinese.
 using System;
 using System.IO;
 using System.Linq;
@@ -32,7 +33,7 @@ class WorkshopCollection
     {
         var app = new AppId_t(uint.Parse(a[0]));
         var id = new PublishedFileId_t(ulong.Parse(a[1]));
-        string title = a[2], description = File.ReadAllText(a[3]).Trim(), preview = Path.GetFullPath(a[4]), visibility = a[5];
+        string title = File.ReadAllText(a[2], System.Text.Encoding.UTF8).Trim(), description = File.ReadAllText(a[3], System.Text.Encoding.UTF8).Trim(), preview = Path.GetFullPath(a[4]), visibility = a[5];
         var tags = a[6].Split(',').Select(t => t.Trim()).Where(t => t.Length > 0).ToList();
         var children = a.Skip(7).Select(c => new PublishedFileId_t(ulong.Parse(c))).ToList();
 

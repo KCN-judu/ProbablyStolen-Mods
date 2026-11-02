@@ -28,8 +28,13 @@ print(c['appid']); print(col.get('id') or '0'); print(col['title']); print(','.j
 for slug in col['items']: print(c['items'][slug]['id'])" | tr -d '\r')
 appid=${conf[0]}; id=${conf[1]}; title=${conf[2]}; tags=${conf[3]}; children=("${conf[@]:4}")
 echo "$appid" > "$work/steam_appid.txt"
+# Python writes the title itself: printed to the console it would come out in the local code page, not UTF-8.
+python -c "
+import json, sys
+c = json.load(open('config/workshop.json', encoding='utf-8'))
+open(sys.argv[1], 'w', encoding='utf-8').write(c['collection']['title'])" "$work/collection-title.txt"
 visibility="${1:-keep}"
-out=$(cd "$work" && ./WorkshopCollection.exe "$appid" "$id" "$title" collection-description.txt collection.png "$visibility" "$tags" "${children[@]}") || { echo "$out"; exit 1; }
+out=$(cd "$work" && ./WorkshopCollection.exe "$appid" "$id" collection-title.txt collection-description.txt collection.png "$visibility" "$tags" "${children[@]}") || { echo "$out"; exit 1; }
 echo "$out"
 new=$(echo "$out" | sed -n 's/^collection \([0-9]*\).*/\1/p' | tr -d '\r')
 if [ -n "$new" ] && [ "$new" != "$id" ]; then
