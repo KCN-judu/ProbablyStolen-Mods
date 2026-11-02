@@ -1,0 +1,18 @@
+{
+  "org": "KCN-judu",
+  "branch": "main",
+  "collection": "ProbablyStolen-Mods",
+  "base": "/ProbablyStolen-Mods",
+  "workspace": "mods",
+  "repos": {
+    "save-language-converter": "ProbablyStolen-SaveLanguageConverter",
+    "quick-call": "ProbablyStolen-QuickCall",
+    "demand-highlight": "ProbablyStolen-DemandHighlight",
+    "performance-fixes": "ProbablyStolen-PerformanceFixes"
+  },
+  "categories": [
+    { "id": "shop", "repos": ["demand-highlight", "quick-call"] },
+    { "id": "saves", "repos": ["save-language-converter"] },
+    { "id": "performance", "repos": ["performance-fixes"] }
+  ]
+}

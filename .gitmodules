@@ -1,0 +1,16 @@
+[submodule "mods/save-language-converter"]
+	path = mods/save-language-converter
+	url = https://github.com/KCN-judu/ProbablyStolen-SaveLanguageConverter.git
+	branch = main
+[submodule "mods/quick-call"]
+	path = mods/quick-call
+	url = https://github.com/KCN-judu/ProbablyStolen-QuickCall.git
+	branch = main
+[submodule "mods/demand-highlight"]
+	path = mods/demand-highlight
+	url = https://github.com/KCN-judu/ProbablyStolen-DemandHighlight.git
+	branch = main
+[submodule "mods/performance-fixes"]
+	path = mods/performance-fixes
+	url = https://github.com/KCN-judu/ProbablyStolen-PerformanceFixes.git
+	branch = main

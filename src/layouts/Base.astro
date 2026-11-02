@@ -1,0 +1,62 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/pixel.css';
+import Header from '../components/Header.astro';
+import Search from '../components/Search.astro';
+import { locales, localeOf, switchUrl, t } from '../lib/site';
+
+interface Props {
+  lang: string;
+  title: string;
+  description?: string;
+  url: string;
+  bodyClass?: string;
+}
+
+const { lang, title, description, url, bodyClass } = Astro.props;
+const locale = localeOf(lang);
+const siteName = t(lang, 'site.name');
+const fullTitle = title === siteName ? siteName : `${title} — ${siteName}`;
+// Pixel faces for display and headings, the game's Noto Sans for reading, a mono for code.
+const cjk = locale.lang.startsWith('zh') ? '&family=Noto+Sans+SC:wght@400;500;700' : '';
+const fonts =
+  'https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Pixelify+Sans:wght@400..700' +
+  '&family=Noto+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500' +
+  cjk +
+  '&display=swap';
+---
+
+<!doctype html>
+<html lang={locale.lang} data-locale={locale.path}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description || t(lang, 'site.description')} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="canonical" href={new URL(url, Astro.site)} />
+    {locales.map((other) => <link rel="alternate" hreflang={other.lang} href={new URL(switchUrl(url, other), Astro.site)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(switchUrl(url, locales[0]), Astro.site)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fonts} />
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('psm-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip" href="#content">{t(lang, 'nav.skip')}</a>
+    <Header lang={lang} url={url} />
+    <slot />
+    <footer class="site-footer">
+      <p>{t(lang, 'footer.text')}</p>
+      <p>{t(lang, 'footer.notice')}</p>
+    </footer>
+    <Search lang={lang} />
+  </body>
+</html>

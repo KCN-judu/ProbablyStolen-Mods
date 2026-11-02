@@ -1,0 +1,27 @@
+{
+  "name": "probably-stolen-mods",
+  "private": true,
+  "type": "module",
+  "description": "Probably Stolen mods collection: the documentation site, gettext-localized manuals of every mod, and shared modding tools.",
+  "workspaces": [
+    "tools/lunadoc"
+  ],
+  "scripts": {
+    "prepare-docs": "node tools/prepare-site.mjs",
+    "dev": "npm run prepare-docs && astro dev",
+    "build": "npm run prepare-docs && astro build && node tools/finalize-site.mjs && pagefind --site dist",
+    "preview": "astro preview",
+    "update-po": "node tools/each-doc.mjs update",
+    "check": "node tools/each-doc.mjs check",
+    "status": "node tools/each-doc.mjs status",
+    "test": "node --test tools/lunadoc/test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/markdown-remark": "^7.3.2",
+    "astro": "^7.3.6",
+    "hast-util-to-string": "^3.0.1",
+    "pagefind": "^1.5.2",
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.8.1"
+  }
+}

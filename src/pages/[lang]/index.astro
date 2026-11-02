@@ -1,0 +1,55 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { locales, percent, site, t } from '../../lib/site';
+import '../../styles/prose.css';
+import '../../styles/home.css';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { lang: locale.path } }));
+}
+
+const { lang } = Astro.params;
+const entry = await getEntry('docs', lang);
+const { Content } = await render(entry!);
+const source = lang === locales[0].path;
+const mods = site.categories.flatMap((category) => category.repos.map((id) => ({ category: category.id, repo: site.repos[id] })));
+---
+
+<Base lang={lang} title={t(lang, 'site.name')} url={`/${lang}/`} bodyClass="home">
+  <main id="content" class="home-main">
+    <section class="home-hero plate" aria-labelledby="home-title">
+      <h1 id="home-title">{t(lang, 'site.name')}</h1>
+      <div class="home-lead prose" data-pagefind-body><Content /></div>
+      <p class="home-actions">
+        <a class="pixel-button primary" href={`/${lang}/library/`}>{t(lang, 'home.library')}</a>
+        <a class="pixel-button" href={`/${lang}/about/`}>{t(lang, 'home.about')}</a>
+        <a class="pixel-button" href={`/${lang}/contribute/`}>{t(lang, 'nav.contribute')}</a>
+      </p>
+    </section>
+
+    <section class="home-mods" aria-labelledby="mods-title">
+      <h2 id="mods-title" class="window-title">{t(lang, 'home.mods')}</h2>
+      <ul class="mod-grid">
+        {
+          mods.map(({ category, repo }) => (
+            <li class="mod-card plate">
+              <a class="mod-cover" href={repo.nav[lang]?.[0]?.url ?? `/${lang}/${repo.id}/`} tabindex="-1" aria-hidden="true">
+                {repo.cover && <img src={repo.cover} alt="" width="640" height="360" loading="lazy" decoding="async" />}
+              </a>
+              <div class="mod-body">
+                <p class="mod-category">{t(lang, `category.${category}.title`)}</p>
+                <h3><a href={repo.nav[lang]?.[0]?.url ?? `/${lang}/${repo.id}/`}>{repo.title}</a></h3>
+                <p>{repo.summary[lang]}</p>
+                <p class="mod-meta">
+                  <a href={repo.url}>{t(lang, 'library.source')}</a>
+                  {!source && <span>{t(lang, 'library.translated', { percent: percent(repo.coverage[lang] ?? 1, lang) })}</span>}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</Base>

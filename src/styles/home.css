@@ -1,0 +1,137 @@
+/* Home: a title plate, then one card per mod with its cover. */
+
+.home-main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--s6) var(--s4) var(--s8);
+}
+
+.plate {
+  background: var(--panel);
+  box-shadow: var(--bevel), 4px 4px 0 rgb(0 0 0 / 0.28);
+}
+
+.home-hero {
+  padding: var(--s6);
+  margin-bottom: var(--s7);
+}
+.home-kicker {
+  margin: 0 0 var(--s2);
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+}
+.home-hero h1 {
+  margin: 0 0 var(--s4);
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.home-hero h1::after {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 4px;
+  margin-top: var(--s4);
+  background: var(--accent);
+}
+:root:lang(zh-CN) .home-hero h1 {
+  font-size: 44px;
+  text-transform: none;
+}
+.home-lead {
+  max-width: var(--measure);
+  font-size: var(--text-lg);
+  color: var(--ink-2);
+}
+.home-lead.prose > :is(h1, h2),
+.home-lead :is(h1, h2) {
+  display: none !important;
+}
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin: var(--s5) 0 0;
+}
+.pixel-button {
+  display: inline-block;
+  padding: var(--s2) var(--s4);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--text-ui);
+  text-transform: uppercase;
+}
+.pixel-button.primary {
+  background: var(--titlebar);
+  color: var(--titlebar-ink);
+}
+.pixel-button.primary:hover {
+  filter: brightness(1.08);
+  background: var(--titlebar);
+}
+
+.mod-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--s5);
+}
+.mod-card {
+  display: flex;
+  flex-direction: column;
+}
+.mod-cover {
+  display: block;
+  background: var(--panel-lo);
+}
+.mod-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.mod-body {
+  padding: var(--s4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  flex: 1;
+}
+.mod-body p {
+  margin: 0;
+  color: var(--ink-2);
+}
+.mod-category {
+  color: var(--accent) !important;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+}
+.mod-body h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+.mod-body h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.mod-body h3 a:hover {
+  color: var(--accent);
+}
+.mod-meta {
+  margin-top: auto !important;
+  padding-top: var(--s2);
+  display: flex;
+  gap: var(--s4);
+  font-size: var(--text-sm);
+  color: var(--ink-3) !important;
+}
+.mod-meta a {
+  color: var(--accent);
+}

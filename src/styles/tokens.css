@@ -1,0 +1,152 @@
+/* Cubic 11, an 11x11 pixel face for Chinese (SIL Open Font License 1.1, github.com/ACh-K/Cubic-11).
+   Only CJK characters come from it; Latin letters keep Silkscreen and Pixelify Sans. */
+@font-face {
+  font-family: 'Cubic 11';
+  src: url('https://cdn.jsdelivr.net/gh/ACh-K/Cubic-11@v1.500/fonts/web/Cubic_11.woff2') format('woff2');
+  font-display: swap;
+  unicode-range: U+3000-303F, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+/*
+ * Design tokens: the game's UI, as on the mod covers (design/DESIGN.md).
+ *
+ * Dusk-violet ground, cream ink, the teal of the game's window title bars as the one
+ * accent (current location, focus, links under the pointer). Panels are square with a
+ * 1 px bevel, like the game's machine plates. Pixel faces for display and headings
+ * (Silkscreen, Pixelify Sans), the game's Noto Sans for reading.
+ *
+ * The names follow the Luna-Flow site this layout comes from: paper is the ground,
+ * ink the text, rule the hairlines.
+ *
+ * Space follows a 4px base: 4 8 12 16 24 32 48 64 96.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --paper: #17151f;
+  --paper-2: #1f1c2b;
+  --paper-3: #2e2b40;
+  --ink: #f3e6c8;
+  --ink-2: #c9bb9c;
+  --ink-3: #a79fbf;
+  --rule: rgb(167 159 191 / 0.18);
+  --rule-strong: rgb(167 159 191 / 0.34);
+
+  --panel: #2e2b40;
+  --panel-hi: #48425f;
+  --panel-lo: #100e16;
+  --slot: #23212f;
+  --titlebar: #7ec3bc;
+  --titlebar-ink: #12101a;
+
+  --accent: #7ec3bc;
+  --accent-wash: rgb(126 195 188 / 0.12);
+  --focus: rgb(126 195 188 / 0.6);
+  --orange: #f08a3c;
+
+  --note: #59d1ff;
+  --tip: #5ceb6b;
+  --important: #c3a6ea;
+  --warning: #ffb829;
+  --caution: #e2504a;
+
+  --font-pixel: 'Silkscreen', 'Cubic 11', 'Pixelify Sans', monospace;
+  --font-serif: 'Pixelify Sans', 'Cubic 11', 'Noto Sans SC', system-ui, sans-serif;
+  --font-sans: 'Noto Sans', 'Noto Sans SC', system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-text: var(--font-sans);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-ui: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --leading: 1.7;
+
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+
+  --measure: 44rem;
+  --sidebar: 16.5rem;
+  --margin: 15rem;
+  --gutter: 3rem;
+  --header: 56px;
+  --radius: 0;
+
+  /* A machine plate: 1 px highlight top-left, 1 px shadow bottom-right. */
+  --bevel: inset 1px 1px 0 var(--panel-hi), inset -1px -1px 0 var(--panel-lo);
+  --sunken: inset 1px 1px 0 var(--panel-lo), inset -1px -1px 0 var(--panel-hi);
+}
+
+:root:lang(zh-CN) {
+  --leading: 1.85;
+}
+
+/* Light: the game's paper notes and price tags. Chosen with the theme switch, or by the
+   system when it asks for light. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --paper: #f3ecdc;
+  --paper-2: #ebe2cd;
+  --paper-3: #ddd2b8;
+  --ink: #221d2c;
+  --ink-2: #4d4559;
+  --ink-3: #6b6278;
+  --rule: rgb(34 29 44 / 0.16);
+  --rule-strong: rgb(34 29 44 / 0.3);
+  --panel: #e4d9c0;
+  --panel-hi: #fbf6ea;
+  --panel-lo: #a8997a;
+  --slot: #ddd1b6;
+  --titlebar: #3f8f87;
+  --titlebar-ink: #fbf6ea;
+  --accent: #2f7c74;
+  --accent-wash: rgb(47 124 116 / 0.1);
+  --focus: rgb(47 124 116 / 0.5);
+  --orange: #b35a14;
+  --note: #1f6f99;
+  --tip: #2d7a3a;
+  --important: #6a3fa0;
+  --warning: #8a5800;
+  --caution: #a3262b;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']):not([data-theme='light']) {
+    color-scheme: light;
+    --paper: #f3ecdc;
+    --paper-2: #ebe2cd;
+    --paper-3: #ddd2b8;
+    --ink: #221d2c;
+    --ink-2: #4d4559;
+    --ink-3: #6b6278;
+    --rule: rgb(34 29 44 / 0.16);
+    --rule-strong: rgb(34 29 44 / 0.3);
+    --panel: #e4d9c0;
+    --panel-hi: #fbf6ea;
+    --panel-lo: #a8997a;
+    --slot: #ddd1b6;
+    --titlebar: #3f8f87;
+    --titlebar-ink: #fbf6ea;
+    --accent: #2f7c74;
+    --accent-wash: rgb(47 124 116 / 0.1);
+    --focus: rgb(47 124 116 / 0.5);
+    --orange: #b35a14;
+    --note: #1f6f99;
+    --tip: #2d7a3a;
+    --important: #6a3fa0;
+    --warning: #8a5800;
+    --caution: #a3262b;
+  }
+}

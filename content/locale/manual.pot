@@ -1,0 +1,656 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Probably Stolen Mods documentation\n"
+"Report-Msgid-Bugs-To: https://github.com/KCN-judu/ProbablyStolen-Mods/issues\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: conf.json:summary
+#: manual/index.md:1
+msgid "Mods for Probably Stolen that keep the game's rules and remove what gets in the way."
+msgstr ""
+
+#: conf.json:strings.nav.home
+msgid "Home"
+msgstr ""
+
+#: conf.json:strings.nav.library
+#: conf.json:strings.library.title
+#: conf.json:strings.home.mods
+msgid "Mods"
+msgstr ""
+
+#: conf.json:strings.nav.about
+#: conf.json:strings.home.about
+#: manual/about.md:1
+msgid "About"
+msgstr ""
+
+#: conf.json:strings.nav.contribute
+msgid "Contribute"
+msgstr ""
+
+#: conf.json:strings.nav.github
+msgid "GitHub"
+msgstr ""
+
+#: conf.json:strings.nav.skip
+msgid "Skip to content"
+msgstr ""
+
+#: conf.json:strings.nav.menu
+msgid "Menu"
+msgstr ""
+
+#: conf.json:strings.nav.close
+msgid "Close"
+msgstr ""
+
+#: conf.json:strings.search.open
+msgid "Search"
+msgstr ""
+
+#: conf.json:strings.search.placeholder
+msgid "Search the documentation"
+msgstr ""
+
+#: conf.json:strings.search.empty
+msgid "No results for this query."
+msgstr ""
+
+#: conf.json:strings.search.loading
+msgid "Searching…"
+msgstr ""
+
+#: conf.json:strings.search.unavailable
+msgid "Search is available on the published site."
+msgstr ""
+
+#: conf.json:strings.theme.label
+msgid "Colour theme"
+msgstr ""
+
+#: conf.json:strings.theme.auto
+msgid "Automatic"
+msgstr ""
+
+#: conf.json:strings.theme.light
+msgid "Light"
+msgstr ""
+
+#: conf.json:strings.theme.dark
+msgid "Dark"
+msgstr ""
+
+#: conf.json:strings.lang.label
+msgid "Language"
+msgstr ""
+
+#: conf.json:strings.toc.title
+msgid "On this page"
+msgstr ""
+
+#: conf.json:strings.page.edit
+msgid "Edit source"
+msgstr ""
+
+#: conf.json:strings.page.translate
+msgid "Improve the translation"
+msgstr ""
+
+#: conf.json:strings.page.report
+msgid "Report an issue"
+msgstr ""
+
+#: conf.json:strings.page.prev
+msgid "Previous"
+msgstr ""
+
+#: conf.json:strings.page.next
+msgid "Next"
+msgstr ""
+
+#: conf.json:strings.notice.partial
+msgid "This page is {percent} translated. Passages without a translation are shown in English."
+msgstr ""
+
+#: conf.json:strings.notice.none
+msgid "This page has not been translated yet, so it is shown in English."
+msgstr ""
+
+#: conf.json:strings.notice.help
+msgid "Help translate it"
+msgstr ""
+
+#: conf.json:strings.notfound.title
+msgid "Page not found"
+msgstr ""
+
+#: conf.json:strings.notfound.body
+msgid "The page may have moved. Search for it, or start from the list of mods."
+msgstr ""
+
+#: conf.json:strings.alert.note
+msgid "Note"
+msgstr ""
+
+#: conf.json:strings.alert.tip
+msgid "Tip"
+msgstr ""
+
+#: conf.json:strings.alert.important
+msgid "Important"
+msgstr ""
+
+#: conf.json:strings.alert.warning
+msgid "Warning"
+msgstr ""
+
+#: conf.json:strings.alert.caution
+msgid "Caution"
+msgstr ""
+
+#: conf.json:strings.site.name
+#: manual/index.md:1
+#: manual/index.md:6
+msgid "Probably Stolen Mods"
+msgstr ""
+
+#: conf.json:strings.site.description
+msgid "Documentation of the Probably Stolen mods by KCN-judu."
+msgstr ""
+
+#: conf.json:strings.library.lead
+msgid "Every mod in the collection, grouped by what it helps with. Each one has an overview for players and guides for how it works."
+msgstr ""
+
+#: conf.json:strings.library.translated
+msgid "{percent} translated"
+msgstr ""
+
+#: conf.json:strings.library.source
+msgid "Source"
+msgstr ""
+
+#: conf.json:strings.home.library
+msgid "Browse the mods"
+msgstr ""
+
+#: conf.json:strings.footer.text
+msgid "© 2026 KCN-judu. Code and documentation are licensed under the Apache License 2.0."
+msgstr ""
+
+#: conf.json:strings.category.other.title
+msgid "Other"
+msgstr ""
+
+#: conf.json:strings.category.other.description
+msgid "Mods that have not been placed in a group yet."
+msgstr ""
+
+#: conf.json:strings.category.shop.title
+msgid "Shop"
+msgstr ""
+
+#: conf.json:strings.category.shop.description
+msgid "Help at the counter and on the phone."
+msgstr ""
+
+#: conf.json:strings.category.saves.title
+msgid "Saves"
+msgstr ""
+
+#: conf.json:strings.category.saves.description
+msgid "Working with save files."
+msgstr ""
+
+#: conf.json:strings.category.performance.title
+msgid "Performance"
+msgstr ""
+
+#: conf.json:strings.category.performance.description
+msgid "A smoother game with large, packed storage."
+msgstr ""
+
+#: conf.json:strings.footer.notice
+msgid "Probably Stolen and its assets belong to their respective owners. This is an unofficial fan project, not affiliated with or endorsed by the developers."
+msgstr ""
+
+#: manual/about.md:3
+msgid "This collection gathers the *Probably Stolen* mods written by KCN-judu. Every mod lives in its own repository, with its own releases and Steam Workshop page; the collection repository ties them together as Git submodules and builds this site from their documentation."
+msgstr ""
+
+#: manual/about.md:5
+#: manual/contribute/documentation_standard.md:5
+msgid "Principles"
+msgstr ""
+
+#: manual/about.md:7
+msgid "**Keep the game's rules.** A mod may remove waiting, guessing or wasted work, but customers accept what they accepted before, locks still lock, and saves load as they did. Where a mod changes how something is computed, it computes the same answer."
+msgstr ""
+
+#: manual/about.md:9
+msgid "**Ask for nothing.** Every mod declares no capabilities, so the game enables it without a permission prompt. Reflection only names game types directly, which the game's mod scanner accepts."
+msgstr ""
+
+#: manual/about.md:11
+msgid "**Fail quietly.** A patch that cannot attach, after a game update for example, turns its own feature off and writes one line to `Player.log`. It never stops the rest of the mod or the game."
+msgstr ""
+
+#: manual/about.md:13
+msgid "**Measure first.** Performance work starts from the game's own log and from a profiler, not from guesses. The numbers behind each fix are in its documentation."
+msgstr ""
+
+#: manual/about.md:15
+msgid "The mods"
+msgstr ""
+
+#: manual/about.md:17
+msgid "Mod"
+msgstr ""
+
+#: manual/about.md:17
+msgid "What it does"
+msgstr ""
+
+#: manual/about.md:19
+msgid "Demand Highlight"
+msgstr ""
+
+#: manual/about.md:19
+msgid "Outlines what the customer at the counter wants, and marks your stock by type with the Item Filter."
+msgstr ""
+
+#: manual/about.md:20
+msgid "Quick Call"
+msgstr ""
+
+#: manual/about.md:20
+msgid "Calls go straight to the choices."
+msgstr ""
+
+#: manual/about.md:21
+msgid "Save Language Converter"
+msgstr ""
+
+#: manual/about.md:21
+msgid "Converts a copy of a save started in another language."
+msgstr ""
+
+#: manual/about.md:22
+msgid "Performance Fixes"
+msgstr ""
+
+#: manual/about.md:22
+msgid "Removes stutters with large, packed storage."
+msgstr ""
+
+#: manual/about.md:24
+msgid "Look"
+msgstr ""
+
+#: manual/about.md:26
+msgid "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License."
+msgstr ""
+
+#: manual/about.md:28
+msgid "License"
+msgstr ""
+
+#: manual/about.md:30
+msgid "Every repository is released under the Apache License 2.0. *Probably Stolen* and its assets belong to their owners; no game files are distributed here."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:1
+msgid "Documentation standard"
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:3
+msgid "This standard applies to every mod in the collection. It fixes where documentation lives, how it is divided into pages, and which source is authoritative."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:7
+msgid "**Describe what exists.** Pages document the mod as it is on the current branch: what it does, its options, and the decisions behind them. Plans belong in issues."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:9
+msgid "**English is the source.** Pages are written once, in English. Translations are made from that text through [gettext catalogs](translation.md) and are never edited as copies of a page."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:11
+msgid "**Players first, then modders.** The overview page tells a player what the mod does and how to use it. How it works, measurements and build instructions follow on their own pages."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:13
+msgid "Repository layout"
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:29
+msgid "Nothing else belongs in `doc/`."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:42
+msgid "`title` is the mod's name as shown in the library. `summary` is one sentence for the library and the home page; it is translated like any page text. `locales` lists the translations the mod maintains. `order` is the order of the pages in the sidebar."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:44
+msgid "Pages"
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:46
+msgid "Each page starts with one `# Title`, which becomes its title in the sidebar and in search results."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:47
+msgid "One page, one purpose: an overview, a guide to one part, or the build instructions."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:48
+msgid "Name a game type or method in code formatting, as in `PhoneUIManager.PressNumber`, so a reader can find it in the game."
+msgstr ""
+
+#: manual/contribute/documentation_standard.md:49
+msgid "Numbers that motivate a change, such as a measured stutter, come with how they were measured."
+msgstr ""
+
+#: manual/contribute/index.md:1
+msgid "Contributing"
+msgstr ""
+
+#: manual/contribute/index.md:3
+msgid "Each mod keeps its documentation next to its code. Its repository has a `doc/` folder with English pages and translations as gettext catalogs beside them. This site collects every mod on each build, so a change merged into a mod's `main` branch appears here once the collection points at it."
+msgstr ""
+
+#: manual/contribute/index.md:5
+msgid "The same rules apply to every mod:"
+msgstr ""
+
+#: manual/contribute/index.md:7
+msgid "[Documentation standard](documentation_standard.md): where files go and what each page contains."
+msgstr ""
+
+#: manual/contribute/index.md:8
+msgid "[Writing and markup](writing.md): headings, code, notes and images."
+msgstr ""
+
+#: manual/contribute/index.md:9
+msgid "[Translation](translation.md): how the gettext workflow keeps every language in step with English."
+msgstr ""
+
+#: manual/contribute/index.md:10
+msgid "[Modding tools](modding_tools.md): building mods, the scanner check and the game-inspection tools."
+msgstr ""
+
+#: manual/contribute/index.md:12
+msgid "Getting the collection"
+msgstr ""
+
+#: manual/contribute/index.md:20
+msgid "Commands"
+msgstr ""
+
+#: manual/contribute/index.md:22
+msgid "Run these from the collection repository. Each one covers the site's own pages and every mod in `mods/`:"
+msgstr ""
+
+#: manual/contribute/index.md:30
+msgid "A change to a mod's `doc/manual` must also contain the updated catalogs produced by `update-po`."
+msgstr ""
+
+#: manual/contribute/index.md:32
+msgid "Previewing the site"
+msgstr ""
+
+#: manual/contribute/index.md:39
+msgid "The build reads the mods from `mods/`, so a local preview shows unpublished changes in any of them."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:1
+msgid "Modding tools"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:3
+msgid "The collection repository keeps the tools shared by every mod."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:5
+msgid "Building"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:7
+msgid "Each mod builds with its own `build.sh` against the game's assemblies; see the mod's Building page. From the collection, `scripts/build-all.sh` builds every mod, and `scripts/package.sh` collects the built folders into `dist/packages/` with a zip of each."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:9
+msgid "The scanner check"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:11
+msgid "The game scans every mod DLL before enabling it and asks the player for permission when a mod uses files, the network, reflection over unknown types or similar capabilities. Every mod here declares none."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:13
+msgid "`tools/modding/ScanTest.cs` runs the game's own scanner, `ModScanner.Scan`, on a built mod outside the game:"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:19
+msgid "It prints the capabilities found and any hard flags, such as an attempt to patch the game's mod loader. A mod is ready when it prints `capabilities: none` and no `HARD` line."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:21
+msgid "Inspecting the game"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:23
+msgid "Small Mono.Cecil programs in `tools/modding/` read the game's `Assembly-CSharp.dll`:"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:25
+msgid "Tool"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:25
+msgid "Use"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:27
+msgid "Types, fields and methods matching a pattern, with the IL of chosen methods"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:28
+msgid "Every method whose IL matches an instruction pattern, such as all callers of a method"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:29
+msgid "Like Find, with the instructions that follow each match"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:30
+msgid "The values of constant fields"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:32
+msgid "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides."
+msgstr ""
+
+#: manual/contribute/translation.md:1
+msgid "Translation"
+msgstr ""
+
+#: manual/contribute/translation.md:3
+msgid "The collection translates its documentation the way the Blender manual and the Luna Flow documentation do: English pages are the only source, and every other language is a gettext catalog of translated messages. A page in Chinese is generated from the English page and the catalog when the site is built."
+msgstr ""
+
+#: manual/contribute/translation.md:5
+msgid "This has three consequences:"
+msgstr ""
+
+#: manual/contribute/translation.md:7
+msgid "A language can never fall out of structure with English. Pages, headings, code and links come from one source."
+msgstr ""
+
+#: manual/contribute/translation.md:8
+msgid "An untranslated or outdated passage is shown in English instead of disappearing or being wrong. The page says how much of it is translated."
+msgstr ""
+
+#: manual/contribute/translation.md:9
+msgid "The site knows the coverage of every page and every mod, and shows it in the library."
+msgstr ""
+
+#: manual/contribute/translation.md:11
+msgid "Messages"
+msgstr ""
+
+#: manual/contribute/translation.md:13
+msgid "`lunadoc` splits every page into messages: headings, paragraphs, list items, table cells, and the `title` and `description` front matter keys. Code blocks and raw HTML are never messages; they appear in every language exactly as written in English."
+msgstr ""
+
+#: manual/contribute/translation.md:15
+msgid "A paragraph that wraps over several lines is one message. Re-wrapping English text does not change its message, so it does not invalidate translations."
+msgstr ""
+
+#: manual/contribute/translation.md:17
+msgid "The workflow"
+msgstr ""
+
+#: manual/contribute/translation.md:19
+msgid "Edit the English pages in `doc/manual`."
+msgstr ""
+
+#: manual/contribute/translation.md:20
+msgid "Run `npm run update-po` in the collection. It regenerates `doc/locale/manual.pot` of every mod and merges it into every `manual.po`."
+msgstr ""
+
+#: manual/contribute/translation.md:21
+msgid "Commit the pages and the catalogs together."
+msgstr ""
+
+#: manual/contribute/translation.md:23
+msgid "`update` behaves like GNU `msgmerge`:"
+msgstr ""
+
+#: manual/contribute/translation.md:25
+msgid "A message whose English text is unchanged keeps its translation."
+msgstr ""
+
+#: manual/contribute/translation.md:26
+msgid "A message whose English text changed takes the translation of the most similar old message and is marked `fuzzy`. The previous English text is kept in a `#| msgid` comment so a translator can see what changed."
+msgstr ""
+
+#: manual/contribute/translation.md:27
+msgid "A translation whose message disappeared is kept as an obsolete entry (`#~`) at the end of the catalog, where `update` can recover it later."
+msgstr ""
+
+#: manual/contribute/translation.md:29
+msgid "Fuzzy translations are not shown on the site. They count as untranslated until a translator reviews them and removes the `fuzzy` flag."
+msgstr ""
+
+#: manual/contribute/translation.md:31
+msgid "Translating"
+msgstr ""
+
+#: manual/contribute/translation.md:33
+msgid "Open `doc/locale/<locale>/LC_MESSAGES/manual.po` in a text editor or a gettext editor such as Poedit, and fill in `msgstr` for each `msgid`:"
+msgstr ""
+
+#: manual/contribute/translation.md:41
+msgid "When translating:"
+msgstr ""
+
+#: manual/contribute/translation.md:43
+msgid "Keep inline code and link destinations exactly as in English. Translate link text."
+msgstr ""
+
+#: manual/contribute/translation.md:44
+msgid "Keep Markdown markup: emphasis, inline code and links must still be balanced."
+msgstr ""
+
+#: manual/contribute/translation.md:45
+msgid "Keep a GitHub alert marker such as `[!NOTE]` at the start of the message."
+msgstr ""
+
+#: manual/contribute/translation.md:46
+msgid "Do not translate identifiers, even in prose. Use the game's own Chinese names for items, places and people."
+msgstr ""
+
+#: manual/contribute/translation.md:47
+msgid "Leave `msgstr` empty rather than guessing. An empty message falls back to English."
+msgstr ""
+
+#: manual/contribute/translation.md:49
+msgid "Check the result with `npm run status` and preview it with the site."
+msgstr ""
+
+#: manual/contribute/translation.md:51
+msgid "Locales"
+msgstr ""
+
+#: manual/contribute/translation.md:53
+msgid "Locale names follow gettext: `zh_CN` for Simplified Chinese. They appear in `conf.json`, in the catalog paths and in `config/locales.json` of the site, which also gives each locale its URL segment and display name. Adding a language to the site means adding it there; adding it to a repository means listing it in `conf.json` and running `update`."
+msgstr ""
+
+#: manual/contribute/writing.md:1
+msgid "Writing and markup"
+msgstr ""
+
+#: manual/contribute/writing.md:3
+msgid "Pages are GitHub-flavoured Markdown. Everything described here also renders on GitHub, so a page read in the repository and the same page on this site say the same thing."
+msgstr ""
+
+#: manual/contribute/writing.md:5
+msgid "Style"
+msgstr ""
+
+#: manual/contribute/writing.md:7
+msgid "Write for a player first: what happens in the game, in the game's own words (customer, counter, storage bay, Workshop)."
+msgstr ""
+
+#: manual/contribute/writing.md:8
+msgid "Short sentences, one fact each. Active voice: \"the mod skips the ringing\", not \"the ringing is skipped\"."
+msgstr ""
+
+#: manual/contribute/writing.md:9
+msgid "Say what something does, not that it is easy, simple or powerful."
+msgstr ""
+
+#: manual/contribute/writing.md:11
+msgid "Code"
+msgstr ""
+
+#: manual/contribute/writing.md:13
+msgid "Fence shell commands with `sh` or `bash` and C# with `csharp`. Keep examples small and make sure they work."
+msgstr ""
+
+#: manual/contribute/writing.md:19
+msgid "Tables"
+msgstr ""
+
+#: manual/contribute/writing.md:21
+msgid "Use a table for options and other lists with the same columns. Keep each cell to one sentence; every cell is translated on its own."
+msgstr ""
+
+#: manual/contribute/writing.md:23
+msgid "Notes"
+msgstr ""
+
+#: manual/contribute/writing.md:25
+msgid "GitHub alerts render as notes:"
+msgstr ""
+
+#: manual/contribute/writing.md:32
+msgid "Images"
+msgstr ""
+
+#: manual/contribute/writing.md:34
+msgid "Put images in `doc/attachments/` and link them relatively, with alt text that says what the image shows:"
+msgstr ""
+
+#: manual/contribute/writing.md:40
+msgid "Pixel art is shown with nearest-neighbour scaling, so draw it at a small size and let the site scale it."
+msgstr ""
+
+#: manual/index.md:8
+msgid "Mods for *Probably Stolen* that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions."
+msgstr ""

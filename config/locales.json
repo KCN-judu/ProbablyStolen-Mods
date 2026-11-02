@@ -1,0 +1,4 @@
+[
+  { "id": "en_US", "path": "en", "lang": "en", "label": "English" },
+  { "id": "zh_CN", "path": "zh-cn", "lang": "zh-CN", "label": "简体中文" }
+]

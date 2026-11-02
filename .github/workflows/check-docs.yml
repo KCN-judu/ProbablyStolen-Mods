@@ -1,0 +1,40 @@
+# Reusable documentation check for the mods of the collection.
+#
+# A mod repository calls it from .github/workflows/docs.yml:
+#
+#   jobs:
+#     docs:
+#       uses: KCN-judu/ProbablyStolen-Mods/.github/workflows/check-docs.yml@main
+#
+# It fails when doc/ breaks the documentation standard, when the gettext catalogs are out
+# of date or when a link is broken.
+
+name: Check documentation
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the mod
+        uses: actions/checkout@v4
+        with:
+          path: repo
+      - name: Check out lunadoc
+        uses: actions/checkout@v4
+        with:
+          repository: KCN-judu/ProbablyStolen-Mods
+          ref: main
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install lunadoc
+        run: npm ci --prefix site --workspace tools/lunadoc --include-workspace-root=false
+      - name: Check
+        run: node site/tools/lunadoc/cli.mjs check repo
