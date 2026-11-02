@@ -174,6 +174,10 @@ msgstr "已翻译 {percent}"
 msgid "Source"
 msgstr "源代码"
 
+#: conf.json:strings.library.workshop
+msgid "Steam Workshop"
+msgstr "Steam 创意工坊"
+
 #: conf.json:strings.home.library
 msgid "Browse the mods"
 msgstr "浏览模组"

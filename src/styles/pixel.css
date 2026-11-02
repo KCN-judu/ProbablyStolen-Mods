@@ -315,3 +315,14 @@ body {
   margin-top: var(--s2);
   font-size: var(--text-xs);
 }
+
+.library-category .mod-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  margin: var(--s1) 0 0;
+  font-size: var(--text-sm);
+}
+.library-category .mod-meta a {
+  color: var(--accent);
+}

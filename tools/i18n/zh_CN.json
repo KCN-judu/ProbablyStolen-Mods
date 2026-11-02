@@ -303,5 +303,6 @@
   "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License.": "本站和模组封面采用同一套设计：游戏的暮紫色窗口、奶油色文字和青色标题栏，带一像素斜面的方形面板，名称和标签使用像素字体。封面设计规范写在合集仓库的 `design/DESIGN.md` 中。中文标题使用以 SIL Open Font License 发布的开源像素字体俐方体 11 号。",
   "© 2026 KCN-judu. Code and documentation are licensed under the Apache License 2.0.": "© 2026 KCN-judu。代码与文档以 Apache License 2.0 授权。",
   "Probably Stolen and its assets belong to their respective owners. This is an unofficial fan project, not affiliated with or endorsed by the developers.": "《深空当铺：可能是偷的》及其素材归各自所有者所有。本项目为非官方爱好者作品，与开发者无关，亦未获其认可。",
-  "English pages are the only source of the documentation. Every other language is a gettext catalog of translated messages, and a page in Chinese is generated from the English page and the catalog when the site is built.": "英文页面是文档唯一的来源。其他语言都是由已翻译消息组成的 gettext 目录，构建站点时，中文页面由英文页面和翻译目录生成。"
+  "English pages are the only source of the documentation. Every other language is a gettext catalog of translated messages, and a page in Chinese is generated from the English page and the catalog when the site is built.": "英文页面是文档唯一的来源。其他语言都是由已翻译消息组成的 gettext 目录，构建站点时，中文页面由英文页面和翻译目录生成。",
+  "Steam Workshop": "Steam 创意工坊"
 }

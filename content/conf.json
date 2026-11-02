@@ -49,6 +49,7 @@
     "library.lead": "Every mod in the collection, grouped by what it helps with. Each one has an overview for players and guides for how it works.",
     "library.translated": "{percent} translated",
     "library.source": "Source",
+    "library.workshop": "Steam Workshop",
     "home.library": "Browse the mods",
     "home.about": "About",
     "home.mods": "Mods",

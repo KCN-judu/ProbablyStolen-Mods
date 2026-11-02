@@ -26,6 +26,10 @@ const source = lang === site.locales[0].path;
                 {repo.cover && <img class="library-cover" src={repo.cover} alt="" width="320" height="180" loading="lazy" decoding="async" />}
                 <a href={repo.nav[lang]?.[0]?.url ?? `/${lang}/${id}/`}>{repo.title}</a>
                 <p>{repo.summary[lang]}</p>
+                <p class="mod-meta">
+                  {repo.workshop && <a href={repo.workshop}>{t(lang, 'library.workshop')}</a>}
+                  <a href={repo.url}>{t(lang, 'library.source')}</a>
+                </p>
                 {!source && (
                   <span class="coverage" title={t(lang, 'library.translated', { percent: percent(coverage, lang) })}>
                     <span class="coverage-bar" style={`--value:${coverage}`} aria-hidden="true" />

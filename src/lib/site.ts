@@ -22,6 +22,7 @@ export interface Repo {
   repo: string;
   url: string;
   cover: string | null;
+  workshop: string | null;
   summary: Record<string, string>;
   coverage: Record<string, number>;
   nav: Record<string, NavItem[]>;

@@ -32,6 +32,7 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoConfig = JSON.parse(fs.readFileSync(path.join(root, 'config', 'repos.json'), 'utf8'));
+const workshopItems = JSON.parse(fs.readFileSync(path.join(root, 'config', 'workshop.json'), 'utf8')).items;
 const workspace = path.resolve(process.env.PSM_REPO_ROOT ?? path.join(root, repoConfig.workspace ?? 'mods'));
 const out = path.join(root, '.generated');
 const attachmentsOut = path.join(root, 'public', 'attachments');
@@ -225,6 +226,7 @@ for (const source of sources) {
     repo: source.repo,
     url: `https://github.com/${org}/${source.repo}`,
     cover: cover ? `/attachments/${source.id}/${cover.output}` : null,
+    workshop: workshopItems[source.id] ? `https://steamcommunity.com/sharedfiles/filedetails/?id=${workshopItems[source.id].id}` : null,
     summary: {},
     coverage: {},
     nav: {},

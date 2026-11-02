@@ -42,6 +42,7 @@ const mods = site.categories.flatMap((category) => category.repos.map((id) => ({
                 <h3><a href={repo.nav[lang]?.[0]?.url ?? `/${lang}/${repo.id}/`}>{repo.title}</a></h3>
                 <p>{repo.summary[lang]}</p>
                 <p class="mod-meta">
+                  {repo.workshop && <a href={repo.workshop}>{t(lang, 'library.workshop')}</a>}
                   <a href={repo.url}>{t(lang, 'library.source')}</a>
                   {!source && <span>{t(lang, 'library.translated', { percent: percent(repo.coverage[lang] ?? 1, lang) })}</span>}
                 </p>
