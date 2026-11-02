@@ -1,10 +1,14 @@
-"""Renders the mod covers described in DESIGN.md.
+"""Renders the mod covers described in DESIGN.md, each with its mod's version from manifest.xml.
 
     python design/covers.py design/out
+    python design/covers.py design/out --checkouts ~/Desktop --sync   # also into each mod's preview.png
 
 Everything is drawn on a 320x180 logical canvas and scaled x4 with nearest-neighbour.
 """
+import json
 import os
+import re
+import shutil
 import sys
 from PIL import Image
 
@@ -95,6 +99,7 @@ BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 class Canvas:
     def __init__(self):
         self.img = Image.new("RGB", (W, H), BG0)
+        self.version = "V1.0"   # set from the mod's manifest before drawing
         self.px = self.img.load()
 
     def put(self, x, y, c):
@@ -184,7 +189,7 @@ def layout(cv, accent, title_lines, tagline_lines):
         y += 11
     # Author line on the bottom margin.
     cv.text(TEXT_X0, H - MARGIN - 7, "BY KCN-JUDU", FAINT)
-    cv.text(TEXT_X0 + text_width("BY KCN-JUDU") + 8, H - MARGIN - 7, "V1.0", accent)
+    cv.text(TEXT_X0 + text_width("BY KCN-JUDU") + 8, H - MARGIN - 7, cv.version, accent)
 
 
 def cartridge(cv, x, y, label_color, glyph, glyph_color):
@@ -492,17 +497,83 @@ COVERS = {
 }
 
 
-def main(out):
+def version_label(version):
+    # 1.0.0 -> V1.0, 1.1.0 -> V1.1, 1.1.1 -> V1.1.1: a trailing zero patch is left off.
+    parts = version.strip().split(".")
+    while len(parts) > 2 and parts[-1] == "0":
+        parts.pop()
+    return "V" + ".".join(parts)
+
+
+def mod_folders(checkouts):
+    # Each cover's mod folder: mods/<slug> in this repository, or with --checkouts the working copy
+    # <checkouts>/<repository>/<repository without its ProbablyStolen- prefix>.
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    repos = json.load(open(os.path.join(root, "config", "repos.json"), encoding="utf-8"))["repos"]
+    folders = {}
+    for name in COVERS:
+        slug = name.replace("_", "-")
+        folder = os.path.join(root, "mods", slug)
+        if checkouts and slug in repos:
+            repo = repos[slug]
+            folder = os.path.join(checkouts, repo, repo.replace("ProbablyStolen-", "", 1))
+        folders[name] = folder
+    return folders
+
+
+def read_version(folder):
+    path = os.path.join(folder, "manifest.xml")
+    if not os.path.isfile(path):
+        return None
+    m = re.search(r"<ModVersion>\s*([^<]+?)\s*</ModVersion>", open(path, encoding="utf-8").read())
+    return m.group(1) if m else None
+
+
+def sync(rendered, folder):
+    # The cover is the mod's preview.png and its documentation cover; only files that differ are written.
+    for target in ("preview.png", os.path.join("doc", "attachments", "cover.png")):
+        path = os.path.join(folder, target)
+        if not os.path.isfile(path):
+            continue
+        if open(path, "rb").read() != open(rendered, "rb").read():
+            shutil.copyfile(rendered, path)
+            print("   updated", path)
+
+
+def main(argv):
+    """python design/covers.py [out] [--checkouts DIR] [--sync]
+
+    Each cover shows its mod's version, read from the mod's manifest.xml. --checkouts reads the manifests from
+    working copies in DIR instead of the submodules, so a version not yet published gets its cover too. --sync
+    writes each cover into the mod's preview.png and doc/attachments/cover.png."""
+    args = list(argv)
+    do_sync = "--sync" in args
+    if do_sync:
+        args.remove("--sync")
+    checkouts = None
+    if "--checkouts" in args:
+        i = args.index("--checkouts")
+        checkouts = args[i + 1]
+        del args[i:i + 2]
+    out = args[0] if args else "out"
     os.makedirs(out, exist_ok=True)
+    folders = mod_folders(checkouts)
     for name, draw in COVERS.items():
+        version = read_version(folders[name])
+        if version is None:
+            sys.exit(f"{name}: no manifest.xml with a ModVersion in {folders[name]}")
         cv = Canvas()
+        cv.version = version_label(version)
         draw(cv)
         big = cv.img.resize((W * SCALE, H * SCALE), Image.NEAREST)
         big = big.convert("P", palette=Image.ADAPTIVE, colors=64)
-        big.save(os.path.join(out, name + ".png"), optimize=True)
+        rendered = os.path.join(out, name + ".png")
+        big.save(rendered, optimize=True)
         cv.img.resize((W, H), Image.NEAREST).save(os.path.join(out, name + "_thumb.png"))
-        print(name, os.path.getsize(os.path.join(out, name + ".png")), "bytes")
+        print(name, cv.version, os.path.getsize(rendered), "bytes")
+        if do_sync:
+            sync(rendered, folders[name])
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "out")
+    main(sys.argv[1:])

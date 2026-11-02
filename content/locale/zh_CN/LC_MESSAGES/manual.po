@@ -516,8 +516,8 @@ msgid "Publishing to the Workshop"
 msgstr "发布到创意工坊"
 
 #: manual/contribute/modding_tools.md:36
-msgid "`scripts/package.sh` collects the built mods into `dist/packages/`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item."
-msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
+msgid "`scripts/package.sh` collects the built mods into `dist/packages/`, each with its cover rendered fresh from `design/covers.py`. A cover shows the version in the mod's `manifest.xml`, and every Workshop upload replaces the preview image, so the Workshop page always shows the version it ships. `python design/covers.py design/out --checkouts <folder> --sync` renders the covers from working copies in that folder, for versions not yet published, and writes each one into the mod's `preview.png` and `doc/attachments/cover.png`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item."
+msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`，每个模组都会附上用 `design/covers.py` 重新生成的封面。封面上显示模组 `manifest.xml` 中的版本号，而每次上传创意工坊都会替换预览图，所以创意工坊页面显示的版本永远和上传的内容一致。`python design/covers.py design/out --checkouts <文件夹> --sync` 用该文件夹中的工作副本生成封面（适用于尚未发布的版本），并写入每个模组的 `preview.png` 和 `doc/attachments/cover.png`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
 
 #: manual/contribute/modding_tools.md:38
 msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."

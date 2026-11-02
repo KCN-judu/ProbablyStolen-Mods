@@ -54,3 +54,7 @@ Each one shows the mod working, using the game's own visual language: inventory 
 
 - Thumbnail test: each cover is also written at 25 % (`*_thumb.png`). The title must still read there.
 - No text is closer than 16 px to an edge.
+
+## Version
+
+The version next to the author line comes from the mod's `manifest.xml`; a trailing zero patch is left off, so 1.0.0 shows V1.0 and 1.1.1 shows V1.1.1. `scripts/package.sh` renders the covers again for every package, and `covers.py --sync` writes them into the mods, so a cover never shows an old version.

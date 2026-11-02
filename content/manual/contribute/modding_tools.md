@@ -33,6 +33,6 @@ They compile with the C# compiler that ships with Windows against the `Unity.Bur
 
 ## Publishing to the Workshop
 
-`scripts/package.sh` collects the built mods into `dist/packages/`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item.
+`scripts/package.sh` collects the built mods into `dist/packages/`, each with its cover rendered fresh from `design/covers.py`. A cover shows the version in the mod's `manifest.xml`, and every Workshop upload replaces the preview image, so the Workshop page always shows the version it ships. `python design/covers.py design/out --checkouts <folder> --sync` renders the covers from working copies in that folder, for versions not yet published, and writes each one into the mod's `preview.png` and `doc/attachments/cover.png`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item.
 
 SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items.
