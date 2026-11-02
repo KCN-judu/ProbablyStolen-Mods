@@ -523,6 +523,10 @@ msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`，�
 msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
 msgstr "SteamCMD 无法设置标签。`scripts/workshop-tags.sh` 通过游戏自带的 Steamworks 库，设置 `config/workshop.json` 中列出的标签。运行时需要 Steam 客户端已启动，并登录物品所有者的账号。"
 
+#: manual/contribute/modding_tools.md:40
+msgid "The mods are also gathered in one Workshop collection, Quality of Life. `scripts/workshop-collection.sh` creates or updates it through the same Steamworks library: its title, tags and mods in the order of the `collection` entry of `config/workshop.json`, its text from `config/collection-description.txt` and its cover from `design/collection_cover.py`. A new mod is added by listing it there and running the script again. The visibility changes only when one is given (`public`, `friends` or `private`)."
+msgstr "这些模组还汇集在一个创意工坊合集“生活质量合集”中。`scripts/workshop-collection.sh` 通过同一个 Steamworks 库创建或更新这个合集：标题、标签和模组按 `config/workshop.json` 中 `collection` 一项的顺序，介绍文字取自 `config/collection-description.txt`，封面由 `design/collection_cover.py` 生成。加入新模组时，只需在那里列出它，再运行一次脚本。只有指定了可见性（`public`、`friends` 或 `private`）时才会更改可见性。"
+
 #: manual/contribute/translation.md:1
 msgid "Translation"
 msgstr "翻译"

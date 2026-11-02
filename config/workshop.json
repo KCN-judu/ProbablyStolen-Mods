@@ -74,5 +74,24 @@
         "Simplified Chinese"
       ]
     }
+  },
+  "collection": {
+    "id": "3832619146",
+    "title": "Quality of Life | 生活质量合集",
+    "tags": [
+      "Mod",
+      "Mods",
+      "Mono",
+      "Quality of Life",
+      "Simplified Chinese"
+    ],
+    "items": [
+      "performance-fixes",
+      "demand-highlight",
+      "quick-call",
+      "window-workspaces",
+      "better-key-bindings",
+      "save-language-converter"
+    ]
   }
 }

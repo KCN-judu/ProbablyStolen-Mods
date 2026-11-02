@@ -50,6 +50,8 @@ Each one shows the mod working, using the game's own visual language: inventory 
 - **Demand Highlight**: an inventory grid showing the four outline styles, plus a small Item Filter window with ticked boxes.
 - **Better Key Bindings**: lit Ctrl + E keycaps, a mouse with its middle and side buttons lit, and a key bindings list where Ctrl + E and E sit on separate rows.
 
+- **The Quality of Life collection** (`collection_cover.py`): one tile per mod in its own accent, in the order the collection lists them, with what each mod takes away. The series tag reads PROBABLY STOLEN MODS and the author line gives the number of mods instead of a version.
+
 ## Checks
 
 - Thumbnail test: each cover is also written at 25 % (`*_thumb.png`). The title must still read there.

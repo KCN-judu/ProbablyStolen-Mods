@@ -523,6 +523,10 @@ msgstr ""
 msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
 msgstr ""
 
+#: manual/contribute/modding_tools.md:40
+msgid "The mods are also gathered in one Workshop collection, Quality of Life. `scripts/workshop-collection.sh` creates or updates it through the same Steamworks library: its title, tags and mods in the order of the `collection` entry of `config/workshop.json`, its text from `config/collection-description.txt` and its cover from `design/collection_cover.py`. A new mod is added by listing it there and running the script again. The visibility changes only when one is given (`public`, `friends` or `private`)."
+msgstr ""
+
 #: manual/contribute/translation.md:1
 msgid "Translation"
 msgstr ""

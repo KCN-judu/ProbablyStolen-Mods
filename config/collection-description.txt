@@ -1,0 +1,31 @@
+[h1]Quality of Life[/h1]
+Small mods for Probably Stolen that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions. Subscribe to all of them here, or pick the ones you want.
+
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]Performance Fixes[/b][/url]: removes stutters with large, packed storage, without changing how the game plays.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488][b]Demand Highlight[/b][/url]: outlines what the customer at the counter wants, and marks your stock by type.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274][b]Quick Call[/b][/url]: calls go straight to the choices, with no ringing or greetings.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832565070][b]Window Workspaces[/b][/url]: windows snap together, and whole sets of them switch with one key.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]Better Key Bindings[/b][/url]: key combinations and extra mouse buttons for every key binding.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]Save Language Converter[/b][/url]: converts a copy of a save started in another language.
+[/list]
+
+All of them are open source under the Apache License 2.0, with documentation in English and Chinese:
+[url=https://kcn-judu.github.io/ProbablyStolen-Mods/]kcn-judu.github.io/ProbablyStolen-Mods[/url]
+
+[hr][/hr]
+
+[h1]生活质量合集[/h1]
+《深空当铺：可能是偷的》的一组小模组：保留游戏规则，只去掉碍事的部分，比如干等、瞎猜和卡顿。每个模组只做一件事，可以单独使用，也不需要任何特殊权限。可以在这里一键订阅全部，也可以只挑需要的。
+
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]性能修复[/b][/url]：消除大型满载仓库带来的卡顿，不改变游戏玩法。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488][b]需求高亮[/b][/url]：描出柜台前顾客想要的物品，并按类型标记你的库存。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274][b]快速通话[/b][/url]：电话直接进入选项，没有铃声和寒暄。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832565070][b]窗口工作区[/b][/url]：窗口彼此吸附，一个键切换整组窗口。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]按键绑定增强[/b][/url]：为每个按键绑定加入组合键和额外的鼠标按键。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]存档语言转换[/b][/url]：把用其他语言开始的存档转换成一个副本。
+[/list]
+
+全部开源，采用 Apache License 2.0，中英文文档：
+[url=https://kcn-judu.github.io/ProbablyStolen-Mods/zh-cn/]kcn-judu.github.io/ProbablyStolen-Mods[/url]
