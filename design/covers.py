@@ -498,10 +498,11 @@ COVERS = {
 
 
 def version_label(version):
-    # 1.0.0 -> V1.0, 1.1.0 -> V1.1, 1.1.1 -> V1.1.1: a trailing zero patch is left off.
-    parts = version.strip().split(".")
-    while len(parts) > 2 and parts[-1] == "0":
-        parts.pop()
+    # Always the full x.y.z (1.1.0 -> V1.1.0, 1.0.1 -> V1.0.1), except a new major version x.0.0, which reads
+    # Vx.0 (1.0.0 -> V1.0, 2.0.0 -> V2.0).
+    parts = (version.strip().split(".") + ["0", "0"])[:3]
+    if parts[1] == "0" and parts[2] == "0":
+        return "V" + parts[0] + ".0"
     return "V" + ".".join(parts)
 
 

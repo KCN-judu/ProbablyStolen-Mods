@@ -57,4 +57,4 @@ Each one shows the mod working, using the game's own visual language: inventory 
 
 ## Version
 
-The version next to the author line comes from the mod's `manifest.xml`; a trailing zero patch is left off, so 1.0.0 shows V1.0 and 1.1.1 shows V1.1.1. `scripts/package.sh` renders the covers again for every package, and `covers.py --sync` writes them into the mods, so a cover never shows an old version.
+The version next to the author line comes from the mod's `manifest.xml`; it is always shown in full as x.y.z (V1.1.0, V1.0.1), except a new major version x.0.0, which shows as Vx.0 (V1.0, V2.0). `scripts/package.sh` renders the covers again for every package, and `covers.py --sync` writes them into the mods, so a cover never shows an old version.
