@@ -4,6 +4,8 @@ Mods for *Probably Stolen* that keep the game's rules and take away what gets in
 
 **Documentation:** <https://kcn-judu.github.io/ProbablyStolen-Mods/> (English, 简体中文)
 
+**Steam Workshop:** all of them in one collection, [Quality of Life](https://steamcommunity.com/sharedfiles/filedetails/?id=3832619146).
+
 | Mod | What it does | Repository |
 | --- | --- | --- |
 | [Demand Highlight](https://kcn-judu.github.io/ProbablyStolen-Mods/en/demand-highlight/) | Outlines what the customer at the counter wants, and marks your stock by type with the Item Filter. | [ProbablyStolen-DemandHighlight](https://github.com/KCN-judu/ProbablyStolen-DemandHighlight) |
