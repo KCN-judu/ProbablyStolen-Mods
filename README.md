@@ -46,6 +46,7 @@ npm run build && npm run preview   # the site at http://localhost:4321/ProbablyS
 | `scripts/build-all.sh [--install]` | Build every mod, and optionally install it into the game |
 | `scripts/package.sh` | Collect built mods into `dist/packages/` with a zip of each |
 | `scripts/workshop.py` | Write a SteamCMD upload file per mod to `dist/workshop/`, using the item ids in `config/workshop.json` |
+| `scripts/workshop-tags.sh` | Set the Workshop tags in `config/workshop.json` (Steam client must be running) |
 | `scripts/scan.sh <folder>` | Run the game's mod scanner on a built mod |
 | `python design/covers.py design/out` | Render the covers |
 

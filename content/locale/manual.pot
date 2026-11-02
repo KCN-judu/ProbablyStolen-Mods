@@ -479,6 +479,18 @@ msgstr ""
 msgid "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides."
 msgstr ""
 
+#: manual/contribute/modding_tools.md:34
+msgid "Publishing to the Workshop"
+msgstr ""
+
+#: manual/contribute/modding_tools.md:36
+msgid "`scripts/package.sh` collects the built mods into `dist/packages/`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:38
+msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
+msgstr ""
+
 #: manual/contribute/translation.md:1
 msgid "Translation"
 msgstr ""

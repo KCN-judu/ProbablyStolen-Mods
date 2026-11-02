@@ -479,6 +479,18 @@ msgstr "常量字段的值"
 msgid "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides."
 msgstr "它们可以用 Windows 自带的 C# 编译器，引用游戏自带的 `Unity.Burst.Cecil.dll` 编译。"
 
+#: manual/contribute/modding_tools.md:34
+msgid "Publishing to the Workshop"
+msgstr "发布到创意工坊"
+
+#: manual/contribute/modding_tools.md:36
+msgid "`scripts/package.sh` collects the built mods into `dist/packages/`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item."
+msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
+
+#: manual/contribute/modding_tools.md:38
+msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
+msgstr "SteamCMD 无法设置标签。`scripts/workshop-tags.sh` 通过游戏自带的 Steamworks 库，设置 `config/workshop.json` 中列出的标签。运行时需要 Steam 客户端已启动，并登录物品所有者的账号。"
+
 #: manual/contribute/translation.md:1
 msgid "Translation"
 msgstr "翻译"
