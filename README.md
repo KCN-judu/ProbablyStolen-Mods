@@ -28,7 +28,7 @@ npm run build && npm run preview   # the site at http://localhost:4321/ProbablyS
 | `content/` | The site's own pages (home, about, contributing) and interface strings, in the same layout as a mod's `doc/` |
 | `config/` | Locales, the site's base path and the mods with their repositories and groups |
 | `src/` | Astro pages, layouts, components and the pixel theme |
-| `tools/lunadoc/` | The gettext documentation tool, from the [Luna Flow documentation site](https://github.com/Luna-Flow/Luna-Flow.github.io) |
+| `tools/lunadoc/` | The gettext documentation tool |
 | `tools/prepare-site.mjs` | Renders every page in every locale from the English source and the catalogs |
 | `tools/i18n/` | Helpers for filling catalogs from a translation table |
 | `tools/modding/` | The game's mod scanner harness and the Mono.Cecil game-inspection tools |

@@ -69,7 +69,6 @@
   "Like Find, with the instructions that follow each match": "和 Find 类似，但会附上每处匹配之后的几条指令",
   "The values of constant fields": "常量字段的值",
   "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides.": "它们可以用 Windows 自带的 C# 编译器，引用游戏自带的 `Unity.Burst.Cecil.dll` 编译。",
-  "The collection translates its documentation the way the Blender manual and the Luna Flow documentation do: English pages are the only source, and every other language is a gettext catalog of translated messages. A page in Chinese is generated from the English page and the catalog when the site is built.": "本合集的文档翻译方式与 Blender 手册和 Luna Flow 文档相同：英文页面是唯一的来源，其他语言都是由已翻译消息组成的 gettext 目录。构建站点时，中文页面由英文页面和翻译目录生成。",
   "The site knows the coverage of every page and every mod, and shows it in the library.": "站点知道每个页面和每个模组的翻译完成度，并在模组列表中显示出来。",
   "`lunadoc` splits every page into messages: headings, paragraphs, list items, table cells, and the `title` and `description` front matter keys. Code blocks and raw HTML are never messages; they appear in every language exactly as written in English.": "`lunadoc` 把每个页面拆分成消息：标题、段落、列表项、表格单元格，以及前置元数据中的 `title` 和 `description`。代码块和原始 HTML 不会成为消息，在每种语言里都和英文原文完全一致。",
   "Run `npm run update-po` in the collection. It regenerates `doc/locale/manual.pot` of every mod and merges it into every `manual.po`.": "在合集中运行 `npm run update-po`。它会重新生成每个模组的 `doc/locale/manual.pot`，并合并到每个 `manual.po` 中。",
@@ -303,5 +302,6 @@
   "Tested against game version 0.46D.": "已在游戏版本 0.46D 上测试。",
   "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License.": "本站和模组封面采用同一套设计：游戏的暮紫色窗口、奶油色文字和青色标题栏，带一像素斜面的方形面板，名称和标签使用像素字体。封面设计规范写在合集仓库的 `design/DESIGN.md` 中。中文标题使用以 SIL Open Font License 发布的开源像素字体俐方体 11 号。",
   "© 2026 KCN-judu. Code and documentation are licensed under the Apache License 2.0.": "© 2026 KCN-judu。代码与文档以 Apache License 2.0 授权。",
-  "Probably Stolen and its assets belong to their respective owners. This is an unofficial fan project, not affiliated with or endorsed by the developers.": "《深空当铺：可能是偷的》及其素材归各自所有者所有。本项目为非官方爱好者作品，与开发者无关，亦未获其认可。"
+  "Probably Stolen and its assets belong to their respective owners. This is an unofficial fan project, not affiliated with or endorsed by the developers.": "《深空当铺：可能是偷的》及其素材归各自所有者所有。本项目为非官方爱好者作品，与开发者无关，亦未获其认可。",
+  "English pages are the only source of the documentation. Every other language is a gettext catalog of translated messages, and a page in Chinese is generated from the English page and the catalog when the site is built.": "英文页面是文档唯一的来源。其他语言都是由已翻译消息组成的 gettext 目录，构建站点时，中文页面由英文页面和翻译目录生成。"
 }

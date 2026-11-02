@@ -10,7 +10,6 @@
 // Inputs: every directory of the workspace (config/repos.json `workspace`, the mods/
 // submodules by default; PSM_REPO_ROOT overrides it) that has doc/conf.json. Directory
 // names become routes; config/repos.json `repos` maps them to their GitHub repositories.
-// Adapted from the Luna-Flow documentation site (Luna-Flow/Luna-Flow.github.io).
 
 import fs from 'node:fs';
 import path from 'node:path';

@@ -30,14 +30,14 @@ import {
 } from '../src/index.mjs';
 
 const page = `---
-title: Generic algebra
+title: Demand outlines
 order: 2
 ---
 
 # Overview
 
-The \`Ring\` trait models
-rings with $0$ and $1$.
+The \`Outline\` class draws
+borders with $1$ and $2$ pixels.
 
 - First item
   wraps here.
@@ -45,10 +45,10 @@ rings with $0$ and $1$.
 
 | Name | Meaning |
 | --- | --- |
-| \`Zero\` | additive identity |
+| \`Stolen\` | taken without paying |
 
-\`\`\`moonbit
-fn main { println("not extracted") }
+\`\`\`csharp
+Debug.Log("not extracted");
 \`\`\`
 
 $$
@@ -58,38 +58,38 @@ $$
 
 test('normalizeMessage joins soft wraps and keeps CJK tight', () => {
   assert.equal(normalizeMessage('a\n  b'), 'a b');
-  assert.equal(normalizeMessage('同态\n映射'), '同态映射');
+  assert.equal(normalizeMessage('描边\n样式'), '描边样式');
   assert.equal(normalizeMessage('hard  \nbreak'), 'hard\\\nbreak');
 });
 
 test('extractSegments skips code, math and word-less blocks', () => {
   const ids = extractSegments(page).map((segment) => segment.msgid);
   assert.deepEqual(ids, [
-    'Generic algebra',
+    'Demand outlines',
     'Overview',
-    'The `Ring` trait models rings with $0$ and $1$.',
+    'The `Outline` class draws borders with $1$ and $2$ pixels.',
     'First item wraps here.',
     'Name',
     'Meaning',
-    'additive identity',
+    'taken without paying',
   ]);
 });
 
 test('renderTranslated replaces only messages and counts coverage', () => {
   const zh = new Map([
-    ['Generic algebra', '泛型代数'],
+    ['Demand outlines', '需求描边'],
     ['Overview', '概览'],
-    ['The `Ring` trait models rings with $0$ and $1$.', '`Ring` trait 刻画带 $0$ 与 $1$ 的环。'],
-    ['additive identity', '加法单位元 | 零'],
+    ['The `Outline` class draws borders with $1$ and $2$ pixels.', '`Outline` 类绘制 $1$ 与 $2$ 像素的边框。'],
+    ['taken without paying', '未付款取得 | 赃物'],
   ]);
   const { markdown, total, translated } = renderTranslated(page, (id) => zh.get(id));
   assert.equal(total, 7);
   assert.equal(translated, 4);
-  assert.match(markdown, /^---\ntitle: 泛型代数\norder: 2\n---/);
+  assert.match(markdown, /^---\ntitle: 需求描边\norder: 2\n---/);
   assert.match(markdown, /# 概览/);
-  assert.match(markdown, /\| `Zero` \| 加法单位元 \\\| 零 \|/);
+  assert.match(markdown, /\| `Stolen` \| 未付款取得 \\\| 赃物 \|/);
   assert.match(markdown, /- First item\n  wraps here\./);
-  assert.match(markdown, /println\("not extracted"\)/);
+  assert.match(markdown, /Debug\.Log\("not extracted"\)/);
 });
 
 test('headingSlugs follow the English source', () => {
@@ -101,18 +101,18 @@ test('headingSlugs follow the English source', () => {
 
 test('mergeCatalog keeps, fuzzies and obsoletes like msgmerge', () => {
   const old = emptyCatalog('zh_CN');
-  old.entries.set('Ring homomorphisms preserve one.', { msgid: 'Ring homomorphisms preserve one.', msgstr: '环同态保持 1。', references: [], flags: new Set() });
+  old.entries.set('Outlines follow the item shape.', { msgid: 'Outlines follow the item shape.', msgstr: '描边沿物品形状绘制。', references: [], flags: new Set() });
   old.entries.set('Kept.', { msgid: 'Kept.', msgstr: '保留。', references: [], flags: new Set() });
   old.entries.set('Gone entirely.', { msgid: 'Gone entirely.', msgstr: '删除。', references: [], flags: new Set() });
   const template = templateFrom([
     { msgid: 'Kept.', reference: 'a.md:1' },
-    { msgid: 'Ring homomorphisms preserve one and zero.', reference: 'a.md:3' },
+    { msgid: 'Outlines follow the item shape and grid.', reference: 'a.md:3' },
   ]);
   const merged = mergeCatalog(template, old, 'zh_CN');
   assert.equal(merged.entries.get('Kept.').msgstr, '保留。');
-  const changed = merged.entries.get('Ring homomorphisms preserve one and zero.');
+  const changed = merged.entries.get('Outlines follow the item shape and grid.');
   assert.ok(changed.flags.has('fuzzy'));
-  assert.equal(changed.previous, 'Ring homomorphisms preserve one.');
+  assert.equal(changed.previous, 'Outlines follow the item shape.');
   assert.ok(merged.obsolete.has('Gone entirely.'));
 });
 

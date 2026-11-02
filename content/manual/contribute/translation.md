@@ -1,6 +1,6 @@
 # Translation
 
-The collection translates its documentation the way the Blender manual and the Luna Flow documentation do: English pages are the only source, and every other language is a gettext catalog of translated messages. A page in Chinese is generated from the English page and the catalog when the site is built.
+English pages are the only source of the documentation. Every other language is a gettext catalog of translated messages, and a page in Chinese is generated from the English page and the catalog when the site is built.
 
 This has three consequences:
 

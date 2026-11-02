@@ -480,8 +480,8 @@ msgid "Translation"
 msgstr "翻译"
 
 #: manual/contribute/translation.md:3
-msgid "The collection translates its documentation the way the Blender manual and the Luna Flow documentation do: English pages are the only source, and every other language is a gettext catalog of translated messages. A page in Chinese is generated from the English page and the catalog when the site is built."
-msgstr "本合集的文档翻译方式与 Blender 手册和 Luna Flow 文档相同：英文页面是唯一的来源，其他语言都是由已翻译消息组成的 gettext 目录。构建站点时，中文页面由英文页面和翻译目录生成。"
+msgid "English pages are the only source of the documentation. Every other language is a gettext catalog of translated messages, and a page in Chinese is generated from the English page and the catalog when the site is built."
+msgstr "英文页面是文档唯一的来源。其他语言都是由已翻译消息组成的 gettext 目录，构建站点时，中文页面由英文页面和翻译目录生成。"
 
 #: manual/contribute/translation.md:5
 msgid "This has three consequences:"

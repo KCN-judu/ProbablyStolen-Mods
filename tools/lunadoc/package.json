@@ -2,7 +2,7 @@
   "name": "lunadoc",
   "version": "0.1.0",
   "private": true,
-  "description": "Gettext-based localization and layout checks for the documentation, from the Luna-Flow documentation site.",
+  "description": "Gettext-based localization and layout checks for the documentation.",
   "type": "module",
   "bin": {
     "lunadoc": "./cli.mjs"

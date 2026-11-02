@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// lunadoc: gettext workflow and checks for the documentation. From the Luna-Flow documentation site (Luna-Flow/Luna-Flow.github.io).
+// lunadoc: gettext workflow and checks for the documentation.
 
 import path from 'node:path';
 import process from 'node:process';

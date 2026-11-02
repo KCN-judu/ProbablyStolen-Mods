@@ -1,7 +1,7 @@
 /*
  * The game's window look, laid over the reading layout (tokens.css for the values).
  *
- * What is borrowed from the game: square panels with a 1 px bevel, the teal title bar
+ * What comes from the game: square panels with a 1 px bevel, the teal title bar
  * of its windows, sunken slots for inputs and code, pixel lettering for names and
  * labels, and crisp nearest-neighbour scaling for pixel art. What is not: prose stays in
  * Noto Sans at a reading size, and nothing animates.
