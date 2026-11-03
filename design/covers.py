@@ -87,6 +87,31 @@ FONT = {
     '>': ["01000", "00100", "00010", "00001", "00010", "00100", "01000"],
     '+': ["00000", "00100", "00100", "11111", "00100", "00100", "00000"],
     ' ': ["00000"] * 7,
+    # The rest of printable ASCII, so the font built from this table (pixel_font.py) sets any English text.
+    '!': ["00100", "00100", "00100", "00100", "00100", "00000", "00100"],
+    '"': ["01010", "01010", "01010", "00000", "00000", "00000", "00000"],
+    '#': ["01010", "01010", "11111", "01010", "11111", "01010", "01010"],
+    '$': ["00100", "01111", "10100", "01110", "00101", "11110", "00100"],
+    '%': ["11000", "11001", "00010", "00100", "01000", "10011", "00011"],
+    '&': ["01100", "10010", "10100", "01000", "10101", "10010", "01101"],
+    '(': ["00010", "00100", "01000", "01000", "01000", "00100", "00010"],
+    ')': ["01000", "00100", "00010", "00010", "00010", "00100", "01000"],
+    '*': ["00000", "00100", "10101", "01110", "10101", "00100", "00000"],
+    ';': ["00000", "01100", "01100", "00000", "01100", "00100", "01000"],
+    '<': ["00010", "00100", "01000", "10000", "01000", "00100", "00010"],
+    '=': ["00000", "00000", "11111", "00000", "11111", "00000", "00000"],
+    '?': ["01110", "10001", "00001", "00010", "00100", "00000", "00100"],
+    '@': ["01110", "10001", "10111", "10101", "10111", "10000", "01110"],
+    '[': ["01110", "01000", "01000", "01000", "01000", "01000", "01110"],
+    '\\': ["10000", "01000", "01000", "00100", "00010", "00010", "00001"],
+    ']': ["01110", "00010", "00010", "00010", "00010", "00010", "01110"],
+    '^': ["00100", "01010", "10001", "00000", "00000", "00000", "00000"],
+    '_': ["00000", "00000", "00000", "00000", "00000", "00000", "11111"],
+    '`': ["01000", "00100", "00010", "00000", "00000", "00000", "00000"],
+    '{': ["00010", "00100", "00100", "01000", "00100", "00100", "00010"],
+    '|': ["00100", "00100", "00100", "00100", "00100", "00100", "00100"],
+    '}': ["01000", "00100", "00100", "00010", "00100", "00100", "01000"],
+    '~': ["00000", "00000", "01000", "10101", "00010", "00000", "00000"],
 }
 
 # 7x7 hand-drawn 文 for the language cover.
@@ -542,12 +567,24 @@ def sync(rendered, folder):
 
 
 def main(argv):
-    """python design/covers.py [out] [--checkouts DIR] [--sync]
+    """python design/covers.py [out] [--checkouts DIR] [--sync] [--only ID[,ID...]]
 
     Each cover shows its mod's version, read from the mod's manifest.xml. --checkouts reads the manifests from
     working copies in DIR instead of the submodules, so a version not yet published gets its cover too. --sync
-    writes each cover into the mod's preview.png and doc/attachments/cover.png."""
+    writes each cover into the mod's preview.png and doc/attachments/cover.png; with --only, only into the mods
+    named (by id, such as performance_fixes), so releasing one mod leaves the others' working copies alone."""
     args = list(argv)
+    if "-h" in args or "--help" in args:
+        print(main.__doc__)
+        return
+    only = None
+    if "--only" in args:
+        i = args.index("--only")
+        only = set(args[i + 1].split(","))
+        del args[i:i + 2]
+        unknown = only - set(COVERS)
+        if unknown:
+            sys.exit("unknown cover id(s): " + ", ".join(sorted(unknown)))
     do_sync = "--sync" in args
     if do_sync:
         args.remove("--sync")
@@ -572,7 +609,7 @@ def main(argv):
         big.save(rendered, optimize=True)
         cv.img.resize((W, H), Image.NEAREST).save(os.path.join(out, name + "_thumb.png"))
         print(name, cv.version, os.path.getsize(rendered), "bytes")
-        if do_sync:
+        if do_sync and (only is None or name in only):
             sync(rendered, folders[name])
 
 

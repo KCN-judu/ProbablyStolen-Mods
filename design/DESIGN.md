@@ -52,6 +52,59 @@ Each one shows the mod working, using the game's own visual language: inventory 
 
 - **The Quality of Life collection** (`collection_cover.py`): one tile per mod in its own accent, in the order the collection lists them, with what each mod takes away. The series tag reads PROBABLY STOLEN MODS and the author line gives the number of mods instead of a version.
 
+## Logo
+
+The collection's logo (`collection_logo.py`) is a drafting compass that reads as a λ: a long stroke with a branch.
+
+- Two legs of equal length on mirrored 1:2 slopes, points on one row; the stalk continues the right leg up to the knob.
+- **Detailed** (128 × 128 grid; 128, 256, 512 and 1024 px): cream legs lit on one side and shaded on the other with a darker rim; a knurled knob; a teal hinge plate with four rivets and a slotted steel screw; steel collars with their screw heads; a pencil leg ending in a sharpened cone and a teal lead, and a needle leg. A one-pixel dark outline holds it on any ground. On the icon it lies on drafting paper (an inset sheet with a dotted 8 px grid) casting a shadow, inside a machinery plate with rivets and cut corners. Teal is the collection's accent.
+- **Small** (64 × 64 grid; 32 and 64 px): the same compass without the parts, cream with a teal hinge and lead on the plate, because detail turns to noise at that size.
+- `collection_logo_*.png` is the icon, `collection_mark_*.png` the detailed compass alone on transparency, `collection_logo_small_*.png` the small icon.
+
+```
+python design/collection_logo.py design/out/logo
+```
+
+## Comparison labels
+
+Comparison videos (before / after one mod) carry a corner label on each half, rendered by `compare_labels.py`.
+
+- One line on a machinery plate without rivets: the mod's name in cream, then a switch. **OFF** is an unlit slot with muted text and a faint bar; **ON** is lit in the mod's accent with dark text, and the bar on the left edge takes the accent too.
+- The switch is sized for OFF, so the OFF and ON labels are exactly the same size and line up across the two halves.
+- Transparent PNG, scaled with nearest-neighbour by half the cover's video scale: ×3 for 1080p, ×6 for 2160p (`--height`).
+- Placement: top-left of each half, inset by the cover margin at the same scale (48 px at 1080p, 96 px at 2160p). OFF on the left, ON on the right.
+- A new mod gets a line in `compare_labels.MODS` with its name and the accent from Colour above.
+
+```
+python design/compare_labels.py design/out/labels performance_fixes            # 1080p
+python design/compare_labels.py design/out/labels performance_fixes --height 2160
+```
+
+## Video font
+
+`pixel_font.py` builds **Probably Stolen Pixel** (`ProbablyStolenPixel.ttf`) from the same alphabet as the covers, for timers, titles and captions in videos. It has every printable ASCII character; lowercase sets as capitals, as on the covers.
+
+- Font size a multiple of 7 px (21 px at 1080p, 42 px at 2160p) and anti-aliasing off, so each font pixel stays a whole block.
+- Colours from the palette above: cream for text, the mod's accent for values such as a timer.
+
+```
+python design/pixel_font.py design/out/ProbablyStolenPixel.ttf
+```
+
+## Video slides
+
+Statement slides cut into videos, rendered by `slides.py` from `slides.json`, in English and Chinese. A new slide is a new entry in `slides.json`; the code stays as it is.
+
+- One statement per slide, centred as a block a little above the middle: the mod's name in its accent (×1), a two-line headline whose last line takes the accent, and one muted line under it.
+- English is set in the cover alphabet with a ×4 headline. Chinese is set in Cubic 11 (`fonts/Cubic_11.ttf`, SIL Open Font License, licence beside it) with a ×3 headline; the mod's name stays in English. At 12 px each Cubic pixel is one canvas pixel, so both scripts scale with nearest-neighbour and stay crisp.
+- Same 320 × 180 canvas, ×6 for 1080p and ×12 for 2160p (`--height`); the vignette is centred on the statement.
+- Each line must fit between the margins; the script stops with the line's width if it does not.
+
+```
+python design/slides.py design/out/slides
+python design/slides.py design/out/slides performance_fixes_stutter --height 2160
+```
+
 ## Checks
 
 - Thumbnail test: each cover is also written at 25 % (`*_thumb.png`). The title must still read there.
