@@ -339,6 +339,46 @@ msgstr "许可证"
 msgid "Every repository is released under the Apache License 2.0. *Probably Stolen* and its assets belong to their owners; no game files are distributed here."
 msgstr "所有仓库均以 Apache License 2.0 发布。《深空当铺：可能是偷的》及其素材归其所有者所有，这里不分发任何游戏文件。"
 
+#: manual/contribute/code_standard.md:1
+msgid "Code standard"
+msgstr "代码规范"
+
+#: manual/contribute/code_standard.md:3
+msgid "These rules apply to the code of every mod in the collection. How to build a mod and check it with the game's scanner is on the [Modding tools](modding_tools.md) page."
+msgstr "这些规则适用于合集中每个模组的代码。如何构建模组并用游戏的扫描器检查，见[模组开发工具](modding_tools.md)页面。"
+
+#: manual/contribute/code_standard.md:5
+msgid "Nothing kept after leaving the store"
+msgstr "离开店铺后不留任何东西"
+
+#: manual/contribute/code_standard.md:7
+msgid "A store's items, inventories, windows and managers all point at each other. One reference to any of them that outlives the store keeps the whole store in memory: the next load in the same session starts with the old store still on the managed heap, and every load after it gets slower."
+msgstr "店铺里的物品、库存、窗口和管理器都互相引用。只要其中任何一个的引用比店铺活得久，整个店铺就会留在内存里：同一次游戏中的下一次读档开始时，旧店铺还在托管堆上，之后每次读档都会更慢。"
+
+#: manual/contribute/code_standard.md:9
+msgid "**No mod keeps store objects after the player leaves the store.** Store objects are `GameItem`, `GameItemElement`, `GameInventory`, `PixelWindow`, `TreeNodeRender`, `StoreClient`, the store's managers and any Unity object of the store's scene. A mod must not keep them in:"
+msgstr "**玩家离开店铺后，任何模组都不得保留店铺对象。**店铺对象指 `GameItem`、`GameItemElement`、`GameInventory`、`PixelWindow`、`TreeNodeRender`、`StoreClient`、店铺的各个管理器，以及店铺场景中的任何 Unity 对象。模组不得把它们保留在："
+
+#: manual/contribute/code_standard.md:11
+msgid "static fields, static collections or caches;"
+msgstr "静态字段、静态集合或缓存中；"
+
+#: manual/contribute/code_standard.md:12
+msgid "objects that outlive the scene, such as one marked with `DontDestroyOnLoad`;"
+msgstr "比场景活得久的对象中，比如标记了 `DontDestroyOnLoad` 的对象；"
+
+#: manual/contribute/code_standard.md:13
+msgid "event subscriptions, or delegates whose target is a store object."
+msgstr "事件订阅中，或目标是店铺对象的委托中。"
+
+#: manual/contribute/code_standard.md:15
+msgid "**Release them when the store is left.** The store is the scene `InventoryScene`. Subscribe to `SceneManager.sceneLoaded` and, when a scene other than `InventoryScene` is loaded in single mode (the main menu is `EmporiumMenu`), clear every such field, cache and subscription. Where that does not fit, key a cache with a `ConditionalWeakTable` or remove its destroyed entries. Nothing may change while the player is in the store. The decision of when to release goes in a `.Pure.cs` file with a headless test, like any other decision."
+msgstr "**离开店铺时释放它们。**店铺是场景 `InventoryScene`。订阅 `SceneManager.sceneLoaded`，当以单场景模式加载 `InventoryScene` 以外的场景时（主菜单是 `EmporiumMenu`），清空所有这类字段、缓存和订阅。不适合这样做时，用 `ConditionalWeakTable` 作为缓存的键，或移除其中已销毁的条目。玩家在店铺里时，行为不得有任何变化。何时释放的判断和其他判断一样，放在 `.Pure.cs` 文件里，并配一个无头测试。"
+
+#: manual/contribute/code_standard.md:17
+msgid "**Check with the Leak Probe.** Every new or changed mod is checked with the [Leak Probe](modding_tools.md#leak-probe): load a save, go back to the main menu and read the `[LeakProbe]` lines in `Player.log`. None of them may name a field of the mod."
+msgstr "**用泄漏探针检查。**每个新模组或改动过的模组都要用[泄漏探针](modding_tools.md#leak-probe)检查：读取一个存档，回到主菜单，然后查看 `Player.log` 里的 `[LeakProbe]` 行。其中不得出现该模组的任何字段。"
+
 #: manual/contribute/documentation_standard.md:1
 msgid "Documentation standard"
 msgstr "文档规范"
@@ -416,30 +456,34 @@ msgid "[Translation](translation.md): how the gettext workflow keeps every langu
 msgstr "[翻译](translation.md)：gettext 工作流程如何让每种语言与英文保持同步。"
 
 #: manual/contribute/index.md:10
-msgid "[Modding tools](modding_tools.md): building mods, the scanner check and the game-inspection tools."
-msgstr "[模组开发工具](modding_tools.md)：构建模组、扫描器检查和游戏分析工具。"
+msgid "[Code standard](code_standard.md): rules for the mods' code, such as keeping nothing of the store after leaving it."
+msgstr "[代码规范](code_standard.md)：模组代码的规则，比如离开店铺后不保留店铺的任何东西。"
 
-#: manual/contribute/index.md:12
+#: manual/contribute/index.md:11
+msgid "[Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools and the Leak Probe."
+msgstr "[模组开发工具](modding_tools.md)：构建模组、扫描器检查、游戏分析工具和泄漏探针。"
+
+#: manual/contribute/index.md:13
 msgid "Getting the collection"
 msgstr "获取合集"
 
-#: manual/contribute/index.md:20
+#: manual/contribute/index.md:21
 msgid "Commands"
 msgstr "命令"
 
-#: manual/contribute/index.md:22
+#: manual/contribute/index.md:23
 msgid "Run these from the collection repository. Each one covers the site's own pages and every mod in `mods/`:"
 msgstr "在合集仓库中运行以下命令。每条命令都会处理本站自己的页面以及 `mods/` 下的每个模组："
 
-#: manual/contribute/index.md:30
+#: manual/contribute/index.md:31
 msgid "A change to a mod's `doc/manual` must also contain the updated catalogs produced by `update-po`."
 msgstr "修改模组的 `doc/manual` 时，必须同时提交 `update-po` 生成的更新后的翻译目录。"
 
-#: manual/contribute/index.md:32
+#: manual/contribute/index.md:33
 msgid "Previewing the site"
 msgstr "预览站点"
 
-#: manual/contribute/index.md:39
+#: manual/contribute/index.md:40
 msgid "The build reads the mods from `mods/`, so a local preview shows unpublished changes in any of them."
 msgstr "构建会从 `mods/` 读取模组，所以本地预览能看到任何模组中尚未发布的改动。"
 
@@ -507,23 +551,107 @@ msgstr "和 Find 类似，但会附上每处匹配之后的几条指令"
 msgid "The values of constant fields"
 msgstr "常量字段的值"
 
-#: manual/contribute/modding_tools.md:32
-msgid "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides."
-msgstr "它们可以用 Windows 自带的 C# 编译器，引用游戏自带的 `Unity.Burst.Cecil.dll` 编译。"
+#: manual/contribute/modding_tools.md:31
+msgid "The static fields of the game or of a mod that can keep the store in memory, and whether anything clears them"
+msgstr "游戏或某个模组中可能把商店留在内存里的静态字段，以及有没有代码清掉它们"
 
-#: manual/contribute/modding_tools.md:34
+#: manual/contribute/modding_tools.md:32
+msgid "The game's managers that point at themselves from a static field, which a mod that releases the store clears"
+msgstr "游戏里用静态字段指向自己的管理器，在离开商店时释放商店的模组会清掉它们"
+
+#: manual/contribute/modding_tools.md:33
+msgid "Which of the methods a mod patches would freeze localized text when patched before the player's language is applied"
+msgstr "模组补丁的方法中，哪些如果在玩家语言生效前打补丁，会把本地化文本固定下来"
+
+#: manual/contribute/modding_tools.md:35
+msgid "They compile with the C# compiler that ships with Windows against the `Unity.Burst.Cecil.dll` the game provides. Usage is at the top of each file."
+msgstr "它们可以用 Windows 自带的 C# 编译器，引用游戏自带的 `Unity.Burst.Cecil.dll` 编译。用法写在每个文件开头。"
+
+#: manual/contribute/modding_tools.md:37
+msgid "For reading a lot of the game's code, `Inspect.exe Assembly-CSharp.dll all.txt \".\" \".\"` writes every type with the IL of every method to one file, and `tools/modding/il-method.sh all.txt PixelWindow Show` prints one method from it."
+msgstr "要大量阅读游戏代码时，`Inspect.exe Assembly-CSharp.dll all.txt \".\" \".\"` 会把每个类型连同每个方法的 IL 写进一个文件，`tools/modding/il-method.sh all.txt PixelWindow Show` 从中打印一个方法。"
+
+#: manual/contribute/modding_tools.md:39
+msgid "Leak Probe"
+msgstr "泄漏探针"
+
+#: manual/contribute/modding_tools.md:41
+msgid "`tools/modding/LeakProbe.cs` is a development mod that checks the rule in [Code standard](code_standard.md): nothing may keep the store after the player leaves it. It is never released."
+msgstr "`tools/modding/LeakProbe.cs` 是一个开发用模组，用来检查[代码规范](code_standard.md)中的规则：玩家离开店铺后，任何东西都不得保留店铺。它不会发布。"
+
+#: manual/contribute/modding_tools.md:43
+msgid "After a scene other than the store replaces the store, it forces a full collection and writes to `Player.log` the managed memory and one `[LeakProbe]` line per field that still holds objects of the store just left, largest first. It looks at the static fields of the game and of every mod, at the objects that survive scene changes, and one level into the plain objects they point to."
+msgstr "当店铺以外的场景替换掉店铺后，它会强制进行一次完整的垃圾回收，并向 `Player.log` 写入托管内存，以及每个仍持有刚离开店铺的对象的字段各一行 `[LeakProbe]`，按占用从大到小排列。它检查游戏和每个模组的静态字段、跨场景存活的对象，并向它们指向的普通对象再深入一层。"
+
+#: manual/contribute/modding_tools.md:45
+msgid "Build it with the commands at the top of `LeakProbe.cs` and copy `LeakProbe.dll` with the manifest given there into the game's `Mods/leak_probe` folder."
+msgstr "用 `LeakProbe.cs` 开头的命令构建它，再把 `LeakProbe.dll` 和那里给出的清单一起复制到游戏的 `Mods/leak_probe` 文件夹。"
+
+#: manual/contribute/modding_tools.md:46
+msgid "Enable Leak Probe (development) in the Mods menu, approve its capability (reflection over the game's types) and restart the game."
+msgstr "在模组菜单中启用 Leak Probe (development)，批准它的权限（对游戏类型的反射），然后重启游戏。"
+
+#: manual/contribute/modding_tools.md:47
+msgid "Load a save, then go back to the main menu."
+msgstr "读取一个存档，然后回到主菜单。"
+
+#: manual/contribute/modding_tools.md:48
+msgid "Read the `[LeakProbe]` lines in `Player.log`. A mod passes when none of them names one of its fields."
+msgstr "查看 `Player.log` 里的 `[LeakProbe]` 行。其中没有出现某个模组的任何字段，该模组即为通过。"
+
+#: manual/contribute/modding_tools.md:50
+msgid "Disable the probe again before playing: it is meant for checks only."
+msgstr "正常游玩前请再次停用探针：它只用于检查。"
+
+#: manual/contribute/modding_tools.md:52
+msgid "Load Breakdown"
+msgstr "读档分析（Load Breakdown）"
+
+#: manual/contribute/modding_tools.md:54
+msgid "`tools/modding/LoadBreakdown.cs` is a development mod that shows where loading a save spends its time. When Continue or a save is chosen, it times the startup methods of the game's MonoBehaviours and a checked list of the steps of the load, and when the first frame is drawn it writes to `Player.log` the phases, the methods by their own time with call counts, and which game methods move UI nodes. Build and install it as described at the top of the file."
+msgstr "`tools/modding/LoadBreakdown.cs` 是一个开发用模组，用来查看读档时间花在了哪里。选择“继续”或某个存档时，它会给游戏中 MonoBehaviour 的启动方法和一份经过核对的读档步骤列表计时；画出首帧时，它会向 `Player.log` 写出各个阶段、按自身耗时排序的方法及调用次数，以及哪些游戏方法移动了界面节点。构建和安装方法写在文件开头。"
+
+#: manual/contribute/modding_tools.md:56
+msgid "Use it only on a copy of a save: timing can break a game method, and a broken load must not be saved over a real slot. Timing adds its own cost, so compare totals only with it off; Performance Fixes writes a load timeline on every load for that."
+msgstr "只在存档副本上使用：计时可能会破坏某个游戏方法，而出错的读档不能存回真正的存档位。计时本身也有开销，所以比较总时长时要把它关掉；Performance Fixes 每次读档都会写出读档时间线，可以用来比较。"
+
+#: manual/contribute/modding_tools.md:58
+msgid "Releasing"
+msgstr "发布"
+
+#: manual/contribute/modding_tools.md:60
+msgid "`scripts/release-check.sh <mod folder>` runs every check before a release and lists what is not ready: the changelog entry for the version, the tests and the build, the scanner (no capability, no `HARD` line), the documentation check and translation, the Workshop text (under Steam's limit of 8,000 bytes and starting with What's new for this version), the cover of this version in `preview.png` and the documentation, and a clean working copy without a tag of this version yet."
+msgstr "`scripts/release-check.sh <模组文件夹>` 在发布前运行所有检查，并列出还没准备好的地方：该版本的更新日志条目、测试和构建、扫描器（没有任何权限，没有 `HARD` 行）、文档检查和翻译、创意工坊文本（低于 Steam 的 8,000 字节上限，并以该版本的“新内容”开头）、`preview.png` 和文档中是否是该版本的封面，以及工作副本是否干净、是否还没有该版本的标签。"
+
+#: manual/contribute/modding_tools.md:62
+msgid "`python design/covers.py design/out --checkouts <folder> --sync --only <id>` renders the covers and writes only that mod's into its working copy."
+msgstr "`python design/covers.py design/out --checkouts <文件夹> --sync --only <id>` 生成封面，并只写入该模组的工作副本。"
+
+#: manual/contribute/modding_tools.md:64
+msgid "After publishing, `python scripts/workshop-status.py` checks every Workshop item against its latest release: updated after the version was set, and showing the cover of that version. It saves the previews to `dist/workshop-status/`."
+msgstr "发布之后，`python scripts/workshop-status.py` 检查每个创意工坊物品是否对应最新的发布：更新时间晚于版本号确定的时间，并显示该版本的封面。预览图保存在 `dist/workshop-status/`。"
+
+#: manual/contribute/modding_tools.md:66
+msgid "Comparison videos"
+msgstr "对比视频"
+
+#: manual/contribute/modding_tools.md:68
+msgid "`scripts/media.py` prepares recordings for release pages. `cut` keeps time ranges of a video, to shorten a cover or a title card. `gif` makes a GIF under a size budget (10 MB for Discord without Nitro) while keeping the frame rate, so the stutters a comparison shows stay visible: it lowers the colours first and the width last. The title slides, the OFF and ON labels and the pixel font of such videos come from `design/` (see `design/DESIGN.md`)."
+msgstr "`scripts/media.py` 为发布页面处理录像。`cut` 保留视频中的若干时间段，用来缩短封面或标题卡。`gif` 在体积上限内（不开 Nitro 的 Discord 为 10 MB）制作 GIF，同时保持帧率，这样对比中的卡顿依然看得出来：它先减少颜色数，最后才缩小宽度。这类视频的标题卡、OFF 和 ON 标签以及像素字体来自 `design/`（见 `design/DESIGN.md`）。"
+
+#: manual/contribute/modding_tools.md:70
 msgid "Publishing to the Workshop"
 msgstr "发布到创意工坊"
 
-#: manual/contribute/modding_tools.md:36
-msgid "`scripts/package.sh` collects the built mods into `dist/packages/`, each with its cover rendered fresh from `design/covers.py`. A cover shows the version in the mod's `manifest.xml`, and every Workshop upload replaces the preview image, so the Workshop page always shows the version it ships. `python design/covers.py design/out --checkouts <folder> --sync` renders the covers from working copies in that folder, for versions not yet published, and writes each one into the mod's `preview.png` and `doc/attachments/cover.png`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`. Upload files leave the visibility alone, so an update never hides or publishes an item."
-msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`，每个模组都会附上用 `design/covers.py` 重新生成的封面。封面上显示模组 `manifest.xml` 中的版本号，而每次上传创意工坊都会替换预览图，所以创意工坊页面显示的版本永远和上传的内容一致。`python design/covers.py design/out --checkouts <文件夹> --sync` 用该文件夹中的工作副本生成封面（适用于尚未发布的版本），并写入每个模组的 `preview.png` 和 `doc/attachments/cover.png`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
+#: manual/contribute/modding_tools.md:72
+msgid "`scripts/package.sh` collects the built mods into `dist/packages/`, each with its cover rendered fresh from `design/covers.py`. A cover shows the version in the mod's `manifest.xml`, and every Workshop upload replaces the preview image, so the Workshop page always shows the version it ships. `python design/covers.py design/out --checkouts <folder> --sync` renders the covers from working copies in that folder, for versions not yet published, and writes each one into the mod's `preview.png` and `doc/attachments/cover.png`. `scripts/workshop.py` then writes a SteamCMD upload file for each of them to `dist/workshop/`, using the item ids and titles in `config/workshop.json`; `--only <slug>` writes only the named mods. It stops when a description is over Steam's limit of 8,000 bytes, which SteamCMD would otherwise reject only after uploading the content. Upload files leave the visibility alone, so an update never hides or publishes an item."
+msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`，每个模组都会附上用 `design/covers.py` 重新生成的封面。封面上显示模组 `manifest.xml` 中的版本号，而每次上传创意工坊都会替换预览图，所以创意工坊页面显示的版本永远和上传的内容一致。`python design/covers.py design/out --checkouts <文件夹> --sync` 用该文件夹中的工作副本生成封面（适用于尚未发布的版本），并写入每个模组的 `preview.png` 和 `doc/attachments/cover.png`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件；`--only <slug>` 只生成指定的模组。描述超过 Steam 的 8,000 字节上限时它会停下，否则 SteamCMD 要在上传完内容之后才会拒绝。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
 
-#: manual/contribute/modding_tools.md:38
+#: manual/contribute/modding_tools.md:74
 msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
 msgstr "SteamCMD 无法设置标签。`scripts/workshop-tags.sh` 通过游戏自带的 Steamworks 库，设置 `config/workshop.json` 中列出的标签。运行时需要 Steam 客户端已启动，并登录物品所有者的账号。"
 
-#: manual/contribute/modding_tools.md:40
+#: manual/contribute/modding_tools.md:76
 msgid "The mods are also gathered in one Workshop collection, Quality of Life. `scripts/workshop-collection.sh` creates or updates it through the same Steamworks library: its title, tags and mods in the order of the `collection` entry of `config/workshop.json`, its text from `config/collection-description.txt` and its cover from `design/collection_cover.py`. A new mod is added by listing it there and running the script again. The visibility changes only when one is given (`public`, `friends` or `private`)."
 msgstr "这些模组还汇集在一个创意工坊合集“生活质量合集”中。`scripts/workshop-collection.sh` 通过同一个 Steamworks 库创建或更新这个合集：标题、标签和模组按 `config/workshop.json` 中 `collection` 一项的顺序，介绍文字取自 `config/collection-description.txt`，封面由 `design/collection_cover.py` 生成。加入新模组时，只需在那里列出它，再运行一次脚本。只有指定了可见性（`public`、`friends` 或 `private`）时才会更改可见性。"
 

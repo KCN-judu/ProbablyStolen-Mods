@@ -49,10 +49,13 @@ npm run build && npm run preview   # the site at http://localhost:4321/ProbablyS
 | `npm run build` | Build the site into `dist/` |
 | `scripts/build-all.sh [--install]` | Build every mod, and optionally install it into the game |
 | `scripts/package.sh` | Collect built mods into `dist/packages/` with a zip of each |
-| `scripts/workshop.py` | Write a SteamCMD upload file per mod to `dist/workshop/`, using the item ids in `config/workshop.json` |
+| `scripts/release-check.sh <mod folder>` | Check a mod before a release: changelog, tests, build, scanner, docs, Workshop text, cover, git |
+| `scripts/workshop.py` | Write a SteamCMD upload file per mod to `dist/workshop/`, using the item ids in `config/workshop.json` (`--only <slug>` for one) |
+| `scripts/workshop-status.py` | Check that every Workshop item has its latest release and the cover of that version |
+| `scripts/media.py` | Cut parts out of a comparison video, and make a GIF of it under a size budget |
 | `scripts/workshop-tags.sh` | Set the Workshop tags in `config/workshop.json` (Steam client must be running) |
 | `scripts/scan.sh <folder>` | Run the game's mod scanner on a built mod |
-| `python design/covers.py design/out` | Render the covers |
+| `python design/covers.py design/out` | Render the covers (`--checkouts <folder> --sync --only <id>` writes one mod's) |
 
 See [Contributing](https://kcn-judu.github.io/ProbablyStolen-Mods/en/contribute/) for the documentation standard and the translation workflow.
 
