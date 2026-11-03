@@ -41,3 +41,6 @@ CLAUDE.local.md
 
 # Rendered covers (python design/covers.py design/out)
 /design/out/
+
+# Rendered guide covers (python design/guide_cover.py)
+/workshop/*.png

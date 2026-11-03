@@ -1,0 +1,51 @@
+TITLE
+A Smoother Shop: Quality-of-Life Mods for Probably Stolen
+
+DESCRIPTION
+workshop/guide-description-en.txt
+
+CATEGORY
+Mods and Configuration
+
+COVER
+workshop/guide-cover-en.png
+
+===== SECTION: Overview =====
+
+New to the shop? These four small mods take away a few annoyances so you can enjoy the game. They do not change the rules or make the game easier, and you can use any of them on its own.
+
+===== SECTION: Performance Fixes =====
+
+[b]Without it:[/b] as your shop fills up, the game starts to lag. Opening a packed crate freezes the screen for a moment, loading takes longer and longer, and the late game feels sluggish.
+
+[b]With it:[/b] full containers open smoothly, loading is faster, and a big late-game shop stays responsive. The game plays exactly the same, just without the stutter.
+
+Get Performance Fixes =>
+https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577
+
+===== SECTION: Quick Call =====
+
+[b]Without it:[/b] every call to Wild or a supplier means waiting through dialing, ringing and small talk before you can say anything.
+
+[b]With it:[/b] the call goes straight to the choices. You save a few seconds on every call, and that adds up. Story calls still play in full.
+
+Get Quick Call =>
+https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274
+
+===== SECTION: Demand Highlight =====
+
+[b]Without it:[/b] a customer asks for something and you dig through every shelf and box looking for it while they wait.
+
+[b]With it:[/b] everything the customer wants is outlined in your shop, so you can see it at a glance. Stolen goods and contraband get their own marks, and the Item Filter shows your stock by type when you tidy up. Its algorithm is fast enough that you will not notice it running, even in a huge shop.
+
+Tip: you need to bind the two keys in the game's options menu first.
+
+Get Demand Highlight =>
+https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488
+
+===== SECTION: Save Language Converter =====
+
+[b]Only if you switch languages.[/b] If you started a save in one language and now play in another, item names and customers stay in the old language, and some text may not display correctly. This mod makes a copy of the save in your current language. Your original save is kept as it was.
+
+Get Save Language Converter =>
+https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427
