@@ -344,48 +344,46 @@ ARCH: Final[Mapping[Lang, ArchText]] = MappingProxyType({
         title="TEXTURE PACKS: HOW IT FITS TOGETHER",
         game="IN THE GAME", kit="CREATOR KIT",
         packs=[("PACK MODS", C.CREAM), ("TEXTURES/", C.MUTED)],
-        others=[("OTHER MODS", C.MUTED), ("ITEMS/, API", C.FAINT)],
+        others=[("OTHER MODS", C.CREAM), ("PICTURES", C.MUTED)],
         step1=[("1  THE GAME'S LOADER", C.CREAM), ("DECODES EACH MOD'S FILES", C.MUTED)],
         step2=[("2  FILE NAME -> IDENTITY", C.CREAM), ("ORIGIN X LOCATOR", C.MUTED)],
         step3=[("3  THE MANAGER'S ORDER", C.CREAM), ("TOP WINS, EACH ON OR OFF", C.MUTED)],
         step4=[("4  CHECK, THEN CHOOSE", C.CREAM), ("BEST USABLE PICTURE", C.MUTED)],
         atlas=[("ATLAS SPRITES", C.CREAM), ("RENDERHANDLER HOOKS", C.MUTED)],
         scene=[("SCENE TEXTURES", C.CREAM), ("COPIED ON SCENE LOAD", C.MUTED)],
-        modspr=[("OTHER MODS' SPRITES", C.MUTED), ("LOADEDMOD.SPRITES, API", C.FAINT)],
+        modspr=[("OTHER MODS' PICTURES", C.CREAM), ("ITEMS, PAPER, CODE", C.MUTED)],
         gamefiles=[("GAME FILES", C.CREAM)],
-        modfolders=[("MOD FOLDERS", C.MUTED)],
+        modfolders=[("MOD FOLDERS", C.CREAM)],
         inventory=[("INVENTORY.PY", C.CREAM), ("FACTS", C.MUTED)],
-        schema=[("SCHEMA.PY", C.MUTED), ("SCHEMA.TSV", C.FAINT)],
+        schema=[("SCHEMA.PY", C.CREAM), ("SCHEMA.TSV", C.MUTED)],
         catalog=[("CATALOG.CS", C.CREAM), ("CATALOG.TSV", C.MUTED)],
         export=[("EXPORT, PLACEHOLDERS", C.CREAM), ("ORIGINALS TO DRAW OVER", C.MUTED)],
         builder=[("PACKBUILDER", C.CREAM), ("CHECKS NAMES AND SIZES", C.MUTED)],
         pack=[("A PACK MOD", C.CREAM), ("INTO THE MODS FOLDER", C.MUTED)],
-        notes=["DOTTED: PLANNED, PROPOSAL 2 (ISSUE #2).",
-                  "THE KIT HOLDS NO GAME ART: CREATORS EXPORT",
+        notes=["THE KIT HOLDS NO GAME ART: CREATORS EXPORT",
                   "THE PICTURES FROM THEIR OWN GAME."],
     ),
     "zh": ArchText(
         title="材质包：整体架构",
         game="游戏内", kit="创作者套件",
         packs=[("材质包 Mod", C.CREAM), ("Textures/", C.MUTED)],
-        others=[("其他 Mod", C.MUTED), ("Items/、API", C.FAINT)],
+        others=[("其他 Mod", C.CREAM), ("它们的图片", C.MUTED)],
         step1=[("1 游戏的加载器", C.CREAM), ("解码各 Mod 的文件", C.MUTED)],
         step2=[("2 文件名 -> 身份", C.CREAM), ("来源 × 定位", C.MUTED)],
         step3=[("3 管理器的顺序", C.CREAM), ("上面的优先，可逐个开关", C.MUTED)],
         step4=[("4 先校验，再选择", C.CREAM), ("选最靠上的可用图", C.MUTED)],
         atlas=[("图集精灵", C.CREAM), ("RenderHandler 钩子", C.MUTED)],
         scene=[("场景贴图", C.CREAM), ("每次进场景时拷入", C.MUTED)],
-        modspr=[("其他 Mod 的精灵", C.MUTED), ("LoadedMod.Sprites、API", C.FAINT)],
+        modspr=[("其他 Mod 的图片", C.CREAM), ("Items、Paper、代码", C.MUTED)],
         gamefiles=[("游戏文件", C.CREAM)],
-        modfolders=[("Mod 文件夹", C.MUTED)],
+        modfolders=[("Mod 文件夹", C.CREAM)],
         inventory=[("inventory.py", C.CREAM), ("客观事实", C.MUTED)],
-        schema=[("schema.py", C.MUTED), ("schema.tsv", C.FAINT)],
+        schema=[("schema.py", C.CREAM), ("schema.tsv", C.MUTED)],
         catalog=[("Catalog.cs", C.CREAM), ("catalog.tsv", C.MUTED)],
         export=[("导出、占位图", C.CREAM), ("用来照着画的原图", C.MUTED)],
         builder=[("PackBuilder", C.CREAM), ("校验文件名和尺寸", C.MUTED)],
         pack=[("一个材质包 Mod", C.CREAM), ("放进 Mods 文件夹", C.MUTED)],
-        notes=["虚线：规划中的部分，提案 2（issue #2）。",
-                  "套件不含游戏美术：创作者从自己的游戏里导出原图。"],
+        notes=["套件不含游戏美术：创作者从自己的游戏里导出原图。"],
     ),
 })
 
@@ -409,14 +407,14 @@ def architecture(cv: C.Canvas, lang: Lang) -> int:
 def game_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int, accent: C.Color) -> int:
     """Inputs, the four steps, and the three ways the chosen pictures reach the screen. Returns the bottom."""
     mid = x + w // 2
-    # Two inputs side by side: texture packs, and (planned) other mods' own pictures.
+    # Two inputs side by side: texture packs, and the pictures of other mods.
     sw = (w - 8) // 2
     y = top
     ha = box(cv, lang, x, y, sw, t.packs, "slot", "packs")
-    hb = box(cv, lang, x + sw + 8, y, sw, t.others, "planned", "others")
+    hb = box(cv, lang, x + sw + 8, y, sw, t.others, "slot", "others")
     row = max(ha, hb)
     arrow_down(cv, x + sw // 2, y + ha + 2, y + row + 12, C.MUTED)
-    arrow_down(cv, x + sw + 8 + sw // 2, y + hb + 2, y + row + 12, C.FAINT, dotted=True)
+    arrow_down(cv, x + sw + 8 + sw // 2, y + hb + 2, y + row + 12, C.MUTED)
     y += row + 14
     for key, lines in (("step1", t.step1), ("step2", t.step2), ("step3", t.step3)):
         h = box(cv, lang, x, y, w, lines, "plate", key)
@@ -432,7 +430,7 @@ def game_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int,
     ox, ow = x + 14, w - 14
     built_end = join
     outs: Sequence[tuple[str, Lines, BoxKind]] = (("atlas", t.atlas, "lit"), ("scene", t.scene, "lit"),
-                                                  ("modspr", t.modspr, "planned"))
+                                                  ("modspr", t.modspr, "lit"))
     for key, lines, kind in outs:
         h = box(cv, lang, ox, y, ow, lines, kind, key, accent)
         m = y + h // 2
@@ -449,19 +447,19 @@ def game_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int,
 
 
 def kit_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int, accent: C.Color) -> int:
-    """The creator kit: the game's catalog and, planned, mods' schemas, merged into export and the builder."""
+    """The creator kit: the game's catalog and the mods' schemas, merged into export and the builder."""
     sw = (w - 8) // 2
     ax, bx = x, x + sw + 8                 # two sub-columns: the game, other mods
     am, bm, mid = ax + sw // 2, bx + sw // 2, x + w // 2
     y = top
     ha = box(cv, lang, ax, y, sw, t.gamefiles, "slot", "game files")
-    hb = box(cv, lang, bx, y, sw, t.modfolders, "planned", "mod folders")
+    hb = box(cv, lang, bx, y, sw, t.modfolders, "slot", "mod folders")
     row = max(ha, hb)
     arrow_down(cv, am, y + ha + 2, y + row + 12, C.MUTED)
-    arrow_down(cv, bm, y + hb + 2, y + row + 12, C.FAINT, dotted=True)
+    arrow_down(cv, bm, y + hb + 2, y + row + 12, C.MUTED)
     y += row + 14
     hi = box(cv, lang, ax, y, sw, t.inventory, "plate", "inventory")
-    hs = box(cv, lang, bx, y, sw, t.schema, "planned", "schema")
+    hs = box(cv, lang, bx, y, sw, t.schema, "plate", "schema")
     schema_bottom = y + hs
     arrow_down(cv, am, y + hi + 2, y + hi + 12, C.MUTED)
     y += hi + 14
@@ -469,7 +467,7 @@ def kit_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int, 
     y += hc + 14
     # Both feed the export: the catalog directly, the schemas past the catalog's row.
     arrow_down(cv, am, y - 12, y - 2, C.MUTED)
-    arrow_down(cv, bm, schema_bottom + 2, y - 2, C.FAINT, dotted=True)
+    arrow_down(cv, bm, schema_bottom + 2, y - 2, C.MUTED)
     for key, lines in (("export", t.export), ("builder", t.builder)):
         h = box(cv, lang, x, y, w, lines, "plate", key)
         arrow_down(cv, mid, y + h + 2, y + h + 12, accent if key == "builder" else C.MUTED)
