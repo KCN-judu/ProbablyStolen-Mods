@@ -5,6 +5,7 @@ import { defineConfig } from 'astro/config';
 import remarkAlerts from './src/plugins/remark-alerts.mjs';
 import rehypeHeadingIds from './src/plugins/rehype-heading-ids.mjs';
 import rehypeSidenotes from './src/plugins/rehype-sidenotes.mjs';
+import rehypeTableScroll from './src/plugins/rehype-table-scroll.mjs';
 
 const { base } = JSON.parse(fs.readFileSync(new URL('./config/repos.json', import.meta.url), 'utf8'));
 
@@ -18,7 +19,7 @@ export default defineConfig({
   build: { format: 'directory' },
   markdown: {
     remarkPlugins: [remarkAlerts],
-    rehypePlugins: [rehypeHeadingIds, rehypeSidenotes],
+    rehypePlugins: [rehypeHeadingIds, rehypeSidenotes, rehypeTableScroll],
     shikiConfig: {
       themes: { light: 'github-light', dark: 'github-dark-dimmed' },
       defaultColor: false,

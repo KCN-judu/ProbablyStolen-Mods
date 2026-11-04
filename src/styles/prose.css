@@ -234,7 +234,7 @@
 .prose ol,
 .prose dl,
 .prose blockquote,
-.prose table,
+.prose .table-scroll,
 .prose .code-block,
 .prose .katex-display {
   margin: 0 0 var(--s4);
@@ -383,10 +383,14 @@
 
 /* ------------------------------------------------------------ tables */
 
-.prose table {
-  display: block;
+/* The box scrolls when a table is wider than the page; the table fills it, so the header row spans the frame. */
+.prose .table-scroll {
   max-width: 100%;
   overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
   border-collapse: collapse;
   font-size: 0.9375rem;
   line-height: 1.5;
