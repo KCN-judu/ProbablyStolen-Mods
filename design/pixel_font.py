@@ -8,23 +8,30 @@ n x n screen pixels and stays crisp: 21 px at 1080p, 42 px at 2160p.
 """
 import os
 import sys
+from collections.abc import Sequence
+from typing import Final
+
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.ttLib.tables._g_l_y_f import Glyph
 
 import covers as C
 
-PX = 128
-EM = 7 * PX
-ADVANCE = 6 * PX            # 5 px glyph and 1 px letter spacing, as covers.text at x1
-ASCENT, DESCENT = 8 * PX, 2 * PX
-FAMILY = "Probably Stolen Pixel"
+PX: Final = 128
+EM: Final = 7 * PX
+ADVANCE: Final = 6 * PX            # 5 px glyph and 1 px letter spacing, as covers.text at x1
+ASCENT: Final = 8 * PX
+DESCENT: Final = 2 * PX
+FAMILY: Final = "Probably Stolen Pixel"
+NOTDEF: Final[C.Bitmap] = ("11111", "10001", "10001", "10001", "10001", "10001", "11111")
 
 
-def glyph_name(ch):
+# Glyph names follow the AGL: `space` and uniXXXX.
+def glyph_name(ch: str) -> str:
     return "space" if ch == " " else "uni%04X" % ord(ch)
 
 
-def outline(rows):
+def outline(rows: C.Bitmap) -> Glyph:
     # One rectangle per run of lit pixels in a row, drawn clockwise, the TrueType outer direction.
     pen = TTGlyphPen(None)
     for j, row in enumerate(rows):
@@ -38,21 +45,21 @@ def outline(rows):
             while i < len(row) and row[i] == "1":
                 i += 1
             x0, x1 = start * PX, i * PX
-            pen.moveTo((x0, top - PX)); pen.lineTo((x0, top)); pen.lineTo((x1, top)); pen.lineTo((x1, top - PX))
+            pen.moveTo((x0, top - PX))
+            pen.lineTo((x0, top))
+            pen.lineTo((x1, top))
+            pen.lineTo((x1, top - PX))
             pen.closePath()
     return pen.glyph()
 
 
-def build(path):
-    chars = sorted(C.FONT, key=ord)
+# Writes the font; glyph set and shapes come from covers.FONT, so a new cover letter appears here without changes.
+def build(path: str) -> None:
+    chars: Sequence[str] = sorted(C.FONT, key=ord)
     order = [".notdef"] + [glyph_name(ch) for ch in chars]
-    glyphs = {".notdef": outline(["11111", "10001", "10001", "10001", "10001", "10001", "11111"])}
-    cmap = {}
-    for ch in chars:
-        glyphs[glyph_name(ch)] = outline(C.FONT[ch])
-        cmap[ord(ch)] = glyph_name(ch)
-        if ch.isalpha():
-            cmap[ord(ch.lower())] = glyph_name(ch)
+    glyphs: dict[str, Glyph] = {".notdef": outline(NOTDEF)} | {glyph_name(ch): outline(C.FONT[ch]) for ch in chars}
+    # Lowercase letters map to the capitals' glyphs.
+    cmap = {ord(ch): glyph_name(ch) for ch in chars} | {ord(ch.lower()): glyph_name(ch) for ch in chars if ch.isalpha()}
 
     fb = FontBuilder(EM, isTTF=True)
     fb.setupGlyphOrder(order)

@@ -8,46 +8,56 @@ art in its own right, so both covers stay crisp at whole-pixel scales.
 """
 import os
 import sys
+from collections.abc import Sequence
+from functools import cache
+from typing import Final, Literal, TypeAlias
+
 from PIL import Image, ImageDraw, ImageFont
+from PIL.ImageFont import FreeTypeFont
 
 import covers as C
 
-S = 180
-C.W = C.H = S
-M = 16
-CJK_FONT = 'C:/Windows/Fonts/simsun.ttc'
+S: Final = 180
+M: Final = 16
+CJK_FONT: Final = 'C:/Windows/Fonts/simsun.ttc'
+
+IconKind: TypeAlias = Literal['performance', 'demand', 'call', 'language']
+Lang: TypeAlias = Literal['en', 'zh']
 
 # The four mods in guide order, each in its cover accent.
-MODS = [
-    ('performance', C.CYAN, "NO LAG", "不卡顿"),
-    ('demand', C.GREEN, "FIND IT", "一眼找货"),
-    ('call', C.ORANGE, "NO WAIT", "不用干等"),
-    ('language', C.TEAL, "LANGUAGE", "换语言玩"),
-]
+MODS: Final[Sequence[tuple[IconKind, C.Color, str, str]]] = (
+    ('performance', C.CYAN, "STUTTERS", "卡顿"),
+    ('demand', C.GREEN, "DEMAND", "需求"),
+    ('call', C.ORANGE, "CALLS", "电话"),
+    ('language', C.TEAL, "LANGUAGE", "存档语言"),
+)
 
 
-def background(cv):
-    cx, cy = 120, 110
-    for y in range(S):
-        for x in range(S):
-            d = (((x - cx) / 150.0) ** 2 + ((y - cy) / 130.0) ** 2) ** 0.5
-            level = int(max(0.0, min(1.0, 1.0 - d)) * 2.2 * 16)
-            th = C.BAYER[y % 4][x % 4]
-            cv.put(x, y, C.BG2 if level > 16 + th else C.BG1 if level > th else C.BG0)
+# Opened once: loading the .ttc per call would dominate the render. SimSun has bitmap strikes at 12 px, which is why that size.
+@cache
+def cjk_font() -> FreeTypeFont:
+    return ImageFont.truetype(CJK_FONT, 12)
+
+
+# The cover background on the guide's square canvas: same vignette and shelf lines as covers.background, centred differently.
+def background(cv: C.Canvas) -> None:
+    cv.paint(lambda x, y: C.vignette(x, y, 120, 110, 150.0, 130.0))
     for y in (40, 104, 168):
         for x in range(0, S, 2):
             cv.put(x, y, C.BG2)
 
 
-def cjk(cv, x, y, s, color, scale=1):
+def cjk(cv: C.Canvas, x: int, y: int, s: str, color: C.Color, scale: int = 1) -> int:
     # SimSun's embedded 12 px bitmaps, drawn without anti-aliasing and scaled by whole pixels.
-    font = ImageFont.truetype(CJK_FONT, 12)
+    font = cjk_font()
     w = int(font.getlength(s)) + 2
     mask = Image.new('L', (w, 14), 0)
     d = ImageDraw.Draw(mask)
     d.fontmode = '1'
     d.text((0, 0), s, font=font, fill=255)
     px = mask.load()
+    if px is None:
+        raise RuntimeError("the mask has no pixel access")
     for j in range(14):
         for i in range(w):
             if px[i, j]:
@@ -55,11 +65,13 @@ def cjk(cv, x, y, s, color, scale=1):
     return w * scale
 
 
-def cjk_width(s, scale=1):
-    return int(ImageFont.truetype(CJK_FONT, 12).getlength(s)) * scale
+# Advance width of a Chinese string at the given scale, for centring.
+def cjk_width(s: str, scale: int = 1) -> int:
+    return int(cjk_font().getlength(s)) * scale
 
 
-def icon(cv, kind, x, y, accent):
+# The small picture of each mod above its tile label: performance bars, demand outline, phone with chevrons, WEN to A/Z.
+def icon(cv: C.Canvas, kind: IconKind, x: int, y: int, accent: C.Color) -> None:
     # Each icon fits a 30x16 box whose top-left is (x, y).
     if kind == 'performance':
         for i in range(7):
@@ -91,17 +103,19 @@ def icon(cv, kind, x, y, accent):
         cv.bitmap(x + 24, y + 9, C.FONT['Z'], accent, 1)
 
 
-def draw(lang):
-    cv = C.Canvas()
+# English letters use the shared 5x7 capitals; Chinese uses cjk(). Both versions have the same layout: heading, accent rule
+# in the four mod colours, four tiles, author line.
+def draw(lang: Lang) -> C.Canvas:
+    cv = C.Canvas(S, S)
     background(cv)
     if lang == 'en':
         cv.text(M, M, "PROBABLY STOLEN MODS", C.MUTED)
-        cv.text(M, 32, "A SMOOTHER", C.CREAM, scale=2, spacing=2)
-        cv.text(M, 50, "SHOP", C.CREAM, scale=2, spacing=2)
+        cv.text(M, 32, "FOUR SMALL", C.CREAM, scale=2, spacing=2)
+        cv.text(M, 50, "MODS", C.CREAM, scale=2, spacing=2)
         tag = "GUIDE"
     else:
         cjk(cv, M, M - 2, "深空当铺 体验优化模组", C.MUTED)
-        cjk(cv, M, 36, "如丝般顺滑", C.CREAM, scale=2)
+        cjk(cv, M, 36, "四个小模组", C.CREAM, scale=2)
         tag = "GUIDE"
     # Accent rule in the four mod colours: the series in one stroke.
     for i, (_, accent, _, _) in enumerate(MODS):
@@ -125,16 +139,16 @@ def draw(lang):
     return cv
 
 
-def main(out):
+def main(out: str) -> None:
     os.makedirs(out, exist_ok=True)
-    for lang in ('en', 'zh'):
+    langs: tuple[Lang, ...] = ('en', 'zh')
+    for lang in langs:
         cv = draw(lang)
-        big = cv.img.resize((S * 4, S * 4), Image.NEAREST).convert("P", palette=Image.ADAPTIVE, colors=64)
+        big = cv.img.resize((S * 4, S * 4), Image.Resampling.NEAREST).convert("P", palette=Image.Palette.ADAPTIVE, colors=64)
         path = os.path.join(out, f"guide-cover-{lang}.png")
         big.save(path, optimize=True)
         print(path, os.path.getsize(path), "bytes")
 
 
 if __name__ == "__main__":
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     main(sys.argv[1] if len(sys.argv) > 1 else "out")

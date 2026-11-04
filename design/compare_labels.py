@@ -9,40 +9,35 @@ of a comparison line up.
 """
 import os
 import sys
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
+from types import MappingProxyType
+from typing import Final
+
 from PIL import Image
 
 import covers as C
+from typed import take_option
 
 # Each mod's name on the label and its accent (DESIGN.md, Colour), keyed like covers.COVERS.
-MODS = {
+MODS: Final[Mapping[str, tuple[str, C.Color]]] = MappingProxyType({
     "performance_fixes": ("PERFORMANCE FIXES", C.CYAN),
     "demand_highlight": ("DEMAND HIGHLIGHT", C.GREEN),
     "quick_call": ("QUICK CALL", C.ORANGE),
     "window_workspaces": ("WINDOW WORKSPACES", C.LILAC),
     "better_key_bindings": ("BETTER KEY BINDINGS", C.AMBER),
     "save_language_converter": ("SAVE LANGUAGE CONVERTER", C.TEAL),
-}
+})
 
-PAD = 8                                   # bevel, accent bar and gap before the name
-CHIP_W = C.text_width("OFF") + 8          # the switch fits the longer state, so OFF and ON match
-H = 17
-
-
-class LabelCanvas(C.Canvas):
-    # A transparent canvas of its own size; drawing works as on the cover canvas.
-    def __init__(self, w, h):
-        self.w, self.h = w, h
-        self.img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-        self.px = self.img.load()
-
-    def put(self, x, y, c):
-        if 0 <= x < self.w and 0 <= y < self.h:
-            self.px[x, y] = c + (255,) if len(c) == 3 else c
+PAD: Final = 8                                   # bevel, accent bar and gap before the name
+CHIP_W: Final = C.text_width("OFF") + 8          # the switch fits the longer state, so OFF and ON match
+H: Final = 17
 
 
-def draw(name, accent, on):
+# One label: plate, accent bar (lit only for ON), the mod's name, then the OFF/ON switch chip; returned as a transparent image.
+def draw(name: str, accent: C.Color, on: bool) -> Image.Image:
     chip_x = PAD + C.text_width(name) + 6
-    cv = LabelCanvas(chip_x + CHIP_W + 4, H)
+    cv = C.Canvas(chip_x + CHIP_W + 4, H, "RGBA")   # transparent, so the label lies on any video
     cv.plate(0, 0, cv.w, H, rivets=False)
     # Accent bar on the left edge, lit only when the mod is on.
     cv.rect(1, 1, 3, H - 2, accent if on else C.FAINT)
@@ -59,33 +54,39 @@ def draw(name, accent, on):
     return cv.img
 
 
-def scale_for(height):
+def scale_for(height: int) -> int:
     # The cover grid is 180 logical px tall, so 1080p is x6. The label takes half of that, x3, so it sits in
     # a corner of each half of a side-by-side without covering the game.
     return max(1, height // C.H // 2)
 
 
-def main(argv):
-    """python design/compare_labels.py [out] [mod ...] [--height PX]"""
-    args = list(argv)
-    height = 1080
-    if "--height" in args:
-        i = args.index("--height")
-        height = int(args[i + 1])
-        del args[i:i + 2]
-    out = args[0] if args else "out/labels"
-    names = args[1:] or list(MODS)
+@dataclass(frozen=True)
+class Options:
+    out: str
+    names: Sequence[str]
+    height: int
+
+
+def parse_options(argv: Sequence[str]) -> Options:
+    height_arg, rest = take_option(argv, "--height")
+    names = rest[1:] or tuple(MODS)
     for name in names:
         if name not in MODS:
-            sys.exit(f"{name}: not one of {', '.join(MODS)}")
-    os.makedirs(out, exist_ok=True)
-    s = scale_for(height)
-    for name in names:
+            raise SystemExit(f"{name}: not one of {', '.join(MODS)}")
+    return Options(rest[0] if rest else "out/labels", names, 1080 if height_arg is None else int(height_arg))
+
+
+def main(argv: Sequence[str]) -> None:
+    """python design/compare_labels.py [out] [mod ...] [--height PX]"""
+    opts = parse_options(argv)
+    os.makedirs(opts.out, exist_ok=True)
+    s = scale_for(opts.height)
+    for name in opts.names:
         title, accent = MODS[name]
         for on in (False, True):
             img = draw(title, accent, on)
-            img = img.resize((img.width * s, img.height * s), Image.NEAREST)
-            path = os.path.join(out, "%s_%s_%dp.png" % (name, "on" if on else "off", height))
+            img = img.resize((img.width * s, img.height * s), Image.Resampling.NEAREST)
+            path = os.path.join(opts.out, "%s_%s_%dp.png" % (name, "on" if on else "off", opts.height))
             img.save(path, optimize=True)
             print(path, "%dx%d" % img.size)
 

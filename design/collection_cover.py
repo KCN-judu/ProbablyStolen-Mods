@@ -7,29 +7,34 @@ in the order the collection lists them, so the cover reads as the series it gath
 """
 import os
 import sys
+from collections.abc import Sequence
+from typing import Final
+
 from PIL import Image
 
 import covers as C
 
-# One tile per mod: accent, what it takes away, where.
-MODS = [
-    (C.CYAN, "NO LAG", "STORAGE"),          # Performance Fixes
-    (C.GREEN, "FIND IT", "DEMAND"),         # Demand Highlight
-    (C.ORANGE, "NO WAIT", "PHONE"),         # Quick Call
+# One tile per mod: accent, what it changes, where.
+MODS: Final[Sequence[tuple[C.Color, str, str]]] = (
+    (C.CYAN, "STUTTERS", "STORAGE"),          # Performance Fixes
+    (C.GREEN, "OUTLINES", "DEMAND"),         # Demand Highlight
+    (C.ORANGE, "CALLS", "CHOICES"),         # Quick Call
     (C.LILAC, "WINDOWS", "WORKSPACE"),      # Window Workspaces
     (C.AMBER, "KEYS", "CTRL + E"),          # Better Key Bindings
     (C.TEAL, "LANGUAGE", "SAVES"),          # Save Language Converter
-]
+)
 
 
-def tile(cv, x, y, w, h, accent, label, sub):
+# One mod's tile: accent bar on the left, what it changes, where.
+def tile(cv: C.Canvas, x: int, y: int, w: int, h: int, accent: C.Color, label: str, sub: str) -> None:
     cv.plate(x, y, w, h, rivets=False)
     cv.rect(x + 1, y + 1, 3, h - 2, accent)
     cv.text(x + 8, y + 9, label, accent)
     cv.text(x + 8, y + 23, sub, C.CREAM_DIM)
 
 
-def draw(cv):
+# Left: title, accent rule, the lines of what the collection does, author and mod count. Right: a 2-column grid of MODS tiles.
+def draw(cv: C.Canvas) -> None:
     C.background(cv)
     y = C.MARGIN
     cv.text(C.TEXT_X0, y, "PROBABLY STOLEN MODS", C.MUTED)
@@ -40,7 +45,7 @@ def draw(cv):
     y += 2
     cv.rect(C.TEXT_X0, y, 24, 2, C.TEAL)
     y += 2 + 10
-    for line in ("KEEP THE RULES.", "LOSE THE WAITING,", "GUESSING, STUTTERS."):
+    for line in ("STUTTERS, CALLS,", "WINDOWS, KEYS,", "SAVE LANGUAGE."):
         cv.text(C.TEXT_X0, y, line, C.MUTED)
         y += 11
     cv.text(C.TEXT_X0, C.H - C.MARGIN - 7, "BY KCN-JUDU", C.FAINT)
@@ -52,15 +57,14 @@ def draw(cv):
         tile(cv, C.IMG_X0 + col * (w + gap), 24 + row * (h + 6), w, h, accent, label, sub)
 
 
-def main(out):
+def main(out: str) -> None:
     os.makedirs(out, exist_ok=True)
     cv = C.Canvas()
     draw(cv)
-    big = cv.img.resize((C.W * C.SCALE, C.H * C.SCALE), Image.NEAREST)
-    big = big.convert("P", palette=Image.ADAPTIVE, colors=64)
+    big = C.to_png(cv)
     path = os.path.join(out, "collection.png")
     big.save(path, optimize=True)
-    cv.img.resize((C.W, C.H), Image.NEAREST).save(os.path.join(out, "collection_thumb.png"))
+    cv.img.resize((C.W, C.H), Image.Resampling.NEAREST).save(os.path.join(out, "collection_thumb.png"))
     print(path, os.path.getsize(path), "bytes")
 
 

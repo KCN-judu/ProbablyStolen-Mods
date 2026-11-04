@@ -5,43 +5,63 @@
 
 Everything is drawn on a 320x180 logical canvas and scaled x4 with nearest-neighbour.
 """
-import json
 import os
-import re
 import shutil
 import sys
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
+from types import MappingProxyType
+from typing import Final, Literal, NamedTuple, TypeAlias
+
 from PIL import Image
 
-W, H, SCALE = 320, 180, 4
-MARGIN = 16
-TEXT_X0, TEXT_X1 = 16, 144
-IMG_X0, IMG_X1 = 160, 304
+from typed import as_dict, load_json, member, split_ids, str_map, take_flag, take_option
+from version import read_version, version_label
+
+Color: TypeAlias = tuple[int, int, int]
+Rgba: TypeAlias = tuple[int, int, int, int]
+Bitmap: TypeAlias = Sequence[str]
+
+W: Final = 320
+H: Final = 180
+SCALE: Final = 4
+MARGIN: Final = 16
+TEXT_X0: Final = 16
+TEXT_X1: Final = 144
+IMG_X0: Final = 160
+IMG_X1: Final = 304
 
 # Palette (DESIGN.md, Colour)
-BG0 = (0x17, 0x15, 0x1F)
-BG1 = (0x1F, 0x1C, 0x2B)
-BG2 = (0x25, 0x22, 0x33)
-PANEL = (0x2E, 0x2B, 0x40)
-PANEL_HI = (0x48, 0x42, 0x60)
-PANEL_LO = (0x12, 0x10, 0x18)
-SLOT = (0x23, 0x21, 0x31)
-SLOT_HI = (0x33, 0x30, 0x46)
-CREAM = (0xF3, 0xE6, 0xC8)
-CREAM_DIM = (0xC9, 0xBB, 0x9C)
-MUTED = (0xA7, 0x9F, 0xBF)
-FAINT = (0x5E, 0x57, 0x75)
-TEAL = (0x4C, 0xC3, 0xB5)
-ORANGE = (0xF0, 0x8A, 0x3C)
-GREEN = (0x5C, 0xEB, 0x6B)
-AMBER = (0xFF, 0xB8, 0x29)
-RED = (0xE2, 0x50, 0x4A)
-CYAN = (0x59, 0xD1, 0xFF)
-RUST = (0x9A, 0x5A, 0x3C)
-STEEL = (0x7C, 0x86, 0x9A)
-STEEL_LO = (0x4E, 0x55, 0x66)
+BG0: Final[Color] = (0x17, 0x15, 0x1F)
+BG1: Final[Color] = (0x1F, 0x1C, 0x2B)
+BG2: Final[Color] = (0x25, 0x22, 0x33)
+PANEL: Final[Color] = (0x2E, 0x2B, 0x40)
+PANEL_HI: Final[Color] = (0x48, 0x42, 0x60)
+PANEL_LO: Final[Color] = (0x12, 0x10, 0x18)
+SLOT: Final[Color] = (0x23, 0x21, 0x31)
+SLOT_HI: Final[Color] = (0x33, 0x30, 0x46)
+CREAM: Final[Color] = (0xF3, 0xE6, 0xC8)
+CREAM_DIM: Final[Color] = (0xC9, 0xBB, 0x9C)
+MUTED: Final[Color] = (0xA7, 0x9F, 0xBF)
+FAINT: Final[Color] = (0x5E, 0x57, 0x75)
+TEAL: Final[Color] = (0x4C, 0xC3, 0xB5)
+ORANGE: Final[Color] = (0xF0, 0x8A, 0x3C)
+GREEN: Final[Color] = (0x5C, 0xEB, 0x6B)
+AMBER: Final[Color] = (0xFF, 0xB8, 0x29)
+RED: Final[Color] = (0xE2, 0x50, 0x4A)
+CYAN: Final[Color] = (0x59, 0xD1, 0xFF)
+RUST: Final[Color] = (0x9A, 0x5A, 0x3C)
+STEEL: Final[Color] = (0x7C, 0x86, 0x9A)
+STEEL_LO: Final[Color] = (0x4E, 0x55, 0x66)
+LILAC: Final[Color] = (0xC3, 0xA6, 0xEA)
+LILAC_DIM: Final[Color] = (0x6E, 0x5E, 0x8C)
+PINK: Final[Color] = (0xE8, 0x6A, 0x92)
+PINK_HI: Final[Color] = (0xF6, 0xB0, 0xC6)
+PINK_LO: Final[Color] = (0x8C, 0x3E, 0x5C)
+WOOD_LO: Final[Color] = (0x6A, 0x3A, 0x28)
 
 # 5x7 capitals, digits and the few signs the covers use.
-FONT = {
+FONT: Final[Mapping[str, Bitmap]] = MappingProxyType({
     'A': ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
     'B': ["11110", "10001", "10001", "11110", "10001", "10001", "11110"],
     'C': ["01110", "10001", "10000", "10000", "10000", "10001", "01110"],
@@ -112,44 +132,78 @@ FONT = {
     '|': ["00100", "00100", "00100", "00100", "00100", "00100", "00100"],
     '}': ["01000", "00100", "00100", "00010", "00100", "00100", "01000"],
     '~': ["00000", "00000", "01000", "10101", "00010", "00000", "00000"],
-}
+})
 
 # 7x7 hand-drawn 文 for the language cover.
-WEN = ["0001000", "1111111", "0100010", "0010100", "0001000", "0110110", "1000001"]
+WEN: Final[Bitmap] = ("0001000", "1111111", "0100010", "0010100", "0001000", "0110110", "1000001")
 
 # Ordered dither (Bayer 4x4) for the vignette.
-BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
+BAYER: Final[Sequence[Sequence[int]]] = ((0, 8, 2, 10), (12, 4, 14, 6), (3, 11, 1, 9), (15, 7, 13, 5))
+
+
+def vignette(x: int, y: int, cx: float, cy: float, rx: float, ry: float) -> Color:
+    """The ordered-dither background colour at (x, y): lighter toward (cx, cy), darker toward the corners."""
+    d = (((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2) ** 0.5
+    level = int(max(0.0, min(1.0, 1.0 - d)) * 2.2 * 16)
+    th = BAYER[y % 4][x % 4]
+    return BG2 if level > 16 + th else BG1 if level > th else BG0
 
 
 class Canvas:
-    def __init__(self):
-        self.img = Image.new("RGB", (W, H), BG0)
-        self.version = "V1.0"   # set from the mod's manifest before drawing
-        self.px = self.img.load()
+    """A pixel canvas of its own size; every drawing call clips to it. `RGBA` canvases start transparent."""
 
-    def put(self, x, y, c):
-        if 0 <= x < W and 0 <= y < H:
-            self.px[x, y] = c
+    def __init__(self, w: int = W, h: int = H, mode: Literal["RGB", "RGBA"] = "RGB") -> None:
+        self.w: int = w
+        self.h: int = h
+        self.alpha: bool = mode == "RGBA"
+        self.img: Image.Image = Image.new("RGBA", (w, h), (0, 0, 0, 0)) if self.alpha else Image.new("RGB", (w, h), BG0)
+        self.version: str = "V1.0"   # set from the mod's manifest before drawing
+        px = self.img.load()
+        if px is None:
+            raise RuntimeError("the image has no pixel access")
+        self._px = px
 
-    def rect(self, x, y, w, h, c):
-        for yy in range(y, y + h):
-            for xx in range(x, x + w):
-                self.put(xx, yy, c)
+    def put(self, x: int, y: int, c: Color | Rgba) -> None:
+        if 0 <= x < self.w and 0 <= y < self.h:
+            self._px[x, y] = (*c, 255) if self.alpha and len(c) == 3 else c
 
-    def frame(self, x, y, w, h, c):
-        self.rect(x, y, w, 1, c); self.rect(x, y + h - 1, w, 1, c)
-        self.rect(x, y, 1, h, c); self.rect(x + w - 1, y, 1, h, c)
+    def get(self, x: int, y: int) -> tuple[int, ...]:
+        v = self._px[x, y]
+        return v if isinstance(v, tuple) else (int(v),)
 
-    def hline(self, x, y, w, c): self.rect(x, y, w, 1, c)
-    def vline(self, x, y, h, c): self.rect(x, y, 1, h, c)
+    def lit(self, x: int, y: int) -> bool:
+        """Whether (x, y) is on the canvas and not transparent."""
+        return 0 <= x < self.w and 0 <= y < self.h and self.get(x, y)[3] != 0
 
-    def bitmap(self, x, y, rows, c, scale=1):
+    def rect(self, x: int, y: int, w: int, h: int, c: Color | Rgba) -> None:
+        # Clipped to the canvas once and filled in one call, instead of one bounds check per pixel.
+        x0, y0, x1, y1 = max(x, 0), max(y, 0), min(x + w, self.w), min(y + h, self.h)
+        if x0 < x1 and y0 < y1:
+            self.img.paste((*c, 255) if self.alpha and len(c) == 3 else c, (x0, y0, x1, y1))
+
+    def paint(self, colour_at: Callable[[int, int], Color]) -> None:
+        """Sets every pixel of an opaque canvas from its position, in one pass."""
+        self.img.putdata([colour_at(x, y) for y in range(self.h) for x in range(self.w)])
+
+    def frame(self, x: int, y: int, w: int, h: int, c: Color) -> None:
+        self.rect(x, y, w, 1, c)
+        self.rect(x, y + h - 1, w, 1, c)
+        self.rect(x, y, 1, h, c)
+        self.rect(x + w - 1, y, 1, h, c)
+
+    def hline(self, x: int, y: int, w: int, c: Color) -> None:
+        self.rect(x, y, w, 1, c)
+
+    def vline(self, x: int, y: int, h: int, c: Color) -> None:
+        self.rect(x, y, 1, h, c)
+
+    def bitmap(self, x: int, y: int, rows: Bitmap, c: Color, scale: int = 1) -> None:
         for j, row in enumerate(rows):
             for i, bit in enumerate(row):
                 if bit == '1':
                     self.rect(x + i * scale, y + j * scale, scale, scale, c)
 
-    def text(self, x, y, s, c, scale=1, spacing=None):
+    def text(self, x: int, y: int, s: str, c: Color, scale: int = 1, spacing: int | None = None) -> int:
         spacing = scale if spacing is None else spacing
         for ch in s.upper():
             self.bitmap(x, y, FONT[ch], c, scale)
@@ -157,46 +211,48 @@ class Canvas:
         return x
 
     # A machinery plate: body, 1 px bevel, rivets (DESIGN.md, Colour: depth by value).
-    def plate(self, x, y, w, h, body=PANEL, rivets=True):
+    def plate(self, x: int, y: int, w: int, h: int, body: Color = PANEL, rivets: bool = True) -> None:
         self.rect(x, y, w, h, body)
-        self.hline(x, y, w, PANEL_HI); self.vline(x, y, h, PANEL_HI)
-        self.hline(x, y + h - 1, w, PANEL_LO); self.vline(x + w - 1, y, h, PANEL_LO)
+        self.hline(x, y, w, PANEL_HI)
+        self.vline(x, y, h, PANEL_HI)
+        self.hline(x, y + h - 1, w, PANEL_LO)
+        self.vline(x + w - 1, y, h, PANEL_LO)
         if rivets:
             for rx, ry in ((x + 2, y + 2), (x + w - 4, y + 2), (x + 2, y + h - 4), (x + w - 4, y + h - 4)):
-                self.put(rx, ry, PANEL_HI); self.put(rx + 1, ry, STEEL_LO)
-                self.put(rx, ry + 1, STEEL_LO); self.put(rx + 1, ry + 1, PANEL_LO)
+                self.put(rx, ry, PANEL_HI)
+                self.put(rx + 1, ry, STEEL_LO)
+                self.put(rx, ry + 1, STEEL_LO)
+                self.put(rx + 1, ry + 1, PANEL_LO)
 
-    def slot(self, x, y, w, h):
+    def slot(self, x: int, y: int, w: int, h: int) -> None:
         self.rect(x, y, w, h, SLOT)
-        self.hline(x, y, w, PANEL_LO); self.vline(x, y, h, PANEL_LO)
-        self.hline(x, y + h - 1, w, SLOT_HI); self.vline(x + w - 1, y, h, SLOT_HI)
+        self.hline(x, y, w, PANEL_LO)
+        self.vline(x, y, h, PANEL_LO)
+        self.hline(x, y + h - 1, w, SLOT_HI)
+        self.vline(x + w - 1, y, h, SLOT_HI)
 
 
-def text_width(s, scale=1, spacing=None):
+Drawer: TypeAlias = Callable[[Canvas], None]
+
+
+# Width in px of a line of text; the text column is TEXT_X1 - TEXT_X0 wide, so a line must stay within it.
+def text_width(s: str, scale: int = 1, spacing: int | None = None) -> int:
     spacing = scale if spacing is None else spacing
     return len(s) * (5 * scale + spacing) - spacing
 
 
-def background(cv):
+def background(cv: Canvas) -> None:
     # Ordered-dither vignette: lighter toward the image field, darker toward the corners.
-    cx, cy = 232, 84
-    for y in range(H):
-        for x in range(W):
-            d = (((x - cx) / 200.0) ** 2 + ((y - cy) / 120.0) ** 2) ** 0.5
-            t = max(0.0, min(1.0, 1.0 - d)) * 2.2
-            level = int(t * 16)
-            th = BAYER[y % 4][x % 4]
-            if level > 16 + th: c = BG2
-            elif level > th: c = BG1
-            else: c = BG0
-            cv.put(x, y, c)
+    cv.paint(lambda x, y: vignette(x, y, 232, 84, 200.0, 120.0))
     # Faint shelf lines, like the shop wall in the key art.
     for y in (40, 104, 168):
         for x in range(0, W, 2):
             cv.put(x, y, BG2)
 
 
-def layout(cv, accent, title_lines, tagline_lines):
+# The left half shared by every mod cover: title lines at scale 2, accent rule, up to three tagline lines at 11 px steps,
+# author and version on the bottom margin. The covers below draw the right half themselves.
+def layout(cv: Canvas, accent: Color, title_lines: Sequence[str], tagline_lines: Sequence[str]) -> None:
     background(cv)
     y = MARGIN
     cv.text(TEXT_X0, y, "PROBABLY STOLEN MOD", MUTED)
@@ -217,7 +273,7 @@ def layout(cv, accent, title_lines, tagline_lines):
     cv.text(TEXT_X0 + text_width("BY KCN-JUDU") + 8, H - MARGIN - 7, cv.version, accent)
 
 
-def cartridge(cv, x, y, label_color, glyph, glyph_color):
+def cartridge(cv: Canvas, x: int, y: int, label_color: Color, glyph: str, glyph_color: Color) -> None:
     # A save cartridge: steel shell, label, notch.
     cv.rect(x, y, 40, 48, STEEL_LO)
     cv.rect(x + 1, y + 1, 38, 46, STEEL)
@@ -234,8 +290,9 @@ def cartridge(cv, x, y, label_color, glyph, glyph_color):
         cv.bitmap(x + 15, y + 15, FONT[glyph], glyph_color, 2)
 
 
-def cover_language(cv):
-    layout(cv, TEAL, ["SAVE", "LANGUAGE", "CONVERTER"], ["OPEN ANY SAVE IN", "YOUR LANGUAGE.", "ORIGINAL KEPT."])
+# Save Language Converter: two save cartridges, the original and the converted copy, with an arrow and their line items.
+def cover_language(cv: Canvas) -> None:
+    layout(cv, TEAL, ["SAVE", "LANGUAGE", "CONVERTER"], ["COPIES A SAVE AND", "CONVERTS ITS TEXT TO", "YOUR LANGUAGE."])
     cv.plate(IMG_X0, 24, IMG_X1 - IMG_X0, 132)
     cv.rect(IMG_X0 + 1, 25, IMG_X1 - IMG_X0 - 2, 9, PANEL_LO)
     cv.text(IMG_X0 + 6, 26, "CONVERT A COPY", TEAL)
@@ -258,8 +315,9 @@ def cover_language(cv):
     cv.text(IMG_X0 + 62, 116, "OK", TEAL)
 
 
-def cover_call(cv):
-    layout(cv, ORANGE, ["QUICK", "CALL"], ["SKIP THE RINGING.", "STRAIGHT TO", "THE CHOICES."])
+# Quick Call: the phone and its number pad with fast-forward chevrons, and the dialog opened straight on its choices.
+def cover_call(cv: Canvas) -> None:
+    layout(cv, ORANGE, ["QUICK", "CALL"], ["CALLS OPEN ON THEIR", "CHOICES: NO RINGING,", "NO GREETING LINES."])
     # Phone on the left of the image field.
     px, py = IMG_X0 + 2, 34
     cv.plate(px, py, 58, 112)
@@ -297,27 +355,36 @@ def cover_call(cv):
             cv.text(dx + 15, ry + 5, s, CREAM_DIM)
 
 
-def outline(cv, x, y, w, h, style, color):
+OutlineStyle: TypeAlias = Literal['solid', 'tape', 'double', 'brackets']
+ItemKind: TypeAlias = Literal['bottle', 'pistol', 'box', 'pills', 'gem', 'can']
+
+
+def outline(cv: Canvas, x: int, y: int, w: int, h: int, style: OutlineStyle, color: Color) -> None:
     if style == 'solid':
         cv.frame(x, y, w, h, color)
     elif style == 'tape':
         for i in range(w):
             c = color if ((x + i + y) // 3) % 2 == 0 else RUST
-            cv.put(x + i, y, c); cv.put(x + i, y + h - 1, c)
+            cv.put(x + i, y, c)
+            cv.put(x + i, y + h - 1, c)
         for j in range(h):
             c = color if ((x + y + j) // 3) % 2 == 0 else RUST
-            cv.put(x, y + j, c); cv.put(x + w - 1, y + j, c)
+            cv.put(x, y + j, c)
+            cv.put(x + w - 1, y + j, c)
     elif style == 'double':
-        cv.frame(x, y, w, h, color); cv.frame(x + 1, y + 1, w - 2, h - 2, color)
+        cv.frame(x, y, w, h, color)
+        cv.frame(x + 1, y + 1, w - 2, h - 2, color)
         cv.frame(x + 4, y + 4, w - 8, h - 8, color)
     elif style == 'brackets':
-        L = 5
+        arm = 5
         for (cx, cy, sx, sy) in ((x, y, 1, 1), (x + w - 1, y, -1, 1), (x, y + h - 1, 1, -1), (x + w - 1, y + h - 1, -1, -1)):
-            for i in range(L):
-                cv.put(cx + sx * i, cy, color); cv.put(cx, cy + sy * i, color)
+            for i in range(arm):
+                cv.put(cx + sx * i, cy, color)
+                cv.put(cx, cy + sy * i, color)
 
 
-def item(cv, kind, x, y, w, h):
+# Item silhouettes for the demand grid, drawn inside their cell with a margin.
+def item(cv: Canvas, kind: ItemKind, x: int, y: int, w: int, h: int) -> None:
     # Simple item silhouettes inside their cells.
     if kind == 'bottle':
         cv.rect(x + w // 2 - 2, y + 3, 4, 4, CREAM_DIM)
@@ -346,8 +413,20 @@ def item(cv, kind, x, y, w, h):
         cv.rect(x + 4, y + h // 2 - 1, w - 8, 3, RUST)
 
 
-def cover_demand(cv):
-    layout(cv, GREEN, ["DEMAND", "HIGHLIGHT"], ["SEE WHAT THEY WANT.", "SORT BY TYPE.", "LIGHT ON CPU."])
+class Placed(NamedTuple):
+    # An item in the demand grid: its cell, its size in cells, and the outline that marks it.
+    kind: ItemKind
+    col: int
+    row: int
+    w: int
+    h: int
+    style: OutlineStyle | None
+    color: Color | None
+
+
+# Demand Highlight: an inventory grid with outlined items and the Item Filter window over its corner.
+def cover_demand(cv: Canvas) -> None:
+    layout(cv, GREEN, ["DEMAND", "HIGHLIGHT"], ["OUTLINES ITEMS THE", "CUSTOMER WANTS.", "ITEM FILTER BY TYPE."])
     gx, gy, cell = IMG_X0 + 4, 30, 18
     cols, rows = 7, 6
     cv.plate(gx - 4, gy - 6, cols * cell + 8, rows * cell + 12)
@@ -355,21 +434,21 @@ def cover_demand(cv):
         for c in range(cols):
             cv.slot(gx + c * cell, gy + r * cell, cell, cell)
     # Items and their outline styles (DESIGN.md, Illustrations).
-    placed = [
-        ('bottle', 0, 0, 1, 2, 'solid', GREEN),
-        ('pills', 1, 0, 1, 1, 'solid', GREEN),
-        ('pistol', 2, 1, 2, 1, 'double', RED),
-        ('can', 1, 1, 1, 1, 'tape', AMBER),
-        ('box', 0, 3, 2, 2, 'brackets', GREEN),
-        ('gem', 4, 0, 1, 1, 'tape', AMBER),
-        ('can', 2, 4, 1, 1, None, None),
-        ('box', 3, 3, 1, 1, None, None),
-    ]
-    for kind, c, r, w, h, style, color in placed:
-        x, y = gx + c * cell, gy + r * cell
-        item(cv, kind, x + 1, y + 1, w * cell - 2, h * cell - 2)
-        if style:
-            outline(cv, x + 1, y + 1, w * cell - 2, h * cell - 2, style, color)
+    placed = (
+        Placed('bottle', 0, 0, 1, 2, 'solid', GREEN),
+        Placed('pills', 1, 0, 1, 1, 'solid', GREEN),
+        Placed('pistol', 2, 1, 2, 1, 'double', RED),
+        Placed('can', 1, 1, 1, 1, 'tape', AMBER),
+        Placed('box', 0, 3, 2, 2, 'brackets', GREEN),
+        Placed('gem', 4, 0, 1, 1, 'tape', AMBER),
+        Placed('can', 2, 4, 1, 1, None, None),
+        Placed('box', 3, 3, 1, 1, None, None),
+    )
+    for p in placed:
+        x, y = gx + p.col * cell, gy + p.row * cell
+        item(cv, p.kind, x + 1, y + 1, p.w * cell - 2, p.h * cell - 2)
+        if p.style is not None and p.color is not None:
+            outline(cv, x + 1, y + 1, p.w * cell - 2, p.h * cell - 2, p.style, p.color)
     # The Item Filter window, overlapping the grid's corner.
     fx, fy, fw, fh = IMG_X1 - 72, 92, 70, 66
     cv.rect(fx + 2, fy + 2, fw, fh, PANEL_LO)
@@ -384,8 +463,9 @@ def cover_demand(cv):
         cv.text(fx + 15, by, label, CREAM_DIM if on else FAINT)
 
 
-def cover_performance(cv):
-    layout(cv, CYAN, ["PERFORMANCE", "FIXES"], ["SMOOTHER SHOP,", "SAME GAME."])
+# Performance Fixes: a frame-time chart, spiky before and flat after, against a 60 fps guide line.
+def cover_performance(cv: Canvas) -> None:
+    layout(cv, CYAN, ["PERFORMANCE", "FIXES"], ["SAVES LOAD FASTER.", "FULL CONTAINERS OPEN", "WITHOUT STUTTERING."])
     px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
     cv.plate(px, py, pw, ph)
     cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
@@ -411,11 +491,7 @@ def cover_performance(cv):
     cv.text(mid + 4, base + 6, "AFTER", CYAN)
 
 
-LILAC = (0xC3, 0xA6, 0xEA)
-LILAC_DIM = (0x6E, 0x5E, 0x8C)
-
-
-def mini_window(cv, x, y, w, h, title_color, rows):
+def mini_window(cv: Canvas, x: int, y: int, w: int, h: int, title_color: Color, rows: int) -> None:
     # A container window: plate, title bar, a few item slots.
     cv.plate(x, y, w, h, rivets=False)
     cv.rect(x + 1, y + 1, w - 2, 6, title_color)
@@ -424,8 +500,9 @@ def mini_window(cv, x, y, w, h, title_color, rows):
             cv.slot(x + 3 + c * 9, y + 10 + r * 9, 8, 8)
 
 
-def cover_workspaces(cv):
-    layout(cv, LILAC, ["WINDOW", "WORKSPACES"], ["SNAP TO EDGES.", "SWITCH SETS", "WITH ONE KEY."])
+# Window Workspaces: workspace chips 1-4 above windows snapped edge to edge on a grid.
+def cover_workspaces(cv: Canvas) -> None:
+    layout(cv, LILAC, ["WINDOW", "WORKSPACES"], ["WINDOWS SNAP TO EDGES", "ONE KEY SWITCHES", "SETS OF WINDOWS."])
     px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
     cv.plate(px, py, pw, ph)
     cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
@@ -464,7 +541,7 @@ def cover_workspaces(cv):
         cv.vline(ax + 9 + k, ay - 3 + k, 8 - 2 * k, CREAM_DIM)
 
 
-def keycap(cv, x, y, w, label, lit):
+def keycap(cv: Canvas, x: int, y: int, w: int, label: str, lit: bool) -> None:
     # A key: raised top, darker front lip, label centred on the top.
     top, lip, ink = (AMBER, RUST, PANEL_LO) if lit else (PANEL_HI, PANEL_LO, CREAM_DIM)
     cv.rect(x, y, w, 18, lip)
@@ -473,7 +550,7 @@ def keycap(cv, x, y, w, label, lit):
     cv.text(x + (w - text_width(label)) // 2, y + 5, label, ink)
 
 
-def mouse(cv, x, y):
+def mouse(cv: Canvas, x: int, y: int) -> None:
     # A mouse seen from above, with the middle button and the two side buttons lit.
     w, h = 29, 46
     cv.vline(x + w // 2, y - 8, 8, MUTED)
@@ -492,8 +569,9 @@ def mouse(cv, x, y):
     cv.rect(x - 2, y + 31, 3, 6, AMBER)
 
 
-def cover_keys(cv):
-    layout(cv, AMBER, ["BETTER", "KEY", "BINDINGS"], ["KEY COMBINATIONS,", "MOUSE 4, 5 AND", "MIDDLE BUTTON."])
+# Better Key Bindings: a key combination and the mouse buttons it may use.
+def cover_keys(cv: Canvas) -> None:
+    layout(cv, AMBER, ["BETTER", "KEY", "BINDINGS"], ["BIND CTRL+E, MOUSE", "4, 5, MIDDLE BUTTON", "AND THE WHEEL."])
     px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
     cv.plate(px, py, pw, ph)
     cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
@@ -512,104 +590,178 @@ def cover_keys(cv):
         cv.text(px + pw - 13 - text_width(key), ry + 4, key, AMBER if lit else MUTED)
 
 
-COVERS = {
+# A braced crate, 16 x 16: o outline, l lit edge, w body, d shade.
+CRATE: Final[Bitmap] = (
+    "oooooooooooooooo",
+    "ollllllllllllllo",
+    "olwwwwwwwwwwwwdo",
+    "olwdwwwwwwwwwddo",
+    "olwwdwwwwwwwdwdo",
+    "olwwwdwwwwwdwwdo",
+    "olwwwwdwwwdwwwdo",
+    "olwwwwwdwdwwwwdo",
+    "olwwwwwwdwwwwwdo",
+    "olwwwwwdwdwwwwdo",
+    "olwwwwdwwwdwwwdo",
+    "olwwwdwwwwwdwwdo",
+    "olwwdwwwwwwwdwdo",
+    "olwdwwwwwwwwwddo",
+    "oddddddddddddddo",
+    "oooooooooooooooo",
+)
+
+
+# Draws a character-keyed bitmap; keys missing from the palette are left transparent.
+def pixmap(cv: Canvas, x: int, y: int, rows: Bitmap, palette: Mapping[str, Color], scale: int = 1) -> None:
+    for j, row in enumerate(rows):
+        for i, key in enumerate(row):
+            if key in palette:
+                cv.rect(x + i * scale, y + j * scale, scale, scale, palette[key])
+
+
+def triangle(cv: Canvas, x: int, y: int, up: bool, c: Color) -> None:
+    # A 5 x 3 arrowhead for the move buttons.
+    for k, w in enumerate((1, 3, 5) if up else (5, 3, 1)):
+        cv.hline(x + (5 - w) // 2, y + k, w, c)
+
+
+# Texture Packs: the same crate before and after a pack, and the manager listing packs in priority order.
+def cover_packs(cv: Canvas) -> None:
+    layout(cv, PINK, ["TEXTURE", "PACKS"], ["RESOURCE PACKS THAT", "REPLACE THE GAME'S", "PICTURES, IN ORDER."])
+    px, py, pw, ph = IMG_X0, 24, IMG_X1 - IMG_X0, 132
+    cv.plate(px, py, pw, ph)
+    cv.rect(px + 1, py + 1, pw - 2, 9, PANEL_LO)
+    cv.text(px + 6, py + 2, "PACK ORDER", PINK)
+    # The same item before and after: the game's crate, then the pack's.
+    before = {'o': PANEL_LO, 'l': CREAM_DIM, 'w': RUST, 'd': WOOD_LO}
+    after = {'o': PANEL_LO, 'l': PINK_HI, 'w': PINK, 'd': PINK_LO}
+    for sx, pal in ((px + 14, before), (px + pw - 50, after)):
+        cv.slot(sx, py + 18, 36, 36)
+        pixmap(cv, sx + 2, py + 20, CRATE, pal, 2)
+    ax, ay = px + 58, py + 35
+    cv.rect(ax, ay, 22, 2, CREAM_DIM)
+    for k in range(4):
+        cv.vline(ax + 22 + k, ay - 3 + k, 8 - 2 * k, CREAM_DIM)
+    # The manager: packs in priority order, each switched on or off, with buttons to move it.
+    rows = [("HD ITEMS", True), ("DARK SHOP", True), ("OLD UI", False)]
+    for i, (name, on) in enumerate(rows):
+        ry = py + 70 + i * 19
+        cv.slot(px + 8, ry, pw - 16, 15)
+        cv.frame(px + 13, ry + 4, 7, 7, MUTED if on else FAINT)
+        if on:
+            cv.rect(px + 15, ry + 6, 3, 3, PINK)
+        cv.text(px + 25, ry + 4, name, CREAM_DIM if on else FAINT)
+        arrows = MUTED if on else FAINT
+        triangle(cv, px + pw - 27, ry + 6, True, FAINT if i == 0 else arrows)
+        triangle(cv, px + pw - 18, ry + 6, False, FAINT if i == len(rows) - 1 else arrows)
+
+
+COVERS: Final[Mapping[str, Drawer]] = MappingProxyType({
     "save_language_converter": cover_language,
     "quick_call": cover_call,
     "demand_highlight": cover_demand,
     "performance_fixes": cover_performance,
     "window_workspaces": cover_workspaces,
     "better_key_bindings": cover_keys,
-}
+    "texture_packs": cover_packs,
+})
+
+# Mods still being made, not yet listed in config/repos.json (which publishes them on the site): their cover is
+# drawn only from a working copy (--checkouts), and skipped otherwise.
+UNLISTED: Final[Mapping[str, str]] = MappingProxyType({"texture-packs": "ProbablyStolen-TexturePacks"})
 
 
-def version_label(version):
-    # Always the full x.y.z (1.1.0 -> V1.1.0, 1.0.1 -> V1.0.1), except a new major version x.0.0, which reads
-    # Vx.0 (1.0.0 -> V1.0, 2.0.0 -> V2.0).
-    parts = (version.strip().split(".") + ["0", "0"])[:3]
-    if parts[1] == "0" and parts[2] == "0":
-        return "V" + parts[0] + ".0"
-    return "V" + ".".join(parts)
-
-
-def mod_folders(checkouts):
+def mod_folders(checkouts: str | None) -> Mapping[str, str]:
     # Each cover's mod folder: mods/<slug> in this repository, or with --checkouts the working copy
     # <checkouts>/<repository>/<repository without its ProbablyStolen- prefix>.
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    repos = json.load(open(os.path.join(root, "config", "repos.json"), encoding="utf-8"))["repos"]
-    folders = {}
-    for name in COVERS:
+    repos_path = os.path.join(root, "config", "repos.json")
+    repos = str_map(member(as_dict(load_json(repos_path), repos_path), "repos", repos_path), "repos")
+
+    def folder(name: str) -> str:
         slug = name.replace("_", "-")
-        folder = os.path.join(root, "mods", slug)
-        if checkouts and slug in repos:
-            repo = repos[slug]
-            folder = os.path.join(checkouts, repo, repo.replace("ProbablyStolen-", "", 1))
-        folders[name] = folder
-    return folders
+        repo = repos.get(slug) or UNLISTED.get(slug)
+        if checkouts and repo:
+            return os.path.join(checkouts, repo, repo.replace("ProbablyStolen-", "", 1))
+        return os.path.join(root, "mods", slug)
+
+    return {name: folder(name) for name in COVERS}
 
 
-def read_version(folder):
-    path = os.path.join(folder, "manifest.xml")
-    if not os.path.isfile(path):
-        return None
-    m = re.search(r"<ModVersion>\s*([^<]+?)\s*</ModVersion>", open(path, encoding="utf-8").read())
-    return m.group(1) if m else None
+def read_bytes(path: str) -> bytes:
+    with open(path, "rb") as f:
+        return f.read()
 
 
-def sync(rendered, folder):
+def sync(rendered: str, folder: str) -> None:
     # The cover is the mod's preview.png and its documentation cover; only files that differ are written.
+    want = read_bytes(rendered)
     for target in ("preview.png", os.path.join("doc", "attachments", "cover.png")):
         path = os.path.join(folder, target)
-        if not os.path.isfile(path):
-            continue
-        if open(path, "rb").read() != open(rendered, "rb").read():
+        if os.path.isfile(path) and read_bytes(path) != want:
             shutil.copyfile(rendered, path)
             print("   updated", path)
 
 
-def main(argv):
+def render(draw: Drawer, version: str) -> Canvas:
+    cv = Canvas()
+    cv.version = version_label(version)
+    draw(cv)
+    return cv
+
+
+def to_png(cv: Canvas) -> Image.Image:
+    """The cover as published: scaled by whole pixels, on a 64-colour palette."""
+    big = cv.img.resize((W * SCALE, H * SCALE), Image.Resampling.NEAREST)
+    return big.convert("P", palette=Image.Palette.ADAPTIVE, colors=64)
+
+
+@dataclass(frozen=True)
+class Options:
+    out: str
+    checkouts: str | None
+    sync: bool
+    only: frozenset[str] | None
+    help: bool
+
+
+def parse_options(argv: Sequence[str]) -> Options:
+    help_asked = "-h" in argv or "--help" in argv
+    only_arg, rest = take_option(argv, "--only")
+    only = split_ids(only_arg)
+    if only is not None and only - COVERS.keys():
+        raise SystemExit("unknown cover id(s): " + ", ".join(sorted(only - COVERS.keys())))
+    do_sync, rest = take_flag(rest, "--sync")
+    checkouts, rest = take_option(rest, "--checkouts")
+    return Options(rest[0] if rest else "out", checkouts, do_sync, only, help_asked)
+
+
+def main(argv: Sequence[str]) -> None:
     """python design/covers.py [out] [--checkouts DIR] [--sync] [--only ID[,ID...]]
 
     Each cover shows its mod's version, read from the mod's manifest.xml. --checkouts reads the manifests from
     working copies in DIR instead of the submodules, so a version not yet published gets its cover too. --sync
     writes each cover into the mod's preview.png and doc/attachments/cover.png; with --only, only into the mods
     named (by id, such as performance_fixes), so releasing one mod leaves the others' working copies alone."""
-    args = list(argv)
-    if "-h" in args or "--help" in args:
+    if "-h" in argv or "--help" in argv:
         print(main.__doc__)
         return
-    only = None
-    if "--only" in args:
-        i = args.index("--only")
-        only = set(args[i + 1].split(","))
-        del args[i:i + 2]
-        unknown = only - set(COVERS)
-        if unknown:
-            sys.exit("unknown cover id(s): " + ", ".join(sorted(unknown)))
-    do_sync = "--sync" in args
-    if do_sync:
-        args.remove("--sync")
-    checkouts = None
-    if "--checkouts" in args:
-        i = args.index("--checkouts")
-        checkouts = args[i + 1]
-        del args[i:i + 2]
-    out = args[0] if args else "out"
-    os.makedirs(out, exist_ok=True)
-    folders = mod_folders(checkouts)
+    opts = parse_options(argv)
+    os.makedirs(opts.out, exist_ok=True)
+    folders = mod_folders(opts.checkouts)
     for name, draw in COVERS.items():
         version = read_version(folders[name])
+        if version is None and name.replace("_", "-") in UNLISTED:
+            print(name, "skipped: not in the collection yet, give --checkouts to draw it")
+            continue
         if version is None:
-            sys.exit(f"{name}: no manifest.xml with a ModVersion in {folders[name]}")
-        cv = Canvas()
-        cv.version = version_label(version)
-        draw(cv)
-        big = cv.img.resize((W * SCALE, H * SCALE), Image.NEAREST)
-        big = big.convert("P", palette=Image.ADAPTIVE, colors=64)
-        rendered = os.path.join(out, name + ".png")
-        big.save(rendered, optimize=True)
-        cv.img.resize((W, H), Image.NEAREST).save(os.path.join(out, name + "_thumb.png"))
+            raise SystemExit(f"{name}: no manifest.xml with a ModVersion in {folders[name]}")
+        cv = render(draw, version)
+        rendered = os.path.join(opts.out, name + ".png")
+        to_png(cv).save(rendered, optimize=True)
+        cv.img.resize((W, H), Image.Resampling.NEAREST).save(os.path.join(opts.out, name + "_thumb.png"))
         print(name, cv.version, os.path.getsize(rendered), "bytes")
-        if do_sync and (only is None or name in only):
+        if opts.sync and (opts.only is None or name in opts.only):
             sync(rendered, folders[name])
 
 
