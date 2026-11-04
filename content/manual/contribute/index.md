@@ -8,7 +8,7 @@ The same rules apply to every mod:
 - [Writing and markup](writing.md): headings, code, notes and images.
 - [Translation](translation.md): how the gettext workflow keeps every language in step with English.
 - [Code standard](code_standard.md): rules for the mods' code, such as keeping nothing of the store after leaving it.
-- [Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools and the Leak Probe.
+- [Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools, the Leak Probe and Load Breakdown development mods, releasing and publishing to the Workshop.
 
 ## Getting the collection
 

@@ -1,1 +1,1 @@
-Late-game lag with packed storage? Digging through boxes while a customer waits? Sitting through the same phone calls again and again? This guide introduces small mods that fix exactly that. No changes to how the game works, just a smoother shop.
+Four small mods for Probably Stolen: no stutters with packed storage, outlines for what the customer wants, phone calls that open on their choices, and a converter for saves started in another language. None of them changes the game's rules.

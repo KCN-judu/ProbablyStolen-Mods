@@ -1,5 +1,5 @@
 TITLE
-A Smoother Shop: Quality-of-Life Mods for Probably Stolen
+Quality-of-Life Mods for Probably Stolen: Stutters, Calls, Demand and Saves
 
 DESCRIPTION
 workshop/guide-description-en.txt
@@ -12,40 +12,40 @@ workshop/guide-cover-en.png
 
 ===== SECTION: Overview =====
 
-New to the shop? These four small mods take away a few annoyances so you can enjoy the game. They do not change the rules or make the game easier, and you can use any of them on its own.
+These four small mods cover the stutters of a full shop, the wait on phone calls, finding what a customer asks for, and saves started in another language. They do not change the rules or make the game easier. Each one works on its own.
 
 ===== SECTION: Performance Fixes =====
 
-[b]Without it:[/b] as your shop fills up, the game starts to lag. Opening a packed crate freezes the screen for a moment, loading takes longer and longer, and the late game feels sluggish.
+[b]Without it:[/b] the more your shop holds, the more the game stutters. Opening a packed container freezes the screen for a moment, and loading a save takes longer and longer.
 
-[b]With it:[/b] full containers open smoothly, loading is faster, and a big late-game shop stays responsive. The game plays exactly the same, just without the stutter.
+[b]With it:[/b] full containers open without the freeze and saves load faster. The game plays the same.
 
 Get Performance Fixes =>
 https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577
 
 ===== SECTION: Quick Call =====
 
-[b]Without it:[/b] every call to Wild or a supplier means waiting through dialing, ringing and small talk before you can say anything.
+[b]Without it:[/b] every call to Wild or a supplier waits after the last digit, rings for a few seconds and plays greeting lines before you get to the choices.
 
-[b]With it:[/b] the call goes straight to the choices. You save a few seconds on every call, and that adds up. Story calls still play in full.
+[b]With it:[/b] the call opens on the choices. That saves several seconds on every call. Intro, cooldown and story calls still play in full.
 
 Get Quick Call =>
 https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274
 
 ===== SECTION: Demand Highlight =====
 
-[b]Without it:[/b] a customer asks for something and you dig through every shelf and box looking for it while they wait.
+[b]Without it:[/b] a customer asks for something and you search every shelf and box for it while they wait.
 
-[b]With it:[/b] everything the customer wants is outlined in your shop, so you can see it at a glance. Stolen goods and contraband get their own marks, and the Item Filter shows your stock by type when you tidy up. Its algorithm is fast enough that you will not notice it running, even in a huge shop.
+[b]With it:[/b] everything the customer wants is outlined in your shop. Stolen goods and contraband get their own outlines, and the Item Filter marks your stock by type when you tidy up.
 
-Tip: you need to bind the two keys in the game's options menu first.
+Tip: the Item Filter and the key that turns the outlines on and off have no default keys. Bind them in the game's options menu.
 
 Get Demand Highlight =>
 https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488
 
 ===== SECTION: Save Language Converter =====
 
-[b]Only if you switch languages.[/b] If you started a save in one language and now play in another, item names and customers stay in the old language, and some text may not display correctly. This mod makes a copy of the save in your current language. Your original save is kept as it was.
+[b]Only if you switch languages.[/b] If you started a save in one language and now play in another, item names and customers stay in the old language, and some text may not display correctly. This mod converts a copy of the save to your current language. The original save is not changed.
 
 Get Save Language Converter =>
 https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427

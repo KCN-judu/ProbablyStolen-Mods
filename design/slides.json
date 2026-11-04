@@ -3,14 +3,14 @@
     {
       "id": "performance_fixes_save_load",
       "mod": "performance_fixes",
-      "en": {"headline": ["SAVES LOAD", "MUCH FASTER"], "sub": "LESS WAITING ON THE LOADING SCREEN."},
-      "zh": {"headline": ["存档加载时间", "大幅缩短"], "sub": "从读档到进入游戏，等待更短。"}
+      "en": {"headline": ["LOAD: 8.3 S", "NOW 4.5 S"], "sub": "MEASURED ON A LARGE TEST STORE."},
+      "zh": {"headline": ["读档原来 8.3 秒", "现在 4.5 秒"], "sub": "在一间很大的测试店铺里测得。"}
     },
     {
       "id": "performance_fixes_stutter",
       "mod": "performance_fixes",
-      "en": {"headline": ["FAR FEWER", "STUTTERS"], "sub": "FULL CONTAINERS OPEN WITHOUT A HITCH."},
-      "zh": {"headline": ["视觉卡顿", "大幅减少"], "sub": "满载容器不再一开一卡。"}
+      "en": {"headline": ["NO STUTTER", "WHEN OPENING"], "sub": "FULL CONTAINERS OPEN WITHOUT A FREEZE."},
+      "zh": {"headline": ["满载的容器", "打开不再卡顿"], "sub": "每次打开都不再卡住一下。"}
     }
   ]
 }

@@ -9,7 +9,7 @@ msgstr ""
 
 #: conf.json:summary
 #: manual/index.md:1
-msgid "Mods for Probably Stolen that keep the game's rules and remove what gets in the way."
+msgid "Mods for Probably Stolen that change one thing each and keep the game's rules."
 msgstr ""
 
 #: conf.json:strings.nav.home
@@ -248,94 +248,94 @@ msgid "Principles"
 msgstr ""
 
 #: manual/about.md:7
-msgid "**Keep the game's rules.** A mod may remove waiting, guessing or wasted work, but customers accept what they accepted before, locks still lock, and saves load as they did. Where a mod changes how something is computed, it computes the same answer."
+msgid "A mod keeps the game's rules. It may remove waiting, guessing or wasted work, but customers accept what they accepted before, locks still lock and saves load as they did. Where a mod changes how something is computed, it computes the same answer."
+msgstr ""
+
+#: manual/about.md:8
+msgid "A mod asks for no permission. It declares no capabilities, so the game enables it without a prompt. Reflection only names game types directly, which the game's mod scanner accepts."
 msgstr ""
 
 #: manual/about.md:9
-msgid "**Ask for nothing.** Every mod declares no capabilities, so the game enables it without a permission prompt. Reflection only names game types directly, which the game's mod scanner accepts."
+msgid "A patch that cannot attach, after a game update for example, turns its own feature off and writes one line to `Player.log`. The rest of the mod and the game keep running."
 msgstr ""
 
-#: manual/about.md:11
-msgid "**Fail quietly.** A patch that cannot attach, after a game update for example, turns its own feature off and writes one line to `Player.log`. It never stops the rest of the mod or the game."
+#: manual/about.md:10
+msgid "Performance work starts from the game's own log and from a profiler. The numbers behind each fix are in its documentation."
 msgstr ""
 
-#: manual/about.md:13
-msgid "**Measure first.** Performance work starts from the game's own log and from a profiler, not from guesses. The numbers behind each fix are in its documentation."
-msgstr ""
-
-#: manual/about.md:15
+#: manual/about.md:12
 msgid "The mods"
 msgstr ""
 
-#: manual/about.md:17
+#: manual/about.md:14
 msgid "Mod"
 msgstr ""
 
-#: manual/about.md:17
+#: manual/about.md:14
 msgid "What it does"
 msgstr ""
 
-#: manual/about.md:19
+#: manual/about.md:16
 msgid "Demand Highlight"
 msgstr ""
 
-#: manual/about.md:19
+#: manual/about.md:16
 msgid "Outlines what the customer at the counter wants, and marks your stock by type with the Item Filter."
 msgstr ""
 
-#: manual/about.md:20
+#: manual/about.md:17
 msgid "Quick Call"
 msgstr ""
 
-#: manual/about.md:20
+#: manual/about.md:17
 msgid "Calls go straight to the choices."
 msgstr ""
 
-#: manual/about.md:21
+#: manual/about.md:18
 msgid "Save Language Converter"
 msgstr ""
 
-#: manual/about.md:21
+#: manual/about.md:18
 msgid "Converts a copy of a save started in another language."
 msgstr ""
 
-#: manual/about.md:22
+#: manual/about.md:19
 msgid "Performance Fixes"
 msgstr ""
 
-#: manual/about.md:22
+#: manual/about.md:19
 msgid "Removes stutters with large, packed storage."
 msgstr ""
 
-#: manual/about.md:23
+#: manual/about.md:20
 msgid "Window Workspaces"
 msgstr ""
 
-#: manual/about.md:23
+#: manual/about.md:20
 msgid "Snaps windows together and switches whole sets of them with one key."
 msgstr ""
 
-#: manual/about.md:24
+#: manual/about.md:21
 msgid "Better Key Bindings"
 msgstr ""
 
-#: manual/about.md:24
+#: manual/about.md:21
 msgid "Key combinations and extra mouse buttons for every key binding."
 msgstr ""
 
-#: manual/about.md:26
+#: manual/about.md:23
 msgid "Look"
 msgstr ""
 
-#: manual/about.md:28
+#: manual/about.md:25
 msgid "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License."
 msgstr ""
 
-#: manual/about.md:30
+#: manual/about.md:27
 msgid "License"
 msgstr ""
 
-#: manual/about.md:32
+#: manual/about.md:29
 msgid "Every repository is released under the Apache License 2.0. *Probably Stolen* and its assets belong to their owners; no game files are distributed here."
 msgstr ""
 
@@ -460,7 +460,7 @@ msgid "[Code standard](code_standard.md): rules for the mods' code, such as keep
 msgstr ""
 
 #: manual/contribute/index.md:11
-msgid "[Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools and the Leak Probe."
+msgid "[Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools, the Leak Probe and Load Breakdown development mods, releasing and publishing to the Workshop."
 msgstr ""
 
 #: manual/contribute/index.md:13
@@ -648,10 +648,14 @@ msgid "`scripts/package.sh` collects the built mods into `dist/packages/`, each 
 msgstr ""
 
 #: manual/contribute/modding_tools.md:74
-msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
+msgid "A mod that is still being made has the version `WIP` in its `manifest.xml`, and its cover shows WIP where a version would be. `scripts/release-check.sh` runs the checks that do not need a version and ends by saying the mod is a WIP. `scripts/package.sh` skips it, and `scripts/workshop.py` stops if it is asked to upload one, so an unfinished mod cannot be released by mistake. The scanner needs a real version, so `scripts/scan.sh` scans a copy with the version `0.1.0` and leaves the mod's own `manifest.xml` as it is."
 msgstr ""
 
 #: manual/contribute/modding_tools.md:76
+msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
+msgstr ""
+
+#: manual/contribute/modding_tools.md:78
 msgid "The mods are also gathered in one Workshop collection, Quality of Life. `scripts/workshop-collection.sh` creates or updates it through the same Steamworks library: its title, tags and mods in the order of the `collection` entry of `config/workshop.json`, its text from `config/collection-description.txt` and its cover from `design/collection_cover.py`. A new mod is added by listing it there and running the script again. The visibility changes only when one is given (`public`, `friends` or `private`)."
 msgstr ""
 
@@ -832,5 +836,5 @@ msgid "Pixel art is shown with nearest-neighbour scaling, so draw it at a small 
 msgstr ""
 
 #: manual/index.md:8
-msgid "Mods for *Probably Stolen* that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions."
+msgid "Small mods for *Probably Stolen*. Each one changes one thing, such as the stutters with packed storage, the waits on phone calls or the keys you can bind, and keeps the game's rules. Each works on its own and needs no special permissions."
 msgstr ""

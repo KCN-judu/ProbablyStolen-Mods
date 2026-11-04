@@ -1,13 +1,13 @@
 [h1]Quality of Life[/h1]
-Small mods for Probably Stolen that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions. Subscribe to all of them here, or pick the ones you want.
+Small mods for Probably Stolen. Each one changes one thing, keeps the game's rules, works on its own and needs no special permissions. Subscribe to all of them here, or pick the ones you want.
 
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]Performance Fixes[/b][/url]: removes stutters with large, packed storage, without changing how the game plays.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]Performance Fixes[/b][/url]: removes the stutters with large, packed storage and makes saves load faster.
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488][b]Demand Highlight[/b][/url]: outlines what the customer at the counter wants, and marks your stock by type.
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274][b]Quick Call[/b][/url]: calls go straight to the choices, with no ringing or greetings.
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832565070][b]Window Workspaces[/b][/url]: windows snap together, and whole sets of them switch with one key.
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]Better Key Bindings[/b][/url]: key combinations and extra mouse buttons for every key binding.
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]Save Language Converter[/b][/url]: converts a copy of a save started in another language.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]Better Key Bindings[/b][/url]: key combinations, the middle mouse button, mouse buttons 4 and 5 and the wheel for every key binding.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]Save Language Converter[/b][/url]: converts a copy of a save started in another language to the one you play in.
 [/list]
 
 All of them are open source under the Apache License 2.0, with documentation in English and Chinese:
@@ -16,15 +16,15 @@ All of them are open source under the Apache License 2.0, with documentation in 
 [hr][/hr]
 
 [h1]生活质量合集[/h1]
-《深空当铺：可能是偷的》的一组小模组：保留游戏规则，只去掉碍事的部分，比如干等、瞎猜和卡顿。每个模组只做一件事，可以单独使用，也不需要任何特殊权限。可以在这里一键订阅全部，也可以只挑需要的。
+《深空当铺：可能是偷的》的小模组。每个只改一件事，不改游戏规则，可以单独使用，也不需要任何特殊权限。可以在这里一次订阅全部，也可以只挑需要的。
 
 [list]
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]性能修复[/b][/url]：消除大型满载仓库带来的卡顿，不改变游戏玩法。
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488][b]需求高亮[/b][/url]：描出柜台前顾客想要的物品，并按类型标记你的库存。
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274][b]快速通话[/b][/url]：电话直接进入选项，没有铃声和寒暄。
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832565070][b]窗口工作区[/b][/url]：窗口彼此吸附，一个键切换整组窗口。
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]按键绑定增强[/b][/url]：为每个按键绑定加入组合键和额外的鼠标按键。
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]存档语言转换[/b][/url]：把用其他语言开始的存档转换成一个副本。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481577][b]性能修复[/b][/url]：仓库塞满后不再卡顿，读档也更快。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481488][b]需求高亮[/b][/url]：框出柜台前顾客想要的物品，还能按类型标记你的库存。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481274][b]快速通话[/b][/url]：电话一接通就是选项，没有铃声和寒暄。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832565070][b]窗口工作区[/b][/url]：拖动时窗口会吸附，一个键切换整组窗口。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832574517][b]按键绑定增强[/b][/url]：每个按键绑定都能用组合键、鼠标中键、鼠标按键 4 和 5 以及滚轮。
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3832481427][b]存档语言转换[/b][/url]：把用其他语言开的存档复制一份，转换成你正在用的语言。
 [/list]
 
 全部开源，采用 Apache License 2.0，中英文文档：

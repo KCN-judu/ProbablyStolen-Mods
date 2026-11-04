@@ -1,6 +1,6 @@
 # Cover design system
 
-One system for every mod cover, so the three read as a series in the Workshop grid and the in-game mod list.
+One system for every mod cover, so they read as a series in the Workshop grid and the in-game mod list.
 
 ## Format
 
@@ -19,7 +19,7 @@ One system for every mod cover, so the three read as a series in the Workshop gr
 - One typeface: a hand-built 5 × 7 pixel capital alphabet, in the spirit of the game's own UI lettering. Capitals only, because pixel lowercase is illegible at thumbnail size.
 - The scale has two steps, in a 2 : 1 ratio, because integer scaling is the only kind that stays crisp. The title is ×2 (14 px capitals), and the series tag, tagline and author line are ×1 (7 px).
 - Letter spacing is 1 px at ×1 and 2 px at ×2. Line spacing is 1.6× the cap height for the tagline, and the title has 4 px leading.
-- The title is at most two words per line and three lines in all. The tagline is at most three short lines. The measure stays under about 20 characters, so it reads at a glance.
+- The title is at most two words per line and three lines in all. The tagline is at most three short lines. A tagline line is at most 21 characters (the text column is 128 px wide), so it reads at a glance. Each line says what the mod changes.
 - Reading order follows a Z: series tag → title → tagline (left column) → illustration (right field) → author line. The illustration is the single focal point and sits on the right-hand third line.
 
 ## Colour (after Itten and Albers)
@@ -32,6 +32,7 @@ One system for every mod cover, so the three read as a series in the Workshop gr
   - Performance Fixes: cyan `#59D1FF`
   - Window Workspaces: lilac `#C3A6EA`
   - Better Key Bindings: amber `#FFB829`, the colour of a lit keycap
+  - Texture Packs: neon pink `#E86A92`, from the shop signs in the key art
 - Contrast: cream `#F3E6C8` on the background `#17151F` is about 15 : 1, and the muted tagline `#A79FBF` is about 7 : 1. Both pass WCAG AAA for their size.
 - Depth comes from value, not hue: panels get a 1 px highlight on the top and left edges and a 1 px shadow on the bottom and right, like the game's machinery plates.
 
@@ -48,9 +49,15 @@ Each one shows the mod working, using the game's own visual language: inventory 
 - **Save Language Converter**: two save cartridges, 文 → A, with an arrow carrying lines of text from one to the other.
 - **Quick Call**: a phone keypad, a fast-forward chevron, and a dialog panel opened straight onto its choices with the first one selected.
 - **Demand Highlight**: an inventory grid showing the four outline styles, plus a small Item Filter window with ticked boxes.
+- **Performance Fixes**: a frame-time chart, spiky before and flat after, against a 60 fps guide line.
+- **Window Workspaces**: workspace chips 1 to 4 above windows snapped edge to edge on a grid.
 - **Better Key Bindings**: lit Ctrl + E keycaps, a mouse with its middle and side buttons lit, and a key bindings list where Ctrl + E and E sit on separate rows.
+- **Texture Packs**: the same crate in an inventory slot before and after, the game's wood → the pack's pink, over the pack manager's list: two packs switched on and one off, each with its move arrows.
 
-- **The Quality of Life collection** (`collection_cover.py`): one tile per mod in its own accent, in the order the collection lists them, with what each mod takes away. The series tag reads PROBABLY STOLEN MODS and the author line gives the number of mods instead of a version.
+A mod still being made is listed in `UNLISTED` in `covers.py` instead of `config/repos.json`, which would publish it on the site: its cover is drawn only from a working copy (`--checkouts`) and skipped otherwise.
+
+- **The Quality of Life collection** (`collection_cover.py`): one tile per mod in its own accent, in the order the collection lists them, with what each mod changes and where. The series tag reads PROBABLY STOLEN MODS and the author line gives the number of mods instead of a version.
+- **The Steam guide covers** (`guide_cover.py`, `workshop/guide-cover-en.png` and `-zh.png`): a 180 × 180 square scaled ×4 to 720 × 720, with four tiles, one per mod the guide covers. The Chinese cover is set in SimSun's 12 px bitmap strike, so every character on it must exist in that font.
 
 ## Logo
 
@@ -112,11 +119,16 @@ Documentation diagrams, rendered by `diagrams.py` in English and Chinese, so the
 - A 400 px wide canvas, as tall as the content, scaled ×2 with nearest-neighbour (800 px wide). Flat `#17151F` ground, no vignette, so nothing competes with the flow.
 - A title plate on the top margin with the mod's accent bar. Steps are machinery plates without rivets; inputs and outcomes nobody gets are sunken slots; the outcome a binding gets is a plate with the accent bar on its left edge.
 - Arrows are 1 px lines with a 5 px head: muted for the flow, the accent for the way an input goes to a binding. A cut way is a dotted line ending in a red cross. Yes and no sit beside their arrow.
+- Something designed but not built yet is a dotted outline on the ground with faint text, reached by dotted arrows that keep their head (a cut way has a cross instead). A note under the diagram says what the dots stand for.
+- The accent is the mod's own (Colour above): amber for Better Key Bindings, pink for Texture Packs.
 - English is set in the cover alphabet, Chinese in Cubic 11, as on the slides, with a 11 px and a 14 px line pitch. Plates size their height to the language; each line must fit its plate, or the script stops with its width.
-- The English file is `<id>.png` and the Chinese one `<id>.zh_CN.png`, written straight into the mod's `doc/attachments/`. The Chinese page links to its file through the catalog.
+- The English file is `<id>.png` and the Chinese one `<id>.zh_CN.png`, written straight into the mod's `doc/attachments/`; `--only` picks the mod's diagrams. The Chinese page links to its file through the catalog.
+
+Diagrams so far: `binding-capture` and `press-decision` (Better Key Bindings); `texture-packs-architecture` (Texture Packs: the loader in the game and the creator kit side by side, with proposal 2 dotted).
 
 ```
-python design/diagrams.py ../ProbablyStolen-BetterKeyBindings/BetterKeyBindings/doc/attachments
+python design/diagrams.py ../ProbablyStolen-BetterKeyBindings/BetterKeyBindings/doc/attachments --only binding-capture,press-decision
+python design/diagrams.py ../ProbablyStolen-TexturePacks/TexturePacks/doc/attachments --only texture-packs-architecture
 ```
 
 ## Checks
@@ -126,4 +138,4 @@ python design/diagrams.py ../ProbablyStolen-BetterKeyBindings/BetterKeyBindings/
 
 ## Version
 
-The version next to the author line comes from the mod's `manifest.xml`; it is always shown in full as x.y.z (V1.1.0, V1.0.1), except a new major version x.0.0, which shows as Vx.0 (V1.0, V2.0). `scripts/package.sh` renders the covers again for every package, and `covers.py --sync` writes them into the mods, so a cover never shows an old version.
+The version next to the author line comes from the mod's `manifest.xml`; it is always shown in full as x.y.z (V1.1.0, V1.0.1), except a new major version x.0.0, which shows as Vx.0 (V1.0, V2.0). `scripts/package.sh` renders the covers again for every package, and `covers.py --sync` writes them into the mods, so a cover never shows an old version. A mod still being made has the version WIP in its `manifest.xml`, and its cover shows WIP instead of a version (`design/version.py`).

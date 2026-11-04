@@ -1,6 +1,6 @@
 # Probably Stolen Mods
 
-Mods for *Probably Stolen* that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions.
+Small mods for *Probably Stolen*. Each one changes one thing, such as the stutters with packed storage, the waits on phone calls or the keys you can bind, and keeps the game's rules. Each works on its own and needs no special permissions.
 
 **Documentation:** <https://kcn-judu.github.io/ProbablyStolen-Mods/> (English, 简体中文)
 
@@ -35,9 +35,9 @@ npm run build && npm run preview   # the site at http://localhost:4321/ProbablyS
 | `tools/lunadoc/` | The gettext documentation tool |
 | `tools/prepare-site.mjs` | Renders every page in every locale from the English source and the catalogs |
 | `tools/i18n/` | Helpers for filling catalogs from a translation table |
-| `tools/modding/` | The game's mod scanner harness and the Mono.Cecil game-inspection tools |
-| `design/` | The cover design system and the cover renderer |
-| `scripts/` | Build every mod, package releases, scan a built mod |
+| `tools/modding/` | The game's mod scanner harness, the Mono.Cecil game-inspection tools and the development mods Leak Probe and Load Breakdown |
+| `design/` | The cover design system and its renderers: covers, the collection and guide covers, the logo, video slides, comparison labels, documentation diagrams and the pixel font |
+| `scripts/` | Build every mod, package releases, scan a built mod, upload to the Workshop, prepare comparison videos |
 
 ## Commands
 
@@ -56,6 +56,8 @@ npm run build && npm run preview   # the site at http://localhost:4321/ProbablyS
 | `scripts/workshop-tags.sh` | Set the Workshop tags in `config/workshop.json` (Steam client must be running) |
 | `scripts/scan.sh <folder>` | Run the game's mod scanner on a built mod |
 | `python design/covers.py design/out` | Render the covers (`--checkouts <folder> --sync --only <id>` writes one mod's) |
+| `python design/collection_cover.py design/out` | Render the cover of the Workshop collection |
+| `python design/guide_cover.py design/out` | Render the covers of the Steam guides in `workshop/` |
 
 See [Contributing](https://kcn-judu.github.io/ProbablyStolen-Mods/en/contribute/) for the documentation standard and the translation workflow.
 

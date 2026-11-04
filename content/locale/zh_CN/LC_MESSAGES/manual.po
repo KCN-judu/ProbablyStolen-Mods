@@ -9,8 +9,8 @@ msgstr ""
 
 #: conf.json:summary
 #: manual/index.md:1
-msgid "Mods for Probably Stolen that keep the game's rules and remove what gets in the way."
-msgstr "为《深空当铺：可能是偷的》制作的 mod：不改游戏规则，只去掉碍事的部分。"
+msgid "Mods for Probably Stolen that change one thing each and keep the game's rules."
+msgstr "《深空当铺：可能是偷的》的模组，每个只改一件事，不改游戏规则。"
 
 #: conf.json:strings.nav.home
 msgid "Home"
@@ -248,94 +248,94 @@ msgid "Principles"
 msgstr "原则"
 
 #: manual/about.md:7
-msgid "**Keep the game's rules.** A mod may remove waiting, guessing or wasted work, but customers accept what they accepted before, locks still lock, and saves load as they did. Where a mod changes how something is computed, it computes the same answer."
-msgstr "**不改游戏规则。** 模组可以去掉等待、猜测和无用的计算，但顾客收什么照旧，锁住的东西照样锁着，存档照常读取。模组改变了某个计算方式的地方，算出来的结果也完全一样。"
+msgid "A mod keeps the game's rules. It may remove waiting, guessing or wasted work, but customers accept what they accepted before, locks still lock and saves load as they did. Where a mod changes how something is computed, it computes the same answer."
+msgstr "模组不改游戏规则。它可以去掉干等、瞎猜和白做的工作，但顾客接受的东西和以前一样，锁照样锁着，存档也和以前一样读取。模组改了某个东西的算法，算出来的结果不变。"
+
+#: manual/about.md:8
+msgid "A mod asks for no permission. It declares no capabilities, so the game enables it without a prompt. Reflection only names game types directly, which the game's mod scanner accepts."
+msgstr "模组不要任何权限。它不声明任何能力，所以游戏启用它时不会弹出权限确认。反射只直接写出游戏的类型名，游戏的模组扫描器接受这种写法。"
 
 #: manual/about.md:9
-msgid "**Ask for nothing.** Every mod declares no capabilities, so the game enables it without a permission prompt. Reflection only names game types directly, which the game's mod scanner accepts."
-msgstr "**不要任何权限。** 每个模组都不声明任何权限，游戏启用它时不会弹出权限确认。反射只直接引用游戏的类型，游戏的模组扫描器认可这种写法。"
+msgid "A patch that cannot attach, after a game update for example, turns its own feature off and writes one line to `Player.log`. The rest of the mod and the game keep running."
+msgstr "补丁挂不上时（比如游戏更新之后），模组只关掉对应的功能，并在 `Player.log` 里写一行说明。模组的其余部分和游戏照常运行。"
 
-#: manual/about.md:11
-msgid "**Fail quietly.** A patch that cannot attach, after a game update for example, turns its own feature off and writes one line to `Player.log`. It never stops the rest of the mod or the game."
-msgstr "**出错也不打扰。** 某个补丁挂不上时（比如游戏更新之后），只关掉它自己的功能，并在 `Player.log` 里写一行说明，绝不影响模组的其他部分，更不会影响游戏。"
+#: manual/about.md:10
+msgid "Performance work starts from the game's own log and from a profiler. The numbers behind each fix are in its documentation."
+msgstr "性能优化从游戏自己的日志和性能分析器入手。每项修复背后的数据，都写在它的文档里。"
 
-#: manual/about.md:13
-msgid "**Measure first.** Performance work starts from the game's own log and from a profiler, not from guesses. The numbers behind each fix are in its documentation."
-msgstr "**先测量再优化。** 性能优化从游戏自己的日志和分析器出发，而不是靠猜。每项修复背后的数据都写在它的文档里。"
-
-#: manual/about.md:15
+#: manual/about.md:12
 msgid "The mods"
 msgstr "模组一览"
 
-#: manual/about.md:17
+#: manual/about.md:14
 msgid "Mod"
 msgstr "模组"
 
-#: manual/about.md:17
+#: manual/about.md:14
 msgid "What it does"
 msgstr "作用"
 
-#: manual/about.md:19
+#: manual/about.md:16
 msgid "Demand Highlight"
 msgstr "需求高亮"
 
-#: manual/about.md:19
+#: manual/about.md:16
 msgid "Outlines what the customer at the counter wants, and marks your stock by type with the Item Filter."
 msgstr "给柜台前顾客想要的东西加框，并可用物品筛选按类型标出你的库存。"
 
-#: manual/about.md:20
+#: manual/about.md:17
 msgid "Quick Call"
 msgstr "快速通话"
 
-#: manual/about.md:20
+#: manual/about.md:17
 msgid "Calls go straight to the choices."
 msgstr "打电话直接进入对话选项。"
 
-#: manual/about.md:21
+#: manual/about.md:18
 msgid "Save Language Converter"
 msgstr "存档语言转换"
 
-#: manual/about.md:21
+#: manual/about.md:18
 msgid "Converts a copy of a save started in another language."
-msgstr "把用其他语言开始的存档转换成一个副本。"
+msgstr "把用其他语言开的存档复制一份，并转换语言。"
 
-#: manual/about.md:22
+#: manual/about.md:19
 msgid "Performance Fixes"
 msgstr "性能修复"
 
-#: manual/about.md:22
+#: manual/about.md:19
 msgid "Removes stutters with large, packed storage."
-msgstr "消除大型满载仓库带来的卡顿。"
+msgstr "大型仓库塞满后不再卡顿。"
 
-#: manual/about.md:23
+#: manual/about.md:20
 msgid "Window Workspaces"
 msgstr "窗口工作区"
 
-#: manual/about.md:23
+#: manual/about.md:20
 msgid "Snaps windows together and switches whole sets of them with one key."
 msgstr "让窗口彼此吸附，并用一个键切换整组窗口。"
 
-#: manual/about.md:24
+#: manual/about.md:21
 msgid "Better Key Bindings"
 msgstr "按键绑定增强"
 
-#: manual/about.md:24
+#: manual/about.md:21
 msgid "Key combinations and extra mouse buttons for every key binding."
-msgstr "为每个按键绑定加入组合键和额外的鼠标按键。"
+msgstr "每个按键绑定都能用组合键和额外的鼠标按键。"
 
-#: manual/about.md:26
+#: manual/about.md:23
 msgid "Look"
 msgstr "外观"
 
-#: manual/about.md:28
+#: manual/about.md:25
 msgid "The site and the mod covers share one design: the game's dusk-violet windows, cream text and teal title bars, square panels with a one-pixel bevel, and pixel lettering for names and labels. The cover system is described in `design/DESIGN.md` of the collection repository. Chinese headings use Cubic 11, an open-source pixel font released under the SIL Open Font License."
 msgstr "本站和模组封面采用同一套设计：游戏的暮紫色窗口、奶油色文字和青色标题栏，带一像素斜面的方形面板，名称和标签使用像素字体。封面设计规范写在合集仓库的 `design/DESIGN.md` 中。中文标题使用以 SIL Open Font License 发布的开源像素字体俐方体 11 号。"
 
-#: manual/about.md:30
+#: manual/about.md:27
 msgid "License"
 msgstr "许可证"
 
-#: manual/about.md:32
+#: manual/about.md:29
 msgid "Every repository is released under the Apache License 2.0. *Probably Stolen* and its assets belong to their owners; no game files are distributed here."
 msgstr "所有仓库均以 Apache License 2.0 发布。《深空当铺：可能是偷的》及其素材归其所有者所有，这里不分发任何游戏文件。"
 
@@ -393,7 +393,7 @@ msgstr "**描述现有的东西。** 页面记录当前分支上的模组：它�
 
 #: manual/contribute/documentation_standard.md:9
 msgid "**English is the source.** Pages are written once, in English. Translations are made from that text through [gettext catalogs](translation.md) and are never edited as copies of a page."
-msgstr "**英文是源文本。** 页面只用英文编写一次。译文通过 [gettext 翻译目录](translation.md) 从该文本生成，绝不作为页面副本进行编辑。"
+msgstr "**英文是源文本。** 页面只用英文写一份。译文由 [gettext 翻译目录](translation.md)配合英文生成，不要把译文当作页面副本来改。"
 
 #: manual/contribute/documentation_standard.md:11
 msgid "**Players first, then modders.** The overview page tells a player what the mod does and how to use it. How it works, measurements and build instructions follow on their own pages."
@@ -460,8 +460,8 @@ msgid "[Code standard](code_standard.md): rules for the mods' code, such as keep
 msgstr "[代码规范](code_standard.md)：模组代码的规则，比如离开店铺后不保留店铺的任何东西。"
 
 #: manual/contribute/index.md:11
-msgid "[Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools and the Leak Probe."
-msgstr "[模组开发工具](modding_tools.md)：构建模组、扫描器检查、游戏分析工具和泄漏探针。"
+msgid "[Modding tools](modding_tools.md): building mods, the scanner check, the game-inspection tools, the Leak Probe and Load Breakdown development mods, releasing and publishing to the Workshop."
+msgstr "[模组开发工具](modding_tools.md)：构建模组、扫描器检查、游戏分析工具、泄漏探针和读档分析这两个开发用模组，以及发布和上传到创意工坊。"
 
 #: manual/contribute/index.md:13
 msgid "Getting the collection"
@@ -613,7 +613,7 @@ msgstr "`tools/modding/LoadBreakdown.cs` 是一个开发用模组，用来查看
 
 #: manual/contribute/modding_tools.md:56
 msgid "Use it only on a copy of a save: timing can break a game method, and a broken load must not be saved over a real slot. Timing adds its own cost, so compare totals only with it off; Performance Fixes writes a load timeline on every load for that."
-msgstr "只在存档副本上使用：计时可能会破坏某个游戏方法，而出错的读档不能存回真正的存档位。计时本身也有开销，所以比较总时长时要把它关掉；Performance Fixes 每次读档都会写出读档时间线，可以用来比较。"
+msgstr "只在存档副本上使用：计时可能会弄坏某个游戏方法，而出错的读档不能存回真正的存档位。计时本身也有开销，所以比较总时长时要把它关掉；性能修复每次读档都会写出读档时间线，可以用它来比较。"
 
 #: manual/contribute/modding_tools.md:58
 msgid "Releasing"
@@ -648,10 +648,14 @@ msgid "`scripts/package.sh` collects the built mods into `dist/packages/`, each 
 msgstr "`scripts/package.sh` 把构建好的模组收集到 `dist/packages/`，每个模组都会附上用 `design/covers.py` 重新生成的封面。封面上显示模组 `manifest.xml` 中的版本号，而每次上传创意工坊都会替换预览图，所以创意工坊页面显示的版本永远和上传的内容一致。`python design/covers.py design/out --checkouts <文件夹> --sync` 用该文件夹中的工作副本生成封面（适用于尚未发布的版本），并写入每个模组的 `preview.png` 和 `doc/attachments/cover.png`。随后 `scripts/workshop.py` 用 `config/workshop.json` 里的物品 ID 和标题，为每个模组在 `dist/workshop/` 生成 SteamCMD 上传文件；`--only <slug>` 只生成指定的模组。描述超过 Steam 的 8,000 字节上限时它会停下，否则 SteamCMD 要在上传完内容之后才会拒绝。上传文件不改可见性，所以更新永远不会隐藏或公开某个物品。"
 
 #: manual/contribute/modding_tools.md:74
+msgid "A mod that is still being made has the version `WIP` in its `manifest.xml`, and its cover shows WIP where a version would be. `scripts/release-check.sh` runs the checks that do not need a version and ends by saying the mod is a WIP. `scripts/package.sh` skips it, and `scripts/workshop.py` stops if it is asked to upload one, so an unfinished mod cannot be released by mistake. The scanner needs a real version, so `scripts/scan.sh` scans a copy with the version `0.1.0` and leaves the mod's own `manifest.xml` as it is."
+msgstr "还在开发的模组，`manifest.xml` 里的版本写 `WIP`，封面上也显示 WIP，不显示版本号。`scripts/release-check.sh` 会跑所有不需要版本号的检查，最后说明这个模组是 WIP。`scripts/package.sh` 会跳过它，`scripts/workshop.py` 被要求上传它时会直接停下，所以没做完的模组不会被误发布。扫描器需要真实的版本号，因此 `scripts/scan.sh` 扫的是一份版本号为 `0.1.0` 的副本，模组自己的 `manifest.xml` 不会被改动。"
+
+#: manual/contribute/modding_tools.md:76
 msgid "SteamCMD cannot set tags. `scripts/workshop-tags.sh` sets the tags listed in `config/workshop.json` through the game's own Steamworks library. It needs the Steam client running and logged in as the owner of the items."
 msgstr "SteamCMD 无法设置标签。`scripts/workshop-tags.sh` 通过游戏自带的 Steamworks 库，设置 `config/workshop.json` 中列出的标签。运行时需要 Steam 客户端已启动，并登录物品所有者的账号。"
 
-#: manual/contribute/modding_tools.md:76
+#: manual/contribute/modding_tools.md:78
 msgid "The mods are also gathered in one Workshop collection, Quality of Life. `scripts/workshop-collection.sh` creates or updates it through the same Steamworks library: its title, tags and mods in the order of the `collection` entry of `config/workshop.json`, its text from `config/collection-description.txt` and its cover from `design/collection_cover.py`. A new mod is added by listing it there and running the script again. The visibility changes only when one is given (`public`, `friends` or `private`)."
 msgstr "这些模组还汇集在一个创意工坊合集“生活质量合集”中。`scripts/workshop-collection.sh` 通过同一个 Steamworks 库创建或更新这个合集：标题、标签和模组按 `config/workshop.json` 中 `collection` 一项的顺序，介绍文字取自 `config/collection-description.txt`，封面由 `design/collection_cover.py` 生成。加入新模组时，只需在那里列出它，再运行一次脚本。只有指定了可见性（`public`、`friends` 或 `private`）时才会更改可见性。"
 
@@ -717,7 +721,7 @@ msgstr "英文文本未改变的消息保留其译文。"
 
 #: manual/contribute/translation.md:26
 msgid "A message whose English text changed takes the translation of the most similar old message and is marked `fuzzy`. The previous English text is kept in a `#| msgid` comment so a translator can see what changed."
-msgstr "英文文本发生变化的消息会采用最相似旧消息的译文，并被标记为 `fuzzy`。之前的英文文本保存在 `#| msgid` 注释中，以便译者查看改动。"
+msgstr "英文文本改过的消息，先沿用与它最相似的旧消息的译文，并标上 `fuzzy`。旧的英文文本留在 `#| msgid` 注释里，译者可以对照看改了什么。"
 
 #: manual/contribute/translation.md:27
 msgid "A translation whose message disappeared is kept as an obsolete entry (`#~`) at the end of the catalog, where `update` can recover it later."
@@ -725,7 +729,7 @@ msgstr "消息已消失的译文会作为废弃条目（`#~`）保留在翻译�
 
 #: manual/contribute/translation.md:29
 msgid "Fuzzy translations are not shown on the site. They count as untranslated until a translator reviews them and removes the `fuzzy` flag."
-msgstr "fuzzy 译文不会在站点上显示。在译者审阅并移除 `fuzzy` 标记之前，它们都算作未翻译。"
+msgstr "fuzzy 译文不会显示在站点上。译者审阅并去掉 `fuzzy` 标记之前，它们都算作未翻译。"
 
 #: manual/contribute/translation.md:31
 msgid "Translating"
@@ -765,7 +769,7 @@ msgstr "用 `npm run status` 检查结果，再用站点预览。"
 
 #: manual/contribute/translation.md:51
 msgid "Locales"
-msgstr "语言环境"
+msgstr "语言区域"
 
 #: manual/contribute/translation.md:53
 msgid "Locale names follow gettext: `zh_CN` for Simplified Chinese. They appear in `conf.json`, in the catalog paths and in `config/locales.json` of the site, which also gives each locale its URL segment and display name. Adding a language to the site means adding it there; adding it to a repository means listing it in `conf.json` and running `update`."
@@ -832,5 +836,8 @@ msgid "Pixel art is shown with nearest-neighbour scaling, so draw it at a small 
 msgstr "像素图以最近邻方式缩放显示，所以按小尺寸绘制，交给站点放大即可。"
 
 #: manual/index.md:8
-msgid "Mods for *Probably Stolen* that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions."
-msgstr "为《深空当铺：可能是偷的》（*Probably Stolen*）制作的模组：不改游戏规则，只去掉碍事的部分，比如等待、猜测和卡顿。每个模组只做一件事，可以单独使用，也不需要任何特殊权限。"
+msgid "Small mods for *Probably Stolen*. Each one changes one thing, such as the stutters with packed storage, the waits on phone calls or the keys you can bind, and keeps the game's rules. Each works on its own and needs no special permissions."
+msgstr "《深空当铺：可能是偷的》（*Probably Stolen*）的小模组。每个只改一件事，比如仓库塞满后的卡顿、打电话时的等待，或者能绑定的按键，而且不改游戏规则。每个都可以单独使用，也不需要任何特殊权限。"
+
+#~ msgid "Mods for *Probably Stolen* that keep the game's rules and take away what gets in the way: waiting, guessing and stutters. Each one does one thing, works on its own, and needs no special permissions."
+#~ msgstr "为《深空当铺：可能是偷的》（*Probably Stolen*）制作的模组：不改游戏规则，只去掉碍事的部分，比如等待、猜测和卡顿。每个模组只做一件事，可以单独使用，也不需要任何特殊权限。"
