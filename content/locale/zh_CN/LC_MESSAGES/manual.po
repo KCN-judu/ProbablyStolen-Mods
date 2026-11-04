@@ -220,11 +220,11 @@ msgstr "按键绑定与输入。"
 
 #: conf.json:strings.category.appearance.title
 msgid "Appearance"
-msgstr ""
+msgstr "外观"
 
 #: conf.json:strings.category.appearance.description
 msgid "Replacing the game's pictures."
-msgstr ""
+msgstr "替换游戏的图片。"
 
 #: conf.json:strings.category.saves.title
 msgid "Saves"
@@ -333,11 +333,11 @@ msgstr "每个按键绑定都能用组合键和额外的鼠标按键。"
 
 #: manual/about.md:22
 msgid "Texture Packs (early access)"
-msgstr ""
+msgstr "材质包加载器（抢先体验）"
 
 #: manual/about.md:22
 msgid "Lets mods replace the game's pictures."
-msgstr ""
+msgstr "让模组替换游戏的图片。"
 
 #: manual/about.md:24
 msgid "Look"
