@@ -1,4 +1,6 @@
 // Usage: Ctx.exe <dll> <regex-on-instruction> <after>  - prints methods with the N instructions after each match
+// Shows what a matched instruction is followed by (e.g. which method consumes a loaded constant or field); only the
+// callee name of each following call is printed. Assemblies next to <dll> are used to resolve references.
 using System; using System.Linq; using System.Text.RegularExpressions; using Mono.Cecil; using System.IO;
 class C { static void Main(string[] a) {
   var res = new DefaultAssemblyResolver(); res.AddSearchDirectory(Path.GetDirectoryName(Path.GetFullPath(a[0])));

@@ -4,6 +4,8 @@
 import { parseMarkdown } from './markdown.mjs';
 import { fromHtml } from 'hast-util-from-html';
 
+// Finds the destination that follows a `](` or `]:` at `from`: either <...> or a run up to whitespace or an unbalanced `)`.
+// Parentheses may nest and a backslash escapes the next character, as in CommonMark.
 function readDestination(source, from) {
   let index = from;
   while (source[index] === ' ' || source[index] === '\t' || source[index] === '\n') index += 1;
@@ -93,6 +95,7 @@ export function findImages(source) {
   return found;
 }
 
+// Reference-style links point at a `[id]: url` definition; ids compare case-insensitively.
 function findDefinition(tree, identifier) {
   const normalized = identifier.toLowerCase();
   let match;
@@ -104,15 +107,19 @@ function findDefinition(tree, identifier) {
   return match;
 }
 
+// True for anything that is not a relative file path: URLs with a scheme, //host, #anchors and root-relative paths.
 export function isExternal(url) {
   return /^[a-z][a-z0-9+.-]*:/i.test(url) || url.startsWith('//') || url.startsWith('#') || url.startsWith('/');
 }
 
+// Splits a destination into path and the `?query`/`#anchor` tail.
 export function splitHash(url) {
   const index = url.search(/[?#]/);
   return index < 0 ? [url, ''] : [url.slice(0, index), url.slice(index)];
 }
 
+// `rewrite(url, link)` returns the new destination or undefined to keep it. Edits are applied from the end of the source
+// so the offsets of earlier links stay valid.
 export function rewriteLinks(source, rewrite) {
   const edits = findLinks(source)
     .map((link) => ({ ...link, next: rewrite(link.url, link) }))

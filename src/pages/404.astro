@@ -1,4 +1,6 @@
 ---
+// Not-found page. It is static and served for every missing path, so it cannot know the reader's language; it
+// lists every language's library and marks the one found in the URL.
 import Base from '../layouts/Base.astro';
 import { locales, t } from '../lib/site';
 const lang = locales[0].path;

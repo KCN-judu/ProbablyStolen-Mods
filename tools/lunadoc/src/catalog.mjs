@@ -9,10 +9,12 @@ import { po } from 'gettext-parser';
 
 const FUZZY_THRESHOLD = 0.6;
 
+// A catalog is { language, entries: Map(msgid -> entry), obsolete: Map }; entries keep flags, references and the previous msgid.
 export function emptyCatalog(language = '') {
   return { language, entries: new Map(), obsolete: new Map() };
 }
 
+// Reads a .po/.pot file; null when it does not exist. Obsolete (#~) entries go to `obsolete`, not `entries`.
 export function readCatalog(file) {
   if (!fs.existsSync(file)) return null;
   const data = po.parse(fs.readFileSync(file));
@@ -31,6 +33,7 @@ export function readCatalog(file) {
   return catalog;
 }
 
+// Converts one parsed .po entry; `previous` is the msgid recorded by a fuzzy match (`#| msgid`), unescaped.
 function fromParsed(entry, context) {
   const flags = new Set(
     (entry.comments?.flag ?? '')
@@ -50,6 +53,8 @@ function fromParsed(entry, context) {
   };
 }
 
+// Writes entries in the catalog's own order (sort: false) and no line folding, so a regenerated file differs from the old one only
+// where messages changed. A template (.pot) gets an empty Language and empty msgstrs; obsolete entries go to the .po only.
 export function writeCatalog(file, catalog, { template = false, project = 'Probably Stolen Mods documentation' } = {}) {
   const headers = {
     'Project-Id-Version': project,
@@ -96,10 +101,13 @@ export function templateFrom(units) {
   return catalog;
 }
 
+// Lowercased words of a message, for the similarity measure.
 function words(text) {
   return text.toLowerCase().match(/[\p{L}\p{N}_]+/gu) ?? [];
 }
 
+// Dice coefficient over the multiset of words, 1 = identical. mergeCatalog uses it to pair a changed source message with an
+// old translation (fuzzy match above FUZZY_THRESHOLD).
 export function similarity(a, b) {
   if (a === b) return 1;
   const left = words(a);

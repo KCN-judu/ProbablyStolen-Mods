@@ -1,3 +1,5 @@
+// Typed access to .generated/site.json (written by tools/prepare-site.mjs: locales, navigation, coverage, UI strings)
+// and the helpers pages share. Locale ids are the URL's first segment; the first locale is the source language.
 import data from '../../.generated/site.json';
 
 export interface Locale {

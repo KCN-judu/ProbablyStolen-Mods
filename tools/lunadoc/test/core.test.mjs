@@ -1,3 +1,5 @@
+// Tests of lunadoc's core (npm test): segmentation, catalog merge semantics, link rewriting, layout, check, attachments.
+// Fixtures are built in temporary directories; nothing here reads a real repository.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';

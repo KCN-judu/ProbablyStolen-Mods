@@ -9,6 +9,8 @@ import { findImages, findLinks, isExternal, splitHash } from './links.mjs';
 
 const LEGACY_LOCALE_DIR = /^[a-z]{2}_[A-Z]{2}$/;
 
+// Returns { errors, warnings }. Errors: missing conf/index, retired layout, catalogs whose msgids differ from the pages, broken or
+// repository-leaving links, empty image alt text, attachment name collisions, Graphviz that does not compile. Fuzzy entries only warn.
 export function check(docDir, { compile = false, repoRoot = path.dirname(docDir) } = {}) {
   const errors = [];
   const warnings = [];

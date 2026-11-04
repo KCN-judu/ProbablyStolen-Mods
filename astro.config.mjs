@@ -1,3 +1,5 @@
+// Astro configuration of the documentation site. Pages are generated into .generated/ by tools/prepare-site.mjs
+// before the build (npm run build); `base` comes from config/repos.json.
 import fs from 'node:fs';
 import { defineConfig } from 'astro/config';
 import remarkAlerts from './src/plugins/remark-alerts.mjs';

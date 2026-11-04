@@ -1,4 +1,6 @@
 ---
+// Cycles auto -> light -> dark. `auto` removes the stored choice and the data-theme attribute so prefers-color-scheme decides;
+// the inline script in layouts/Base.astro applies the stored choice before first paint.
 import { t } from '../lib/site';
 interface Props {
   lang: string;

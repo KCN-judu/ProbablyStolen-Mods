@@ -52,6 +52,7 @@ export function normalizeMessage(text) {
   return out.trim();
 }
 
+// The text a reader sees: code, math and raw HTML contribute nothing, images contribute their alt text.
 function visibleText(node) {
   if (node.type === 'inlineCode' || node.type === 'inlineMath' || node.type === 'html') return '';
   if (typeof node.value === 'string') return node.value;
@@ -59,10 +60,12 @@ function visibleText(node) {
   return (node.children ?? []).map(visibleText).join('');
 }
 
+// A block with no letters (a lone code span, a number) is not offered for translation.
 function hasWords(node) {
   return /\p{L}/u.test(visibleText(node));
 }
 
+// Source offsets covering a block's inline content, without the markers (#, >, list bullets) around it.
 function childrenRange(node) {
   const first = node.children?.[0];
   const last = node.children?.at(-1);

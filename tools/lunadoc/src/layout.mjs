@@ -17,6 +17,7 @@ export const DEFAULT_LOCALES = ['zh_CN', 'ja_JP'];
 export const DOMAIN = 'manual';
 export const CONF_KEYS = ['summary'];
 
+// Paths of every part of the documentation tree, derived from docDir.
 export function layout(docDir) {
   return {
     docDir,
@@ -29,6 +30,7 @@ export function layout(docDir) {
   };
 }
 
+// conf.json with defaults for title, summary, locales, order and strings; other keys pass through.
 export function readConf(docDir) {
   const paths = layout(docDir);
   const raw = fs.existsSync(paths.conf) ? JSON.parse(fs.readFileSync(paths.conf, 'utf8')) : {};
@@ -42,6 +44,7 @@ export function readConf(docDir) {
   };
 }
 
+// All files below dir that pass `filter`, as sorted paths relative to `base`.
 export function walkFiles(dir, filter = () => true, base = dir) {
   if (!fs.existsSync(dir)) return [];
   const out = [];
@@ -56,10 +59,12 @@ export function walkFiles(dir, filter = () => true, base = dir) {
   return out.sort();
 }
 
+// Source pages of manual/ as paths relative to it.
 export function listPages(docDir) {
   return walkFiles(layout(docDir).manual, (name) => name.endsWith('.md'));
 }
 
+// Source text of one page of manual/.
 export function readPage(docDir, page) {
   return fs.readFileSync(path.join(layout(docDir).manual, page), 'utf8');
 }
@@ -84,6 +89,7 @@ export function extractUnits(docDir) {
   return units;
 }
 
+// The .pot catalog: each distinct message of conf.json and the pages once, with its source lines as references.
 export function extractTemplate(docDir) {
   return templateFrom(extractUnits(docDir));
 }
@@ -103,6 +109,7 @@ export function update(docDir, { project } = {}) {
   return report;
 }
 
+// Counts of translated, fuzzy and untranslated messages of a catalog.
 export function coverageOf(catalog) {
   let translated = 0;
   let fuzzy = 0;
@@ -114,6 +121,7 @@ export function coverageOf(catalog) {
   return { total, translated, fuzzy, untranslated: total - translated - fuzzy };
 }
 
+// The translation catalog of a locale; null for the source locale or when no .po exists.
 export function loadCatalog(docDir, locale) {
   if (locale === SOURCE_LOCALE) return null;
   return readCatalog(layout(docDir).po(locale));
@@ -130,6 +138,7 @@ export function renderPage(docDir, page, locale, catalog = loadCatalog(docDir, l
   return { ...renderTranslated(source, translator(catalog)), headings };
 }
 
+// conf.json with the translatable fields (title, summary) replaced by the catalog's translation.
 export function translateConf(docDir, locale, catalog = loadCatalog(docDir, locale)) {
   const conf = readConf(docDir);
   if (locale === SOURCE_LOCALE) return conf;

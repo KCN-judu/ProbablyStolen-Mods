@@ -48,6 +48,7 @@ fs.mkdirSync(out, { recursive: true });
 
 // ---------------------------------------------------------------- sources
 
+// Mods are the workspace folders (git submodules) that have doc/conf.json; the sort keeps routes and navigation stable.
 function discoverRepos() {
   if (!fs.existsSync(workspace)) return [];
   return fs
@@ -78,6 +79,7 @@ for (const name of discoverRepos()) {
 
 const pageSlug = (page) => page.replace(/\.md$/, '').replace(/(^|\/)index$/, '');
 
+// Route of a page: /<locale>/<repo>/<page>/ ; the site's own pages have no repo segment and index pages no page segment.
 function route(locale, source, page) {
   const parts = [locale.path];
   if (source.id !== SITE) parts.push(source.id);
@@ -88,11 +90,13 @@ function route(locale, source, page) {
 
 const github = (source, kind, file) => `https://github.com/${org}/${source.repo}/${kind}/${branch}/${file}`;
 
+// Fallback page title from a file name when a page has neither front matter title nor heading.
 function humanize(name) {
   const text = name.replace(/\.md$/, '').replace(/[_-]+/g, ' ');
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+// Title fallback: the first level-1 heading.
 function firstHeading(markdown) {
   return markdown.match(/^#\s+(.+?)\s*#*\s*$/m)?.[1];
 }
@@ -105,6 +109,8 @@ function stripFrontmatter(markdown) {
   return markdown.replace(/^---\n[\s\S]*?\n---\n?/, '');
 }
 
+// Returns the rewrite function for rewriteLinks: relative links between pages become site routes, attachments become
+// /attachments/<repo>/... (the compiled output) and any other file becomes a link to the repository on GitHub.
 function linkRewriter(source, page, locale, attachments) {
   const manualDir = path.join(source.docDir, 'manual');
   const attachmentsDir = path.join(source.docDir, 'attachments');

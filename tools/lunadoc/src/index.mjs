@@ -1,3 +1,4 @@
+// Public API of lunadoc: what cli.mjs, tools/prepare-site.mjs and the tests import.
 export * from './markdown.mjs';
 export * from './catalog.mjs';
 export * from './layout.mjs';

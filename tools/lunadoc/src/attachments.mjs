@@ -21,6 +21,7 @@ import { layout, walkFiles } from './layout.mjs';
 
 const LOCALE_SUFFIX = /\.([a-z]{2}_[A-Z]{2})$/;
 
+// Lists the attachments of doc/attachments/ as items { kind, source, name, locale, output } (see the table above).
 export function listAttachments(docDir) {
   const root = layout(docDir).attachments;
   const files = walkFiles(root);
@@ -57,6 +58,7 @@ export function listAttachments(docDir) {
   return items;
 }
 
+// Two sources that would write the same output file (e.g. a.typ and a/main.typ).
 export function findAttachmentCollisions(items) {
   const byOutput = new Map();
   const collisions = [];
@@ -92,6 +94,8 @@ export function resolveAttachment(items, target, locale) {
   return file ? { ...file, pdf: file.source.endsWith('.pdf') } : null;
 }
 
+// Runs the typst CLI (TYPST overrides the command) and writes the PDF to outDir; returns { ok, output } or { ok: false, message }.
+// The project root is the attachments folder, so a multi-file project can import its siblings.
 export function compileTypst(docDir, item, outDir, { typst = process.env.TYPST ?? 'typst' } = {}) {
   const root = layout(docDir).attachments;
   const output = path.join(outDir, item.output);
@@ -118,10 +122,14 @@ const SVG_ATTRIBUTES = new Set([
 ]);
 const URL_ATTRIBUTES = new Set(['fill', 'stroke', 'clip-path', 'marker-start', 'marker-mid', 'marker-end']);
 
+// Graphviz may emit links; only http(s) and in-document anchors survive sanitizing.
 function safeSvgHref(value) {
   return typeof value === 'string' && (/^https?:\/\//i.test(value) || value.startsWith('#'));
 }
 
+// Rebuilds Graphviz's SVG output through an allow-list of elements and attributes (SVG_ELEMENTS, SVG_ATTRIBUTES), dropping
+// scripts, event handlers, style and external references. Ids and url(#...) references get `prefix` so several diagrams
+// can share one HTML page. With `theme`, black strokes, text and polygon fills become currentColor so diagrams follow the site theme.
 function mapSvgTree(root, prefix, { theme = false, accessibleLabel } = {}) {
   const ids = new Map();
   const collect = (node) => {
@@ -186,6 +194,7 @@ function mapSvgTree(root, prefix, { theme = false, accessibleLabel } = {}) {
   return clean(root, true);
 }
 
+// Themed SVG as a string, for files written to disk; the id prefix is a hash of the DOT source so it is stable between builds.
 export function themeGraphvizSvg(svg, source = '') {
   const document = new DOMParser().parseFromString(svg, 'image/svg+xml');
   const root = document.documentElement;
@@ -194,6 +203,7 @@ export function themeGraphvizSvg(svg, source = '') {
   return new XMLSerializer().serializeToString(mapSvgTree(root, prefix, { theme: true }));
 }
 
+// The same cleaning as a hast element, for inlining into a generated page with an accessible label; null if not an SVG.
 export function sanitizeGraphvizSvg(svg, prefix, accessibleLabel) {
   const document = new DOMParser().parseFromString(svg, 'image/svg+xml');
   const root = document.documentElement;
@@ -202,6 +212,8 @@ export function sanitizeGraphvizSvg(svg, prefix, accessibleLabel) {
   return fromHtml(output, { fragment: true }).children.find((child) => child.type === 'element' && child.tagName === 'svg') ?? null;
 }
 
+// Runs `dot -Tsvg` with a transparent background (GRAPHVIZ_DOT overrides the command), themes the result and writes it to outDir.
+// Time and output size are capped so a bad DOT file cannot hang or exhaust a build.
 export function compileGraphviz(docDir, item, outDir, {
   dot = process.env.GRAPHVIZ_DOT ?? 'dot',
   maxBuffer = 64 * 1024 * 1024,
