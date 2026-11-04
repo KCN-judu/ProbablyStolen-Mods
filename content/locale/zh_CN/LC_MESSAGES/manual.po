@@ -357,7 +357,7 @@ msgstr "店铺里的物品、库存、窗口和管理器都互相引用。只要
 
 #: manual/contribute/code_standard.md:9
 msgid "**No mod keeps store objects after the player leaves the store.** Store objects are `GameItem`, `GameItemElement`, `GameInventory`, `PixelWindow`, `TreeNodeRender`, `StoreClient`, the store's managers and any Unity object of the store's scene. A mod must not keep them in:"
-msgstr "**玩家离开店铺后，任何模组都不得保留店铺对象。**店铺对象指 `GameItem`、`GameItemElement`、`GameInventory`、`PixelWindow`、`TreeNodeRender`、`StoreClient`、店铺的各个管理器，以及店铺场景中的任何 Unity 对象。模组不得把它们保留在："
+msgstr "**玩家离开店铺后，任何模组都不得保留店铺对象**。店铺对象指 `GameItem`、`GameItemElement`、`GameInventory`、`PixelWindow`、`TreeNodeRender`、`StoreClient`、店铺的各个管理器，以及店铺场景中的任何 Unity 对象。模组不得把它们保留在："
 
 #: manual/contribute/code_standard.md:11
 msgid "static fields, static collections or caches;"
@@ -373,11 +373,11 @@ msgstr "事件订阅中，或目标是店铺对象的委托中。"
 
 #: manual/contribute/code_standard.md:15
 msgid "**Release them when the store is left.** The store is the scene `InventoryScene`. Subscribe to `SceneManager.sceneLoaded` and, when a scene other than `InventoryScene` is loaded in single mode (the main menu is `EmporiumMenu`), clear every such field, cache and subscription. Where that does not fit, key a cache with a `ConditionalWeakTable` or remove its destroyed entries. Nothing may change while the player is in the store. The decision of when to release goes in a `.Pure.cs` file with a headless test, like any other decision."
-msgstr "**离开店铺时释放它们。**店铺是场景 `InventoryScene`。订阅 `SceneManager.sceneLoaded`，当以单场景模式加载 `InventoryScene` 以外的场景时（主菜单是 `EmporiumMenu`），清空所有这类字段、缓存和订阅。不适合这样做时，用 `ConditionalWeakTable` 作为缓存的键，或移除其中已销毁的条目。玩家在店铺里时，行为不得有任何变化。何时释放的判断和其他判断一样，放在 `.Pure.cs` 文件里，并配一个无头测试。"
+msgstr "**离开店铺时释放它们**。店铺是场景 `InventoryScene`。订阅 `SceneManager.sceneLoaded`，当以单场景模式加载 `InventoryScene` 以外的场景时（主菜单是 `EmporiumMenu`），清空所有这类字段、缓存和订阅。不适合这样做时，用 `ConditionalWeakTable` 作为缓存的键，或移除其中已销毁的条目。玩家在店铺里时，行为不得有任何变化。何时释放的判断和其他判断一样，放在 `.Pure.cs` 文件里，并配一个无头测试。"
 
 #: manual/contribute/code_standard.md:17
 msgid "**Check with the Leak Probe.** Every new or changed mod is checked with the [Leak Probe](modding_tools.md#leak-probe): load a save, go back to the main menu and read the `[LeakProbe]` lines in `Player.log`. None of them may name a field of the mod."
-msgstr "**用泄漏探针检查。**每个新模组或改动过的模组都要用[泄漏探针](modding_tools.md#leak-probe)检查：读取一个存档，回到主菜单，然后查看 `Player.log` 里的 `[LeakProbe]` 行。其中不得出现该模组的任何字段。"
+msgstr "**用泄漏探针检查**。每个新模组或改动过的模组都要用[泄漏探针](modding_tools.md#leak-probe)检查：读取一个存档，回到主菜单，然后查看 `Player.log` 里的 `[LeakProbe]` 行。其中不得出现该模组的任何字段。"
 
 #: manual/contribute/documentation_standard.md:1
 msgid "Documentation standard"
