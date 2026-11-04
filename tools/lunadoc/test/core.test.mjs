@@ -206,6 +206,24 @@ test('alt validation handles reference images, HTML img, and whitespace-only emp
   assert.ok(errors.some((error) => error.startsWith('manual/index.md:4: image alt text is empty')));
 });
 
+test('lunadoc check rejects emphasis that the parser leaves as typed', (t) => {
+  const fixture = makeDoc('**Waiting for a key.** The rest follows.\n', { dot: false });
+  t.after(() => fs.rmSync(fixture.root, { recursive: true, force: true }));
+  fs.writeFileSync(path.join(fixture.docDir, 'conf.json'), JSON.stringify({ summary: 'Fixture', locales: ['zh_CN'] }));
+  update(fixture.docDir);
+  const po = layout(fixture.docDir).po('zh_CN');
+  const original = fs.readFileSync(po, 'utf8');
+  const translated = (msgstr) =>
+    original.replace(/(msgid "\*\*Waiting for a key\.\*\* The rest follows\."\nmsgstr )""/, `$1"${msgstr}"`);
+
+  // A closing ** after "。" and before a Han character does not close, so the asterisks would show on the page.
+  fs.writeFileSync(po, translated('**有绑定在等按键。**下文接着说。'));
+  assert.ok(check(fixture.docDir, { repoRoot: fixture.root }).errors.some((e) => e.includes('[zh_CN]: emphasis is not parsed')));
+
+  fs.writeFileSync(po, translated('**有绑定在等按键**。下文接着说。'));
+  assert.deepEqual(check(fixture.docDir, { repoRoot: fixture.root }).errors, []);
+});
+
 test('DOT attachments resolve to locale-aware SVG outputs', (t) => {
   const fixture = makeDoc('A graph.\n');
   t.after(() => fs.rmSync(fixture.root, { recursive: true, force: true }));

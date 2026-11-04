@@ -4,13 +4,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { readCatalog } from './catalog.mjs';
 import { compileGraphviz, compileTypst, findAttachmentCollisions, listAttachments, resolveAttachment } from './attachments.mjs';
-import { extractTemplate, layout, listPages, readConf, readPage, SOURCE_LOCALE } from './layout.mjs';
+import { extractTemplate, layout, listPages, readConf, readPage, renderPage, SOURCE_LOCALE } from './layout.mjs';
+import { unparsedEmphasis } from './markdown.mjs';
 import { findImages, findLinks, isExternal, splitHash } from './links.mjs';
 
 const LEGACY_LOCALE_DIR = /^[a-z]{2}_[A-Z]{2}$/;
 
 // Returns { errors, warnings }. Errors: missing conf/index, retired layout, catalogs whose msgids differ from the pages, broken or
-// repository-leaving links, empty image alt text, attachment name collisions, Graphviz that does not compile. Fuzzy entries only warn.
+// repository-leaving links, emphasis markup the parser leaves as typed, empty image alt text, attachment name collisions, Graphviz that does not compile. Fuzzy entries only warn.
 export function check(docDir, { compile = false, repoRoot = path.dirname(docDir) } = {}) {
   const errors = [];
   const warnings = [];
@@ -48,6 +49,15 @@ export function check(docDir, { compile = false, repoRoot = path.dirname(docDir)
     if (!sameKeys(catalog)) errors.push(`${locale} catalog is out of date: run \`lunadoc update\``);
     const fuzzy = [...catalog.entries.values()].filter((entry) => entry.flags.has('fuzzy')).length;
     if (fuzzy) warnings.push(`${locale}: ${fuzzy} fuzzy messages need review`);
+  }
+
+  // Emphasis that the parser leaves as typed, in the English pages and in every translation of them.
+  for (const locale of [SOURCE_LOCALE, ...conf.locales.filter((l) => l !== SOURCE_LOCALE)]) {
+    for (const page of listPages(docDir)) {
+      for (const text of unparsedEmphasis(renderPage(docDir, page, locale).markdown)) {
+        errors.push(`manual/${page} [${locale}]: emphasis is not parsed (put punctuation outside the ** markers): ${text.slice(0, 60)}`);
+      }
+    }
   }
 
   // Links and attachments.

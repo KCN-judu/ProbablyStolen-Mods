@@ -26,6 +26,21 @@ export function parseMarkdown(source) {
   return processor.parse(source);
 }
 
+// Texts of a page in which emphasis markup was written but not parsed, so its asterisks would show on the page. CommonMark
+// only closes `**` after punctuation when a space or punctuation follows it, so "**注意。**下文" stays as typed; the usual
+// fix is to put the punctuation outside the markers. Code is ignored.
+const EMPHASIS_LOOKING = /\*{1,2}[^\s*][^*]*\*{1,2}/;
+export function unparsedEmphasis(source) {
+  const found = [];
+  const walk = (node) => {
+    if (node.type === 'code' || node.type === 'inlineCode') return;
+    if (node.type === 'text' && EMPHASIS_LOOKING.test(node.value)) found.push(node.value);
+    for (const child of node.children ?? []) walk(child);
+  };
+  walk(parseMarkdown(source));
+  return found;
+}
+
 const CJK = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}　-〿＀-￯]/u;
 
 // Joins soft-wrapped lines so re-wrapping the English source does not
