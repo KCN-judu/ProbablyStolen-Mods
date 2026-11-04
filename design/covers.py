@@ -668,7 +668,7 @@ COVERS: Final[Mapping[str, Drawer]] = MappingProxyType({
 
 # Mods still being made, not yet listed in config/repos.json (which publishes them on the site): their cover is
 # drawn only from a working copy (--checkouts), and skipped otherwise.
-UNLISTED: Final[Mapping[str, str]] = MappingProxyType({"texture-packs": "ProbablyStolen-TexturePacks"})
+UNLISTED: Final[Mapping[str, str]] = MappingProxyType({})
 
 
 def mod_folders(checkouts: str | None) -> Mapping[str, str]:

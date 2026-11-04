@@ -10,7 +10,8 @@
     "demand-highlight": "ProbablyStolen-DemandHighlight",
     "performance-fixes": "ProbablyStolen-PerformanceFixes",
     "window-workspaces": "ProbablyStolen-WindowWorkspaces",
-    "better-key-bindings": "ProbablyStolen-BetterKeyBindings"
+    "better-key-bindings": "ProbablyStolen-BetterKeyBindings",
+    "texture-packs": "ProbablyStolen-TexturePacks"
   },
   "categories": [
     {
@@ -30,6 +31,12 @@
       "id": "controls",
       "repos": [
         "better-key-bindings"
+      ]
+    },
+    {
+      "id": "appearance",
+      "repos": [
+        "texture-packs"
       ]
     },
     {

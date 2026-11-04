@@ -62,6 +62,8 @@
     "category.windows.description": "Arranging and switching container windows.",
     "category.controls.title": "Controls",
     "category.controls.description": "Key bindings and input.",
+    "category.appearance.title": "Appearance",
+    "category.appearance.description": "Replacing the game's pictures.",
     "category.saves.title": "Saves",
     "category.saves.description": "Working with save files.",
     "category.performance.title": "Performance",

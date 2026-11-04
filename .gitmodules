@@ -22,3 +22,7 @@
 	path = mods/better-key-bindings
 	url = https://github.com/KCN-judu/ProbablyStolen-BetterKeyBindings.git
 	branch = main
+[submodule "mods/texture-packs"]
+	path = mods/texture-packs
+	url = https://github.com/KCN-judu/ProbablyStolen-TexturePacks.git
+	branch = main

@@ -52,7 +52,7 @@ Each one shows the mod working, using the game's own visual language: inventory 
 - **Performance Fixes**: a frame-time chart, spiky before and flat after, against a 60 fps guide line.
 - **Window Workspaces**: workspace chips 1 to 4 above windows snapped edge to edge on a grid.
 - **Better Key Bindings**: lit Ctrl + E keycaps, a mouse with its middle and side buttons lit, and a key bindings list where Ctrl + E and E sit on separate rows.
-- **Texture Packs**: the same crate in an inventory slot before and after, the game's wood → the pack's pink, over the pack manager's list: two packs switched on and one off, each with its move arrows.
+- **Texture Packs** (early access, listed on the site and in the Workshop but not in the Quality of Life collection): the same crate in an inventory slot before and after, the game's wood → the pack's pink, over the pack manager's list: two packs switched on and one off, each with its move arrows.
 
 A mod still being made is listed in `UNLISTED` in `covers.py` instead of `config/repos.json`, which would publish it on the site: its cover is drawn only from a working copy (`--checkouts`) and skipped otherwise.
 
