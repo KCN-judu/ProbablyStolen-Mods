@@ -476,10 +476,178 @@ def kit_column(cv: C.Canvas, lang: Lang, t: ArchText, x: int, w: int, top: int, 
     return y + h
 
 
+# ---------------------------------------------------------------- demand highlight: query and highlight
+
+@dataclass(frozen=True)
+class QueryText:
+    title: str
+    front: str
+    back_left: str
+    back_right: str
+    customer: Lines
+    window: Lines
+    intent: Lines
+    language: Lines
+    formatter: Lines
+    query: Lines
+    engine: Lines
+    result: Lines
+    painter: Lines
+    walk: Lines
+    counts: Lines
+    api: Lines
+    mods: Lines
+    core: Lines
+    notes: Sequence[str]
+
+
+QUERY: Final[Mapping[Lang, QueryText]] = MappingProxyType({
+    "en": QueryText(
+        title="DEMAND HIGHLIGHT 1.2: QUERY AND HIGHLIGHT",
+        front="FRONT: WHAT IS ASKED", back_left="HIGHLIGHT: ON SCREEN", back_right="QUERY: THE WHOLE SHOP",
+        customer=[("THE CUSTOMER", C.CREAM), ("AT THE COUNTER", C.MUTED)],
+        window=[("ITEM FILTER WINDOW", C.CREAM), ("TICKS AND TEXT BOX", C.MUTED)],
+        intent=[("INTENT RULES", C.CREAM), ("INSPECT, BARTER,", C.MUTED), ("FLEXI, BUY, SELL", C.MUTED)],
+        language=[("FILTER LANGUAGE", C.CREAM), ("LEXER, PARSER: AST", C.MUTED), ("BINDER: PRED", C.MUTED)],
+        formatter=[("FORMATTER", C.CREAM), ("AST -> ONE FORM", C.MUTED), ("WORDS OR + | -", C.MUTED)],
+        query=[("QUERY: PRED VALUES", C.CREAM), ("WANT, SEARCH, GOODS, FILTER", C.MUTED)],
+        engine=[("ENGINE", C.CREAM), ("ITEMS ON SCREEN, A FEW", C.MUTED), ("MS A FRAME, ANSWERS KEPT", C.MUTED)],
+        result=[("RESULT", C.CREAM), ("ITEMS AND THEIR LOOKS", C.MUTED)],
+        painter=[("PAINTER", C.CREAM), ("OUTLINES, TAB MARKS", C.MUTED)],
+        walk=[("SHOP WALK + PRED.EVAL", C.CREAM), ("THE FILTER'S PRED OR A", C.MUTED), ("CALLER'S, ON EVERY ITEM", C.MUTED)],
+        counts=[("FILTER COUNTS, NUMBERS", C.CREAM)],
+        api=[("QUERY API 1.0", C.CREAM), ("TEXT IN, ITEMS OUT", C.MUTED), ("SAME LANGUAGE", C.MUTED)],
+        mods=[("OTHER MODS", C.CREAM), ("A COPIED CLIENT FILE", C.MUTED)],
+        core=[("QUERY CORE LIBRARY", C.FAINT), ("ONLY IF MODS NEED IT", C.FAINT)],
+        notes=["THE FORMATTER WRITES THE BOX: ON ENTER, AND WHEN A",
+               "TICK EDITS THE QUERY. THE API COMPILES ITS CALLER'S",
+               "TEXT WITH THE FILTER LANGUAGE AND RUNS IT ON THE",
+               "SAME SHOP WALK, WITHOUT THE ENGINE OR THE PAINTER.",
+               "DOTTED: CONSIDERED, NOT BUILT."],
+    ),
+    "zh": QueryText(
+        title="需求高亮 1.2：查询与高亮",
+        front="前端：要找什么", back_left="高亮：屏幕上的物品", back_right="查询：整个商店",
+        customer=[("柜台前的顾客", C.CREAM), ("需求、意图", C.MUTED)],
+        window=[("物品筛选窗口", C.CREAM), ("勾选和输入框", C.MUTED)],
+        intent=[("意图规则", C.CREAM), ("检查、以物易物、", C.MUTED), ("灵活买家、买卖", C.MUTED)],
+        language=[("筛选语言", C.CREAM), ("词法、语法：AST", C.MUTED), ("绑定：Pred", C.MUTED)],
+        formatter=[("格式化器", C.CREAM), ("AST -> 规范文本", C.MUTED), ("词形或 + | -", C.MUTED)],
+        query=[("查询：Pred 值", C.CREAM), ("想要、搜查、货物、筛选", C.MUTED)],
+        engine=[("Engine", C.CREAM), ("屏幕上的物品，每帧", C.MUTED), ("几毫秒，答案留存", C.MUTED)],
+        result=[("Result", C.CREAM), ("物品和它们的样式", C.MUTED)],
+        painter=[("Painter", C.CREAM), ("描边、标签页标记", C.MUTED)],
+        walk=[("遍历商店 + Pred.Eval", C.CREAM), ("筛选或调用方的 Pred，", C.MUTED), ("逐件判断，不留缓存", C.MUTED)],
+        counts=[("筛选计数、统计行", C.CREAM)],
+        api=[("查询 API 1.0", C.CREAM), ("文本进，物品出", C.MUTED), ("同一种语言", C.MUTED)],
+        mods=[("其他 Mod", C.CREAM), ("拷入一个客户端文件", C.MUTED)],
+        core=[("查询核心库", C.FAINT), ("有需要才会考虑", C.FAINT)],
+        notes=["格式化器负责写输入框：按回车时，以及勾选改动查询时。",
+               "API 用筛选语言编译调用方的文本，在同一个商店遍历上执行，",
+               "不经过 Engine 和 Painter。",
+               "Engine 不认识顾客，Painter 不认识查询。",
+               "虚线：只是设想，尚未实现。"],
+    ),
+})
+
+
+# Diagram of Demand Highlight's query design: the front builds one query value; the highlight (Engine, Result, Painter)
+# and the whole-shop walk (filter counts, the public API) are two separate consumers of it.
+def query_architecture(cv: C.Canvas, lang: Lang) -> int:
+    t = QUERY[lang]
+    accent = C.GREEN
+    y = title(cv, lang, t.title, accent) + 12
+    lx, rx, cw = MARGIN, 208, 184
+    lm, rm = lx + cw // 2, rx + cw // 2
+    text(cv, lang, lx, y, t.front, accent)
+    y += GLYPH[lang] + 8
+
+    # The front in three columns: the customer and its rules; the window and its language; the formatter, which
+    # writes a query back as the window's text.
+    fw = (W - 2 * MARGIN - 2 * 8) // 3
+    c1, c2, c3 = MARGIN, MARGIN + fw + 8, MARGIN + 2 * (fw + 8)
+    m1, m2 = c1 + fw // 2, c2 + fw // 2
+    hc = box(cv, lang, c1, y, fw, t.customer, "slot", "customer")
+    hw = box(cv, lang, c2, y, fw, t.window, "slot", "window")
+    window_mid = y + hw // 2
+    row = max(hc, hw)
+    arrow_down(cv, m1, y + hc + 2, y + row + 12, C.MUTED)
+    arrow_down(cv, m2, y + hw + 2, y + row + 12, C.MUTED)
+    y += row + 14
+    hi = box(cv, lang, c1, y, fw, t.intent, "plate", "intent")
+    hl = box(cv, lang, c2, y, fw, t.language, "plate", "language")
+    hf = box(cv, lang, c3, y, fw, t.formatter, "plate", "formatter")
+    # Language to formatter, and the formatter's text back into the window's box.
+    arrow_right(cv, c2 + fw + 2, c3 - 2, y + hl // 2, C.MUTED)
+    fx = c3 + fw // 2
+    cv.vline(fx, window_mid, y - 2 - window_mid, C.MUTED)
+    cv.hline(c2 + fw + 5, window_mid, fx - c2 - fw - 4, C.MUTED)
+    for i in range(3):
+        cv.vline(c2 + fw + 2 + i, window_mid - i, 2 * i + 1, C.MUTED)
+    y += max(hi, hl, hf) + 14
+
+    # The query value, across the width; the customer's rules and the language both make one.
+    qy = y
+    arrow_down(cv, m1, qy - 14 - max(hi, hl, hf) + hi + 2, qy - 2, C.MUTED)
+    arrow_down(cv, m2, qy - 14 - max(hi, hl, hf) + hl + 2, qy - 2, C.MUTED)
+    hq = box(cv, lang, lx, y, W - 2 * MARGIN, t.query, "lit", "query", accent)
+    y += hq + 14
+
+    # Two consumers of the query, side by side; the arrows run down the columns' right edges, past the headings.
+    text(cv, lang, lx, y, t.back_left, accent)
+    text(cv, lang, rx, y, t.back_right, accent)
+    y += GLYPH[lang] + 8
+    arrow_down(cv, lx + cw - 10, qy + hq + 2, y - 2, accent)
+    arrow_down(cv, rx + cw - 10, qy + hq + 2, y - 2, accent)
+    top = y
+    left = top
+    chain: Sequence[tuple[str, Lines, BoxKind]] = (("engine", t.engine, "plate"), ("result", t.result, "plate"),
+                                                   ("painter", t.painter, "lit"))
+    for key, lines, kind in chain:
+        h = box(cv, lang, lx, left, cw, lines, kind, key, accent)
+        if key != "painter":
+            arrow_down(cv, lm, left + h + 2, left + h + 12, C.MUTED)
+        left += h + 14
+    right = top
+    h = box(cv, lang, rx, right, cw, t.walk, "plate", "walk")
+    right += h
+    # The walk serves the filter's counts and the API.
+    split = right + 6
+    cv.vline(rm, right + 1, split - right, accent)
+    bus = rx + 5
+    cv.hline(bus, split, rm - bus + 1, accent)
+    right = split + 6
+    ox, ow = rx + 14, cw - 14
+    built_end = split
+    users: Sequence[tuple[str, Lines, BoxKind]] = (("counts", t.counts, "plate"), ("api", t.api, "lit"))
+    api_bottom = right
+    for key, lines, kind in users:
+        h = box(cv, lang, ox, right, ow, lines, kind, key, accent)
+        m = right + h // 2
+        arrow_right(cv, bus, ox - 2, m, accent)
+        cv.vline(bus, built_end, m - built_end + 1, accent)
+        built_end = m
+        if key == "api":
+            api_bottom = right + h
+        right += h + 6
+    # Other mods use the API; the core library is only an idea.
+    right += 6
+    om = ox + ow // 2
+    arrow_down(cv, om, api_bottom + 2, right - 2, accent)
+    h = box(cv, lang, ox, right, ow, t.mods, "slot", "mods")
+    right += h + 14
+    arrow_down(cv, om, right - 12, right - 2, C.FAINT, dotted=True)
+    h = box(cv, lang, ox, right, ow, t.core, "planned", "core")
+    right += h
+    y = max(left - 14, right) + 12
+    return note_lines(cv, lang, y, t.notes) + MARGIN
+
+
 DIAGRAMS: Final[Mapping[str, Diagram]] = MappingProxyType({
     "binding-capture": capture,
     "press-decision": press,
     "texture-packs-architecture": architecture,
+    "query-architecture": query_architecture,
 })
 
 

@@ -120,15 +120,16 @@ Documentation diagrams, rendered by `diagrams.py` in English and Chinese, so the
 - A title plate on the top margin with the mod's accent bar. Steps are machinery plates without rivets; inputs and outcomes nobody gets are sunken slots; the outcome a binding gets is a plate with the accent bar on its left edge.
 - Arrows are 1 px lines with a 5 px head: muted for the flow, the accent for the way an input goes to a binding. A cut way is a dotted line ending in a red cross. Yes and no sit beside their arrow.
 - Something designed but not built yet is a dotted outline on the ground with faint text, reached by dotted arrows that keep their head (a cut way has a cross instead). A note under the diagram says what the dots stand for.
-- The accent is the mod's own (Colour above): amber for Better Key Bindings, pink for Texture Packs.
+- The accent is the mod's own (Colour above): amber for Better Key Bindings, pink for Texture Packs, green for Demand Highlight.
 - English is set in the cover alphabet, Chinese in Cubic 11, as on the slides, with a 11 px and a 14 px line pitch. Plates size their height to the language; each line must fit its plate, or the script stops with its width.
 - The English file is `<id>.png` and the Chinese one `<id>.zh_CN.png`, written straight into the mod's `doc/attachments/`; `--only` picks the mod's diagrams. The Chinese page links to its file through the catalog.
 
-Diagrams so far: `binding-capture` and `press-decision` (Better Key Bindings); `texture-packs-architecture` (Texture Packs: the loader in the game and the creator kit side by side, with proposal 2 dotted).
+Diagrams so far: `binding-capture` and `press-decision` (Better Key Bindings); `texture-packs-architecture` (Texture Packs: the loader in the game and the creator kit side by side, with proposal 2 dotted); `query-architecture` (Demand Highlight: the front that builds a query, then the highlight and the whole-shop walk as two separate consumers of it, the public query API under the walk, a possible core library dotted). The accent is the mod's green.
 
 ```
 python design/diagrams.py ../ProbablyStolen-BetterKeyBindings/BetterKeyBindings/doc/attachments --only binding-capture,press-decision
 python design/diagrams.py ../ProbablyStolen-TexturePacks/TexturePacks/doc/attachments --only texture-packs-architecture
+python design/diagrams.py ../ProbablyStolen-DemandHighlight/DemandHighlight/doc/attachments --only query-architecture
 ```
 
 ## Checks
